@@ -16,13 +16,13 @@ if rootCheck != 0:
 
 
 #-----flashrom commands-----
-fw2bRomFile = "protectli_fw2b_v4.12.0.3.rom"
-fw4bRomFile = "protectli_fw4b_v4.12.0.3.rom"
-fw6RomFile = "protectli_fw6_v4.12.0.3.rom"
+fw2bRomFile = "images/protectli_fw2b_v4.12.0.3.rom"
+fw4bRomFile = "images/protectli_fw4b_v4.12.0.3.rom"
+fw6RomFile = "images/protectli_fw6_v4.12.0.3.rom"
 
-fw2bBinFile = "FW2_BSW4L009.bin"
-fw4bBinFile = "FW4_BSW4L009.bin"
-fw6BinFile = "FW6_KBU6LA09.bin"
+fw2bBinFile = "images/FW2_BSW4L009.bin"
+fw4bBinFile = "images/FW4_BSW4L009.bin"
+fw6BinFile = "images/FW6_KBU6LA09.bin"
 
 fw2bcoreboot = "flashrom -p internal -w " + fw2bRomFile + " --ifd -i bios"
 fw4bcoreboot = "flashrom -p internal -w " + fw4bRomFile + " --ifd -i bios"
