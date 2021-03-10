@@ -63,7 +63,7 @@ def checkDmi():
         return True
 
     else:
-        maenFact ="Unknown"
+        menFact = "Unknown"
         return False
 
 
@@ -195,6 +195,15 @@ def flashAMI(passModel):
 
     else:
         print("Unable to flash AMI BIOS, system not compatible")
+
+#-----Menu------
+
+def menu():
+
+    print("Manufacture: " + menFact)
+    print("Device: " + deviceName)
+    print("ubuntu version " + ubVersion)
+    print(biosVers)
 
 
 ##_____MAIN GLOBAL EXE______________________________________________________________________
