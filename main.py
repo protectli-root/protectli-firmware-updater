@@ -5,6 +5,11 @@ from shutil import which
 
 #-----global var----
 
+menFact = ""
+deviceName = ""
+ubVersion = ""
+biosVers = ""
+
 #----Check for script root priv
 
 rootCheck = os.geteuid()
@@ -52,104 +57,87 @@ macCheck = str(subprocess.check_output(macAddress, shell=True))
 #-----checks dmidecode for device name-----
 def checkDmi():
 
+    global menFact
     if "Protectli" in dmiCheck:
-        print("\nDevice: Protectli")
+        menFact = "Protectli"
         return True
 
     else:
-        print("Device: Unknown")
+        maenFact ="Unknown"
         return False
 
 
 #-----checks CPU info using cpuinfo file and dmidecode-----
 def chkCpuInfo():
 
+    global deviceName
 
     if "J3060" in cpuInfo and "FW2B" in dmiCheck and "00:e0:67" in macCheck:
 
-        print("Device: FW2B")
+        deviceName = "FW2B"
         return True
 
     elif "J3160" in cpuInfo and "FW4B" in dmiCheck and "00:e0:67" in macCheck:
 
-        print("Device: FW4B")
+        deviceName = "FW4B"
         return True
 
     elif "3865U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
-        print("Device: FW6A")
+        deviceName = "FW6A"
         return True
 
     elif "7100U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
-        print("Device: FW6B")
+        deviceName = "FW6B"
         return True
 
     elif "7200U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
-        print("Device: FW6C")
+        deviceName = "FW6C"
         return True
 
     else:
 
-        print("Device: Unknownz")
+        print("Device: Unknown")
         return False
 
 
 #-----returns model-----
 def cpuInfoPass():
 
-    if "J3060" in cpuInfo and "FW2B" in dmiCheck and "00:e0:67" in macCheck:
-
-        return "FW2B"
-
-    elif "J3160" in cpuInfo  and "FW4B" in dmiCheck and "00:e0:67" in macCheck:
-
-        return "FW4B"
-
-    elif "3865U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
-
-        return "FW6x"
-
-    elif "7100U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
-
-        return "FW6x"
-
-    elif "7200U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
-
-        return "FW6x"
-
-    else:
-
-        return "empty"
+    print("old function")
 
 
 #-----checks ubuntu version with lsb-release file-----
 def ubuVersion():
 
+    global ubVersion
+
     if "20.04" in uVersion:
-        print("Ubuntu version: 20.04")
+        ubVersion = "20.04"
         return True
 
     elif "18.04" in uVersion:
-        print("Ubuntu version: 18.04")
+        ubVersion = "18.04"
         return True
 
     else:
-        print("Ubuntu version: Unknown")
+        ubVersion = "Ubuntu version: Unknown"
         return False
 
 
 #-----check if ubuntu is in legacy or UEFI/ ref path of efi-----
 def checkLegacy():
 
+    global biosVers
     #if path exists, UEFI
     if not pathCheck:
-        print("Ubuntu: Legacy")
+        biosVers = "Legacy"
         return True
 
     else:
-        print("Ubuntu: UEFI")
+        biosVers = "UEFI"
         return False
 
 #-----get necessary files/ programs-----
@@ -230,10 +218,10 @@ try:
 	        selection = str(input("1. coreboot\n2. AMI\n"))
 
 	        if selection == "1":
-	            flashCoreboot(cpuInfoPass())
+	            flashCoreboot(deviceName)
 	            
         	elif selection == "2":
-            	    flashAMI(cpuInfoPass())
+            	    flashAMI(deviceName)
 
         	else:
             	    print("\nPlease enter 1 for coreboot or 2 for AMI")
