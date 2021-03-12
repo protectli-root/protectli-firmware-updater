@@ -10,6 +10,8 @@ deviceName = ""
 ubVersion = ""
 biosVers = ""
 
+over_ride_tester = True
+
 #----Check for script root priv
 
 rootCheck = os.geteuid()
@@ -99,7 +101,7 @@ def chkCpuInfo():
 
     else:
 
-        print("Device: Unknown")
+        deviceName = "Unknown"
         return False
 
 
@@ -123,7 +125,7 @@ def ubuVersion():
         return True
 
     else:
-        ubVersion = "Ubuntu version: Unknown"
+        ubVersion = "Unknown"
         return False
 
 
@@ -143,12 +145,47 @@ def checkLegacy():
 #-----get necessary files/ programs-----
 def getNess():
 
+
     if which("flashrom"):
         return True
 
     else:
+        select_to_install = "x"
+        print("Flashrom is not is not installed")
+        print("Flashrom is required to be able to flash to coreboot")
+        print("Would you like to install flashrom [Y/N]\n")
 
-        os.system("apt-get -y install flashrom")
+        while not(select_to_install == "Y" or select_to_install == "N"):
+
+            select_to_install = str(input("")).upper()
+
+            if select_to_install == "Y":
+
+                print("\nProceeding with installing flashrom, please wait\n")
+                os.system("apt-get -y install flashrom")
+
+                if which("flashrom"):
+
+                    print("\nflashrom has been successfully installed\nproceeding with operations\n")
+
+                    return True
+
+                else:
+
+                    print("\nflashrom has failed to install\nplease check internet connection")
+                    getNess()
+
+            elif select_to_install == "N":
+
+                print("\nflashrom is required to continue, program will now exit")
+
+                exit()
+
+            else:
+                print("Please enter \"Y\" for Yes and \"N\" for No")
+
+
+        #os.system("apt-get -y install flashrom")
         #os.system("sudo -S apt-get -y install git")
         #os.system("git clone https://github.com/foxlipro/liflash")
 
@@ -196,50 +233,87 @@ def flashAMI(passModel):
     else:
         print("Unable to flash AMI BIOS, system not compatible")
 
+#-----Coreboot or AMI choice
+def flasherChoice():
+
+    selection = "-1"
+
+
+    while not (selection == "1" or selection == "2"):
+
+        selection = str(input("1. coreboot\n2. AMI\n"))
+
+        if selection == "1":
+            flashCoreboot(deviceName)
+
+        elif selection == "2":
+            flashAMI(deviceName)
+
+        else:
+            print("\nPlease enter 1 for coreboot or 2 for AMI")
+
+
+#-----Full System Check
+
+def fullSysChk():
+
+    if checkDmi() and chkCpuInfo() and ubuVersion() and checkLegacy():
+
+        return True
+
+    else:
+
+        return False
+
 #-----Menu------
 
 def menu():
 
+    print("\t----FlashLi----\n")
+
     print("Manufacture: " + menFact)
     print("Device: " + deviceName)
-    print("ubuntu version " + ubVersion)
-    print(biosVers)
+    print("Ubuntu version: " + ubVersion)
+    print("OS: " + biosVers)
+    print("\n")
 
 
 ##_____MAIN GLOBAL EXE______________________________________________________________________
 
 os.system("clear")
 
-print("\t----LiFlash----")
+checkDmi()
+chkCpuInfo()
+ubuVersion()
+checkLegacy()
+
+
 try:
 
-	if checkDmi() and chkCpuInfo() and ubuVersion() and checkLegacy():
-	    print("\nDevice compatible\nProceding with flashing")
+    if over_ride_tester:
 
-	    print("\nobtaining Files")
 
-	    getNess()
+    #if checkDmi() and chkCpuInfo() and ubuVersion() and checkLegacy():
+        #print("\nDevice compatible\nProceding with flashing")
 
-	    selection = "-1"
+        #print("\nobtaining Files")
 
-	    while not (selection == "1" or selection == "2"):
+        if getNess():
 
-	        selection = str(input("1. coreboot\n2. AMI\n"))
+            menu()
+            flasherChoice()
 
-	        if selection == "1":
-	            flashCoreboot(deviceName)
-	            
-        	elif selection == "2":
-            	    flashAMI(deviceName)
+        else:
+            print("installing Flashrom was not successful")
 
-        	else:
-            	    print("\nPlease enter 1 for coreboot or 2 for AMI")
+    else:
 
-	else:
-    	    print("Device Incompatible Cannot Continue")
+        print("platfrom is not compatible")
+
+
 
 except:
-	print("Error has occured")
-	print("Exiting program")
-	exit()
+    print("Error has occured")
+    print("Exiting program")
+    exit()
 #
