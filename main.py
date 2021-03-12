@@ -291,6 +291,8 @@ def fullSysChk():
 def displayInfo():
     print("\t----FlashLi----\n")
 
+    print("\t--Pawn: 2A3--\n")
+
     print("Manufacture: " + menFact)
     print("Device: " + deviceName)
     print("Ubuntu version: " + ubVersion)
