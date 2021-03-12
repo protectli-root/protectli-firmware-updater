@@ -189,7 +189,7 @@ def getNess():
 
             if select_to_install == "Y":
 
-                print("\nProceeding with installing flashrom, please wait\n")
+                print(Fore.GREEN + "\nProceeding with installing flashrom, please wait\n" + Style.RESET_ALL)
                 os.system("apt-get -y install flashrom")
 
                 if which("flashrom"):
@@ -323,6 +323,10 @@ try:
             displayInfo()
             flasherChoice()
 
+            print(Fore.YELLOW + "\n\n-Make sure the flash has been VERIFIED")
+            print("-If the flash has not been VERIFIED please run the script again")
+            print("-If the flash is VERIFIED please restart the device" + Style.RESET_ALL)
+
         else:
             print(Fore.RED + "Installing Flashrom was not successful")
 
@@ -333,7 +337,7 @@ try:
 
 
 except:
-    print(Fore.RED + "\nError has occured")
+    print(Fore.RED + "\nError has occurred")
     print("Exiting program" + Style.RESET_ALL)
 
     exit()
