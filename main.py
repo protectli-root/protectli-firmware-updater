@@ -21,8 +21,9 @@ over_ride_tester = True
 rootCheck = os.geteuid()
 
 if rootCheck != 0:
-    print("Need to be run as root user")
-    print("Program now exiting")
+    print(Fore.RED + "\nNeed to be run as root user" + Style.RESET_ALL)
+    print(Fore.YELLOW + "Please run: sudo python3 main.py" + Style.RESET_ALL)
+    print(Fore.RED + "\nProgram now exiting\n" + Style.RESET_ALL)
     exit()
 
 # -----flashrom commands-----
@@ -264,12 +265,10 @@ def flasherChoice():
         selection = str(input("1. coreboot\n2. AMI\n"))
 
         if selection == "1":
-            print(deviceName)
-            #flashCoreboot(deviceName)
+            flashCoreboot(deviceName)
 
         elif selection == "2":
-            print(deviceName)
-            #flashAMI(deviceName)
+            flashAMI(deviceName)
 
         else:
             print("\nPlease enter 1 for coreboot or 2 for AMI")
@@ -315,7 +314,7 @@ checkLegacy()
 # trying to execute the main scrip application
 try:
 
-    if over_ride_tester:
+    if fullSysChk():
 
         if getNess():
 
