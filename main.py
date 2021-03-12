@@ -3,12 +3,16 @@ import sys
 import subprocess
 from shutil import which
 
+from colorama import Fore, Style
+
 # -----global var----
 
 menFact = ""
 deviceName = ""
 ubVersion = ""
 biosVers = ""
+flashFileCore = "none"
+flashFileAmi = "none"
 
 over_ride_tester = True
 
@@ -71,31 +75,57 @@ def checkDmi():
 # -----checks CPU info using cpuinfo file and dmidecode-----
 def chkCpuInfo():
     global deviceName
+    global flashFileCore
+    global flashFileAmi
 
     if "J3060" in cpuInfo and "FW2B" in dmiCheck and "00:e0:67" in macCheck:
 
         deviceName = "FW2B"
+        flashFileCore = fw2bRomFile
+        flashFileAmi = fw2bBinFile
         return True
 
     elif "J3160" in cpuInfo and "FW4B" in dmiCheck and "00:e0:67" in macCheck:
 
         deviceName = "FW4B"
+        flashFileCore = fw4bRomFile
+        flashFileAmi = fw4bBinFile
         return True
 
     elif "3865U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         deviceName = "FW6A"
+        flashFileCore = fw6RomFile
+        flashFileCore = fw6BinFile
         return True
 
     elif "7100U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         deviceName = "FW6B"
+        flashFileCore = fw6RomFile
+        flashFileCore = fw6BinFile
         return True
 
     elif "7200U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         deviceName = "FW6C"
+        flashFileCore = fw6RomFile
+        flashFileCore = fw6BinFile
         return True
+
+    elif "8525" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
+
+        print(Fore.YELLOW + "\nPlatform is not compatible at the moment\n" + Style.RESET_ALL)
+        flashFileCore = "Not selected"
+        flashFileCore = "Not selected"
+        return False
+
+    elif "8550" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
+
+        print(Fore.YELLOW + "\nFW6E: Platform is not compatible at the moment\n" + Style.RESET_ALL)
+        flashFileCore = "Not selected"
+        flashFileCore = "Not selected"
+        return False
 
     else:
 
@@ -141,6 +171,9 @@ def checkLegacy():
 # -----get necessary files/ programs-----
 def getNess():
     if which("flashrom"):
+
+        print(Fore.GREEN + "Flashrom has been found\n" + Style.RESET_ALL)
+
         return True
 
     else:
@@ -160,18 +193,18 @@ def getNess():
 
                 if which("flashrom"):
 
-                    print("\nflashrom has been successfully installed\nproceeding with operations\n")
+                    print(Fore.GREEN + "\nflashrom has been successfully installed\nproceeding with operations\n" + Style.RESET_ALL)
 
                     return True
 
                 else:
 
-                    print("\nflashrom has failed to install\nplease check internet connection")
+                    print(Fore.RED + "\nflashrom has failed to install\nplease check internet connection" + Style.RESET_ALL)
                     getNess()
 
             elif select_to_install == "N":
 
-                print("\nflashrom is required to continue, program will now exit")
+                print(Fore.RED + "\nflashrom is required to continue, program will now exit" + Style.RESET_ALL)
 
                 exit()
 
@@ -197,7 +230,7 @@ def flashCoreboot(passModel):
         os.system(fw6coreboot)
 
     else:
-        print("Unable to flash coreboot BIOS, system not compatible")
+        print(Fore.RED + "Unable to flash coreboot BIOS, system not compatible")
 
 
 # -----AMI flash------
@@ -219,7 +252,7 @@ def flashAMI(passModel):
         os.system(fw6ami)
 
     else:
-        print("Unable to flash AMI BIOS, system not compatible")
+        print(Fore.RED + "Unable to flash AMI BIOS, system not compatible" + Style.RESET_ALL)
 
 
 # -----Coreboot or AMI choice
@@ -231,10 +264,12 @@ def flasherChoice():
         selection = str(input("1. coreboot\n2. AMI\n"))
 
         if selection == "1":
-            flashCoreboot(deviceName)
+            print(deviceName)
+            #flashCoreboot(deviceName)
 
         elif selection == "2":
-            flashAMI(deviceName)
+            print(deviceName)
+            #flashAMI(deviceName)
 
         else:
             print("\nPlease enter 1 for coreboot or 2 for AMI")
@@ -254,13 +289,16 @@ def fullSysChk():
 
 # -----Menu------
 
-def menu():
+def displayInfo():
     print("\t----FlashLi----\n")
 
     print("Manufacture: " + menFact)
     print("Device: " + deviceName)
     print("Ubuntu version: " + ubVersion)
     print("OS: " + biosVers)
+
+    print(Fore.YELLOW + "\nFlash file used for coreboot: " + flashFileCore)
+    print("Flash file used for AMI: " + flashFileAmi + Style.RESET_ALL)
     print("\n")
 
 
@@ -277,24 +315,25 @@ checkLegacy()
 # trying to execute the main scrip application
 try:
 
-    if fullSysChk():
+    if over_ride_tester:
 
         if getNess():
 
-            menu()
+            displayInfo()
             flasherChoice()
 
         else:
-            print("installing Flashrom was not successful")
+            print(Fore.RED + "Installing Flashrom was not successful")
 
     else:
 
-        print("\nPlatform is not compatible with flashing the specific BIOS\n")
+        print(Fore.RED + "\nPlatform is not compatible with flashing the specific BIOS\n" + Style.RESET_ALL)
 
 
 
 except:
-    print("Error has occured")
-    print("Exiting program")
+    print(Fore.RED + "\nError has occured")
+    print("Exiting program" + Style.RESET_ALL)
+
     exit()
 #
