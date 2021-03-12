@@ -3,7 +3,7 @@ import sys
 import subprocess
 from shutil import which
 
-#-----global var----
+# -----global var----
 
 menFact = ""
 deviceName = ""
@@ -12,7 +12,7 @@ biosVers = ""
 
 over_ride_tester = True
 
-#----Check for script root priv
+# ----Check for script root priv
 
 rootCheck = os.geteuid()
 
@@ -21,8 +21,7 @@ if rootCheck != 0:
     print("Program now exiting")
     exit()
 
-
-#-----flashrom commands-----
+# -----flashrom commands-----
 fw2bRomFile = "images/protectli_fw2b_v4.12.0.3.rom"
 fw4bRomFile = "images/protectli_fw4b_v4.12.0.3.rom"
 fw6RomFile = "images/protectli_fw6_v4.12.0.3.rom"
@@ -39,7 +38,7 @@ fw2bami = "flashrom -p internal -w " + fw2bBinFile + " --ifd -i bios"
 fw4bami = "flashrom -p internal -w " + fw4bBinFile + " --ifd -i bios"
 fw6ami = "flashrom -p internal -w " + fw6BinFile + " --ifd -i bios"
 
-#-----open files----
+# -----open files----
 cpuInfo = open("/proc/cpuinfo")
 cpuInfo = cpuInfo.read()
 
@@ -49,16 +48,16 @@ uVersion = uVersion.read()
 pathCheck = "/sys/firmware/efi"
 pathCheck = os.path.isdir(pathCheck)
 
-#-----Terminal commands----
+# -----Terminal commands----
 dmiCmd = "dmidecode"
 dmiCheck = str(subprocess.check_output(dmiCmd, shell=True))
 
 macAddress = "ip address"
 macCheck = str(subprocess.check_output(macAddress, shell=True))
 
-#-----checks dmidecode for device name-----
-def checkDmi():
 
+# -----checks dmidecode for device name-----
+def checkDmi():
     global menFact
     if "Protectli" in dmiCheck:
         menFact = "Protectli"
@@ -69,9 +68,8 @@ def checkDmi():
         return False
 
 
-#-----checks CPU info using cpuinfo file and dmidecode-----
+# -----checks CPU info using cpuinfo file and dmidecode-----
 def chkCpuInfo():
-
     global deviceName
 
     if "J3060" in cpuInfo and "FW2B" in dmiCheck and "00:e0:67" in macCheck:
@@ -105,15 +103,13 @@ def chkCpuInfo():
         return False
 
 
-#-----returns model-----
+# -----returns model-----
 def cpuInfoPass():
-
     print("old function")
 
 
-#-----checks ubuntu version with lsb-release file-----
+# -----checks ubuntu version with lsb-release file-----
 def ubuVersion():
-
     global ubVersion
 
     if "20.04" in uVersion:
@@ -129,11 +125,10 @@ def ubuVersion():
         return False
 
 
-#-----check if ubuntu is in legacy or UEFI/ ref path of efi-----
+# -----check if ubuntu is in legacy or UEFI/ ref path of efi-----
 def checkLegacy():
-
     global biosVers
-    #if path exists, UEFI
+    # if path exists, UEFI
     if not pathCheck:
         biosVers = "Legacy"
         return True
@@ -142,10 +137,9 @@ def checkLegacy():
         biosVers = "UEFI"
         return False
 
-#-----get necessary files/ programs-----
+
+# -----get necessary files/ programs-----
 def getNess():
-
-
     if which("flashrom"):
         return True
 
@@ -155,7 +149,7 @@ def getNess():
         print("Flashrom is required to be able to flash to coreboot")
         print("Would you like to install flashrom [Y/N]\n")
 
-        while not(select_to_install == "Y" or select_to_install == "N"):
+        while not (select_to_install == "Y" or select_to_install == "N"):
 
             select_to_install = str(input("")).upper()
 
@@ -184,15 +178,9 @@ def getNess():
             else:
                 print("Please enter \"Y\" for Yes and \"N\" for No")
 
-
-        #os.system("apt-get -y install flashrom")
-        #os.system("sudo -S apt-get -y install git")
-        #os.system("git clone https://github.com/foxlipro/liflash")
-
-#----- coreboot flash-----
+# ----- coreboot flash-----
 
 def flashCoreboot(passModel):
-
     if passModel == "FW2B":
         print("Flashing coreboot for FW2B")
 
@@ -211,11 +199,11 @@ def flashCoreboot(passModel):
     else:
         print("Unable to flash coreboot BIOS, system not compatible")
 
-#-----AMI flash------
+
+# -----AMI flash------
 
 def flashAMI(passModel):
-
-    if passModel== "FW2B":
+    if passModel == "FW2B":
         print("\nFlashing AMI for FW2B\n")
 
         os.system(fw2bami)
@@ -233,11 +221,10 @@ def flashAMI(passModel):
     else:
         print("Unable to flash AMI BIOS, system not compatible")
 
-#-----Coreboot or AMI choice
+
+# -----Coreboot or AMI choice
 def flasherChoice():
-
     selection = "-1"
-
 
     while not (selection == "1" or selection == "2"):
 
@@ -253,10 +240,9 @@ def flasherChoice():
             print("\nPlease enter 1 for coreboot or 2 for AMI")
 
 
-#-----Full System Check
+# -----Full System Check
 
 def fullSysChk():
-
     if checkDmi() and chkCpuInfo() and ubuVersion() and checkLegacy():
 
         return True
@@ -265,10 +251,10 @@ def fullSysChk():
 
         return False
 
-#-----Menu------
+
+# -----Menu------
 
 def menu():
-
     print("\t----FlashLi----\n")
 
     print("Manufacture: " + menFact)
@@ -278,25 +264,20 @@ def menu():
     print("\n")
 
 
-##_____MAIN GLOBAL EXE______________________________________________________________________
+##_____MAIN EXE______________________________________________________________________
 
 os.system("clear")
 
+# initialize the check system process
 checkDmi()
 chkCpuInfo()
 ubuVersion()
 checkLegacy()
 
-
+# trying to execute the main scrip application
 try:
 
-    if over_ride_tester:
-
-
-    #if checkDmi() and chkCpuInfo() and ubuVersion() and checkLegacy():
-        #print("\nDevice compatible\nProceding with flashing")
-
-        #print("\nobtaining Files")
+    if fullSysChk():
 
         if getNess():
 
@@ -308,7 +289,7 @@ try:
 
     else:
 
-        print("platfrom is not compatible")
+        print("\nPlatform is not compatible with flashing the specific BIOS\n")
 
 
 
