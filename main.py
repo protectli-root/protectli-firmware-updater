@@ -202,7 +202,7 @@ def getNess():
 
                     print(Fore.RED + "\nflashrom has failed to install")
                     print("Repository might need to be updated")
-                    print("Would you like to update a repository and try to install flashrom [Y/N]")
+                    print("Would you like to update a repository and try to install flashrom [Y/N]" + Style.RESET_ALL)
                     user_input = "x"
 
                     while not (user_input == "Y" or user_input == "N"):
@@ -214,9 +214,11 @@ def getNess():
                             os.system("apt-get -y install flashrom")
 
                             if which("flashrom"):
+                                print(Fore.GREEN + "\nFlashrom has been installed" + Style.RESET_ALL)
                                 return True
 
                             else:
+                                print(Fore.RED + "Flashrom has fialed to install, Error E30P" + Style.RESET_ALL)
                                 return False
 
                         else:
