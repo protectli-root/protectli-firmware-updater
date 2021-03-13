@@ -200,8 +200,28 @@ def getNess():
 
                 else:
 
-                    print(Fore.RED + "\nflashrom has failed to install\nplease check internet connection" + Style.RESET_ALL)
-                    getNess()
+                    print(Fore.RED + "\nflashrom has failed to install")
+                    print("Repository might need to be updated")
+                    print("Would you like to update a repository and try to install flashrom [Y/N]")
+                    user_input = "x"
+
+                    while not (user_input == "Y" or user_input == "N"):
+
+                        user_input =str(input("")).upper()
+
+                        if user_input == "Y":
+                            os.system("add-apt-repository universe")
+                            os.system("apt-get -y install flashrom")
+
+                            if which("flashrom"):
+                                return True
+
+                            else:
+                                return False
+
+                        else:
+                            print("\nflashrom is required to continue, program will now exit")
+                            exit()
 
             elif select_to_install == "N":
 
