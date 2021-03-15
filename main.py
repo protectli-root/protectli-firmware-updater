@@ -146,7 +146,11 @@ def cpuInfoPass():
 def ubuVersion():
     global ubVersion
 
-    if "20.04" in uVersion:
+    if "20.10" in uVersion:
+        ubVersion = "20.04"
+        return True
+
+    elif "20.04" in uVersion:
         ubVersion = "20.04"
         return True
 
@@ -175,7 +179,7 @@ def checkLegacy():
 # -----get necessary files/ programs-----
 def getNess():
     global flashromBinary;
-    if(os.path.exists("vendor/flashrom"):
+    if(os.path.exists("vendor/flashrom")):
 
         print(Fore.GREEN + "Using bundled Flashrom binary\n" + Style.RESET_ALL)
         flashromBinary = "vendor/flashrom"
