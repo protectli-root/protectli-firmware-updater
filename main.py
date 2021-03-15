@@ -143,22 +143,22 @@ def cpuInfoPass():
 
 # -----checks ubuntu version with lsb-release file-----
 def ubuVersion():
-    global uVersion
+    global ubVersion
 
-    if "20.10" in ubVersion:
-        uVersion = "20.10"
+    if "20.10" in uVersion:
+        ubVersion = "20.10"
         return True
 
-    elif "20.04" in ubVersion:
-        uVersion = "20.04"
+    elif "20.04" in uVersion:
+        ubVersion = "20.04"
         return True
 
-    elif "18.04" in ubVersion:
-        uVersion = "18.04"
+    elif "18.04" in uVersion:
+        ubVersion = "18.04"
         return True
 
     else:
-        uVersion = "Unknown"
+        ubVersion = "Unknown"
         return False
 
 
