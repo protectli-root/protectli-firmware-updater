@@ -15,6 +15,7 @@ ubVersion = ""
 biosVers = ""
 flashFileCore = "none"
 flashFileAmi = "none"
+flashromBinary = ""
 
 over_ride_tester = True
 
@@ -37,13 +38,13 @@ fw2bBinFile = "images/FW2_BSW4L009.bin"
 fw4bBinFile = "images/FW4_BSW4L009.bin"
 fw6BinFile = "images/FW6_KBU6LA09.bin"
 
-fw2bcoreboot = "flashrom -p internal -w " + fw2bRomFile + " --ifd -i bios"
-fw4bcoreboot = "flashrom -p internal -w " + fw4bRomFile + " --ifd -i bios"
-fw6coreboot = "flashrom -p internal -w " + fw6RomFile + " --ifd -i bios"
+fw2bcoreboot = " -p internal -w " + fw2bRomFile + " --ifd -i bios"
+fw4bcoreboot = " -p internal -w " + fw4bRomFile + " --ifd -i bios"
+fw6coreboot = " -p internal -w " + fw6RomFile + " --ifd -i bios"
 
-fw2bami = "flashrom -p internal -w " + fw2bBinFile + " --ifd -i bios"
-fw4bami = "flashrom -p internal -w " + fw4bBinFile + " --ifd -i bios"
-fw6ami = "flashrom -p internal -w " + fw6BinFile + " --ifd -i bios"
+fw2bami = " -p internal -w " + fw2bBinFile + " --ifd -i bios"
+fw4bami = " -p internal -w " + fw4bBinFile + " --ifd -i bios"
+fw6ami = " -p internal -w " + fw6BinFile + " --ifd -i bios"
 
 # -----open files----
 cpuInfo = open("/proc/cpuinfo")
@@ -173,10 +174,17 @@ def checkLegacy():
 
 # -----get necessary files/ programs-----
 def getNess():
-    if which("flashrom"):
+    global flashromBinary;
+    if(os.path.exists("vendor/flashrom"):
+
+        print(Fore.GREEN + "Using bundled Flashrom binary\n" + Style.RESET_ALL)
+        flashromBinary = "vendor/flashrom"
+        return True
+
+    elif which("flashrom"):
 
         print(Fore.GREEN + "Flashrom has been found\n" + Style.RESET_ALL)
-
+        flashromBinary = "flashrom"
         return True
 
     else:
@@ -197,6 +205,7 @@ def getNess():
                 if which("flashrom"):
 
                     print(Fore.GREEN + "\nflashrom has been successfully installed\nproceeding with operations\n" + Style.RESET_ALL)
+                    flashromBinary = "flashrom"
 
                     return True
 
@@ -242,17 +251,17 @@ def flashCoreboot(passModel):
     if passModel == "FW2B":
         print("Flashing coreboot for FW2B")
 
-        os.system(fw2bcoreboot)
+        os.system(flashromBinary + fw2bcoreboot)
 
     elif passModel == "FW4B":
         print("Flashing coreboot for FW4B")
 
-        os.system(fw4bcoreboot)
+        os.system(flashromBinary + fw4bcoreboot)
 
     elif passModel == "FW6x":
         print("Flashing coreboot for FW6A/B/C")
 
-        os.system(fw6coreboot)
+        os.system(flashromBinary + fw6coreboot)
 
     else:
         print(Fore.RED + "Unable to flash coreboot BIOS, system not compatible")
@@ -264,17 +273,17 @@ def flashAMI(passModel):
     if passModel == "FW2B":
         print("\nFlashing AMI for FW2B\n")
 
-        os.system(fw2bami)
+        os.system(flashromBinary + fw2bami)
 
     elif passModel == "FW4B":
         print("\nFlashing AMI for FW4B\n")
 
-        os.system(fw4bami)
+        os.system(flashromBinary + fw4bami)
 
     elif passModel == "FW6x":
         print("\nFlashing AMI for FW6A/B/C\n")
 
-        os.system(fw6ami)
+        os.system(flashromBinary + fw6ami)
 
     else:
         print(Fore.RED + "Unable to flash AMI BIOS, system not compatible" + Style.RESET_ALL)
