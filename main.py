@@ -99,21 +99,21 @@ def chkCpuInfo():
 
     elif "3865U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
-        deviceName = "FW6A"
+        deviceName = "FW6x"
         flashFileCore = fw6RomFile
         flashFileAmi = fw6BinFile
         return True
 
     elif "7100U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
-        deviceName = "FW6B"
+        deviceName = "FW6x"
         flashFileCore = fw6RomFile
         flashFileAmi = fw6BinFile
         return True
 
     elif "7200U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
-        deviceName = "FW6C"
+        deviceName = "FW6x"
         flashFileCore = fw6RomFile
         flashFileAmi = fw6BinFile
         return True
