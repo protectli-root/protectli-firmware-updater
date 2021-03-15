@@ -97,35 +97,35 @@ def chkCpuInfo():
 
         deviceName = "FW6A"
         flashFileCore = fw6RomFile
-        flashFileCore = fw6BinFile
+        flashFileAmi = fw6BinFile
         return True
 
     elif "7100U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         deviceName = "FW6B"
         flashFileCore = fw6RomFile
-        flashFileCore = fw6BinFile
+        flashFileAmi = fw6BinFile
         return True
 
     elif "7200U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         deviceName = "FW6C"
         flashFileCore = fw6RomFile
-        flashFileCore = fw6BinFile
+        flashFileAmi = fw6BinFile
         return True
 
     elif "8525" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         print(Fore.YELLOW + "\nPlatform is not compatible at the moment\n" + Style.RESET_ALL)
         flashFileCore = "Not selected"
-        flashFileCore = "Not selected"
+        flashFileAmi = "Not selected"
         return False
 
     elif "8550" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         print(Fore.YELLOW + "\nFW6E: Platform is not compatible at the moment\n" + Style.RESET_ALL)
         flashFileCore = "Not selected"
-        flashFileCore = "Not selected"
+        flashFileAmi = "Not selected"
         return False
 
     else:
