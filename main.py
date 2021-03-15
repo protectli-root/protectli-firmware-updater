@@ -68,10 +68,12 @@ def checkDmi():
     global menFact
     if "Protectli" in dmiCheck:
         menFact = "Protectli"
+
         return True
 
     else:
         menFact = "Unknown"
+        print("Fail at DMI")
         return False
 
 
@@ -145,7 +147,11 @@ def cpuInfoPass():
 def ubuVersion():
     global ubVersion
 
-    if "20.04" in uVersion:
+    if "20.10" in ubVersion:
+        ubVersion = "20.10"
+        return True
+
+    elif "20.04" in uVersion:
         ubVersion = "20.04"
         return True
 
@@ -155,6 +161,7 @@ def ubuVersion():
 
     else:
         ubVersion = "Unknown"
+        print("Fail at U1")
         return False
 
 
@@ -168,6 +175,7 @@ def checkLegacy():
 
     else:
         biosVers = "UEFI"
+        print("Fail at bio")
         return False
 
 
@@ -306,7 +314,7 @@ def fullSysChk():
         return True
 
     else:
-
+        print("Fail at Full system check")
         return False
 
 
