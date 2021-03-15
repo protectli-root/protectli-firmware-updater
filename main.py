@@ -145,21 +145,20 @@ def cpuInfoPass():
 def ubuVersion():
     global uVersion
 
-    if "20.10" in uVersion:
+    if "20.10" in ubVersion:
         uVersion = "20.10"
         return True
 
-    elif "20.04" in uVersion:
+    elif "20.04" in ubVersion:
         uVersion = "20.04"
         return True
 
-    elif "18.04" in uVersion:
+    elif "18.04" in ubVersion:
         uVersion = "18.04"
         return True
 
     else:
         uVersion = "Unknown"
-        print("Fail at U1")
         return False
 
 
