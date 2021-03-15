@@ -69,10 +69,12 @@ def checkDmi():
     global menFact
     if "Protectli" in dmiCheck:
         menFact = "Protectli"
+
         return True
 
     else:
         menFact = "Unknown"
+        print("Fail at DMI")
         return False
 
 
@@ -100,35 +102,35 @@ def chkCpuInfo():
 
         deviceName = "FW6A"
         flashFileCore = fw6RomFile
-        flashFileCore = fw6BinFile
+        flashFileAmi = fw6BinFile
         return True
 
     elif "7100U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         deviceName = "FW6B"
         flashFileCore = fw6RomFile
-        flashFileCore = fw6BinFile
+        flashFileAmi = fw6BinFile
         return True
 
     elif "7200U" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         deviceName = "FW6C"
         flashFileCore = fw6RomFile
-        flashFileCore = fw6BinFile
+        flashFileAmi = fw6BinFile
         return True
 
     elif "8525" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         print(Fore.YELLOW + "\nPlatform is not compatible at the moment\n" + Style.RESET_ALL)
         flashFileCore = "Not selected"
-        flashFileCore = "Not selected"
+        flashFileAmi = "Not selected"
         return False
 
     elif "8550" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         print(Fore.YELLOW + "\nFW6E: Platform is not compatible at the moment\n" + Style.RESET_ALL)
         flashFileCore = "Not selected"
-        flashFileCore = "Not selected"
+        flashFileAmi = "Not selected"
         return False
 
     else:
@@ -144,22 +146,23 @@ def cpuInfoPass():
 
 # -----checks ubuntu version with lsb-release file-----
 def ubuVersion():
-    global ubVersion
+    global uVersion
 
     if "20.10" in uVersion:
-        ubVersion = "20.04"
+        uVersion = "20.10"
         return True
 
     elif "20.04" in uVersion:
-        ubVersion = "20.04"
+        uVersion = "20.04"
         return True
 
     elif "18.04" in uVersion:
-        ubVersion = "18.04"
+        uVersion = "18.04"
         return True
 
     else:
-        ubVersion = "Unknown"
+        uVersion = "Unknown"
+        print("Fail at U1")
         return False
 
 
@@ -173,6 +176,7 @@ def checkLegacy():
 
     else:
         biosVers = "UEFI"
+        print("Fail at bio")
         return False
 
 
@@ -319,7 +323,7 @@ def fullSysChk():
         return True
 
     else:
-
+        print("Fail at Full system check")
         return False
 
 
