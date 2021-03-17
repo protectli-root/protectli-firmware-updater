@@ -318,7 +318,6 @@ def fullSysChk():
         return True
 
     else:
-        print("Fail at Full system check")
         return False
 
 
