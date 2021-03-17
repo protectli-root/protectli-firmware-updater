@@ -28,3 +28,6 @@
     -Run the script
 
         sudo python3 main.py
+
+    -After the script has started to run, you will be prompted to enter a password.
+    -Use the password for ubuntu user account
