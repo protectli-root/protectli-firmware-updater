@@ -30,7 +30,7 @@ if rootCheck != 0:
     exit()
 
 # -----flashrom commands-----
-fw2bRomFile = "images/protectli_fw2b_v4.12.0.3.rom"
+fw2bRomFile = "images/protectli_fw2b_v4.9.0.1.rom"
 fw4bRomFile = "images/protectli_fw4b_v4.12.0.3.rom"
 fw6RomFile = "images/protectli_fw6_v4.12.0.3.rom"
 
