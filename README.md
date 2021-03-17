@@ -1,5 +1,13 @@
 # BIOS Flash
 
+## Quick Install and Run
+
+Only use this technique if you're working on a fresh system that you're not afraid to pipe wget to shell. <L:https://www.seancassidy.me/dont-pipe-to-your-shell.html>
+
+```
+wget -O - https://gitlab.protectli.com/protectli/bios-flash/-/raw/master/main.sh | sudo sh
+```
+
     -Ensure you are connected to the local network and have internet access
     -Use wget to obtain the zip file 
 
