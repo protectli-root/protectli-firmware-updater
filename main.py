@@ -5,7 +5,7 @@ import sys
 import subprocess
 from shutil import which
 
-from colorama import Fore, Style
+#from colorama import Fore, Style
 
 # -----global var----
 
@@ -24,9 +24,9 @@ over_ride_tester = True
 rootCheck = os.geteuid()
 
 if rootCheck != 0:
-    print(Fore.RED + "\nNeed to be run as root user" + Style.RESET_ALL)
-    print(Fore.YELLOW + "Please run: sudo python3 main.py" + Style.RESET_ALL)
-    print(Fore.RED + "\nProgram now exiting\n" + Style.RESET_ALL)
+    print("\nNeed to be run as root user")
+    print("Please run: sudo python3 main.py")
+    print("\nProgram now exiting\n")
     exit()
 
 # -----flashrom commands-----
@@ -119,14 +119,14 @@ def chkCpuInfo():
 
     elif "8525" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
-        print(Fore.YELLOW + "\nPlatform is not compatible at the moment\n" + Style.RESET_ALL)
+        print("\nPlatform is not compatible at the moment\n")
         flashFileCore = "Not selected"
         flashFileAmi = "Not selected"
         return False
 
     elif "8550" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
-        print(Fore.YELLOW + "\nFW6E: Platform is not compatible at the moment\n" + Style.RESET_ALL)
+        print("\nFW6E: Platform is not compatible at the moment\n")
         flashFileCore = "Not selected"
         flashFileAmi = "Not selected"
         return False
@@ -180,13 +180,13 @@ def getNess():
     global flashromBinary;
     if(os.path.exists("vendor/flashrom")):
 
-        print(Fore.GREEN + "Using bundled Flashrom binary\n" + Style.RESET_ALL)
+        print("Using bundled Flashrom binary\n")
         flashromBinary = "vendor/flashrom"
         return True
 
     elif which("flashrom"):
 
-        print(Fore.GREEN + "Flashrom has been found\n" + Style.RESET_ALL)
+        print("Flashrom has been found\n")
         flashromBinary = "flashrom"
         return True
 
@@ -202,21 +202,21 @@ def getNess():
 
             if select_to_install == "Y":
 
-                print(Fore.GREEN + "\nProceeding with installing flashrom, please wait\n" + Style.RESET_ALL)
+                print("\nProceeding with installing flashrom, please wait\n")
                 os.system("apt-get -y install flashrom")
 
                 if which("flashrom"):
 
-                    print(Fore.GREEN + "\nflashrom has been successfully installed\nproceeding with operations\n" + Style.RESET_ALL)
+                    print( "\nflashrom has been successfully installed\nproceeding with operations\n")
                     flashromBinary = "flashrom"
 
                     return True
 
                 else:
 
-                    print(Fore.RED + "\nflashrom has failed to install")
+                    print("\nflashrom has failed to install")
                     print("Repository might need to be updated")
-                    print("Would you like to update a repository and try to install flashrom [Y/N]" + Style.RESET_ALL)
+                    print("Would you like to update a repository and try to install flashrom [Y/N]")
                     user_input = "x"
 
                     while not (user_input == "Y" or user_input == "N"):
@@ -228,11 +228,11 @@ def getNess():
                             os.system("apt-get -y install flashrom")
 
                             if which("flashrom"):
-                                print(Fore.GREEN + "\nFlashrom has been installed" + Style.RESET_ALL)
+                                print("\nFlashrom has been installed")
                                 return True
 
                             else:
-                                print(Fore.RED + "Flashrom has fialed to install, Error E30P" + Style.RESET_ALL)
+                                print("Flashrom has fialed to install, Error E30P")
                                 return False
 
                         else:
@@ -241,7 +241,7 @@ def getNess():
 
             elif select_to_install == "N":
 
-                print(Fore.RED + "\nflashrom is required to continue, program will now exit" + Style.RESET_ALL)
+                print("\nflashrom is required to continue, program will now exit")
 
                 exit()
 
@@ -267,7 +267,7 @@ def flashCoreboot(passModel):
         os.system(flashromBinary + fw6coreboot)
 
     else:
-        print(Fore.RED + "Unable to flash coreboot BIOS, system not compatible")
+        print("Unable to flash coreboot BIOS, system not compatible")
 
 
 # -----AMI flash------
@@ -289,7 +289,7 @@ def flashAMI(passModel):
         os.system(flashromBinary + fw6ami)
 
     else:
-        print(Fore.RED + "Unable to flash AMI BIOS, system not compatible" + Style.RESET_ALL)
+        print("Unable to flash AMI BIOS, system not compatible")
 
 
 # -----Coreboot or AMI choice
@@ -333,8 +333,8 @@ def displayInfo():
     print("Ubuntu version: " + ubVersion)
     print("OS: " + biosVers)
 
-    print(Fore.YELLOW + "\nFlash file used for coreboot: " + flashFileCore)
-    print("Flash file used for AMI: " + flashFileAmi + Style.RESET_ALL)
+    print("\nFlash file used for coreboot: " + flashFileCore)
+    print("Flash file used for AMI: " + flashFileAmi)
     print("\n")
 
 
@@ -358,22 +358,22 @@ try:
             displayInfo()
             flasherChoice()
 
-            print(Fore.YELLOW + "\n\n-Make sure the flash has been VERIFIED")
+            print("\n\n-Make sure the flash has been VERIFIED")
             print("-If the flash has not been VERIFIED please run the script again")
-            print("-If the flash is VERIFIED please restart the device" + Style.RESET_ALL)
+            print("-If the flash is VERIFIED please restart the device")
 
         else:
-            print(Fore.RED + "Installing Flashrom was not successful")
+            print("Installing Flashrom was not successful")
 
     else:
 
-        print(Fore.RED + "\nPlatform is not compatible with flashing the specific BIOS\n" + Style.RESET_ALL)
+        print("\nPlatform is not compatible with flashing the specific BIOS\n")
 
 
 
 except:
-    print(Fore.RED + "\nError has occurred")
-    print("Exiting program" + Style.RESET_ALL)
+    print("\nError has occurred")
+    print("Exiting program")
 
     exit()
 #
