@@ -9,4 +9,3 @@ wget -q https://gitlab.protectli.com/protectli/bios-flash/-/archive/master/bios-
 unzip -q bios-flash-master.zip
 cd bios-flash-master/
 ./main.py
-exit
