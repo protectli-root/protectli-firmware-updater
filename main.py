@@ -117,7 +117,7 @@ def chkCpuInfo():
         flashFileAmi = fw6BinFile
         return True
 
-    elif "8525" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
+    elif "8250" in cpuInfo and "FW6" in dmiCheck and "00:e0:67" in macCheck:
 
         print("\nPlatform is not compatible at the moment\n")
         flashFileCore = "Not selected"
@@ -326,7 +326,7 @@ def fullSysChk():
 def displayInfo():
     print("\t----FlashLi----\n")
 
-    print("\t--Pawn: 2A3--\n")
+    print("\t--Version 00.00.01--\n")
 
     print("Manufacture: " + menFact)
     print("Device: " + deviceName)
