@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+"""
+Recent changes, from 00.00.01 to 00.00.02
+menu display OS to BIOS Mode
+increment script version 
+"""
+
 import os
 import sys
 import subprocess
@@ -326,12 +332,12 @@ def fullSysChk():
 def displayInfo():
     print("\t----FlashLi----\n")
 
-    print("\t--Version 00.00.01--\n")
+    print("\t--Version 00.00.02--\n")
 
     print("Manufacture: " + menFact)
     print("Device: " + deviceName)
-    print("Ubuntu version: " + ubVersion)
-    print("OS: " + biosVers)
+    print("Ubuntu Version: " + ubVersion)
+    print("BIOS Mode: " + biosVers)
 
     print("\nFlash file used for coreboot: " + flashFileCore)
     print("Flash file used for AMI: " + flashFileAmi)
