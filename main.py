@@ -3,7 +3,7 @@
 """
 Recent changes, from 00.00.01 to 00.00.02
 menu display OS to BIOS Mode
-increment script version 
+increment script version
 """
 
 import os
