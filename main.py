@@ -141,7 +141,9 @@ def is_protectli_device():
         Returns True if this is a Protectli device.
     """
     syscall = subprocess.check_output(['/usr/sbin/dmidecode'], shell=False)
-    return 'Protectli' in str(syscall)
+    match1 = 'Protectli' in str(syscall)
+    match2 = 'YANLING' in str(syscall)
+    return match1 or match2
 
 def get_cpu():
     return subprocess.check_output('cat /proc/cpuinfo | grep -i "^model name" | uniq', shell=True).decode('utf-8')
