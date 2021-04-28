@@ -196,7 +196,7 @@ def do_flash(model, bios):
         Void
     """
     filePath = get_image_path(model, bios)
-    os.system('flashrom -p internal -w ' + filePath + ' --ifd -i bios')
+    os.system('vendor/flashrom -p internal -w ' + filePath + ' --ifd -i bios')
 
 
 def main():
@@ -222,7 +222,6 @@ def main():
 
     global configurations
     availableOptions = configurations[device]['bios']
-    print(availableOptions)
 
     selection = ''
     while selection not in map(lambda a: a['name'], availableOptions):
