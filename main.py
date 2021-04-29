@@ -1,244 +1,183 @@
 #!/usr/bin/env python3
 
+"""Protectli device BIOS flasher.
+
+This tool will flash new BIOS onto the machine that runs this script.
+"""
+
 import os
-import sys
-import subprocess
+import re
+import subprocess  # noqa:S404
 
-debugMode = ''
+from configurations import CONFIGURATIONS
 
-if os.geteuid() != 0:
-    print("\nNeed to be run as root user")
-    print("Please run: sudo python3 main.py")
-    print("\nProgram now exiting\n")
+configurations = CONFIGURATIONS
+
+VERSION = '1.1.0'
+
+# Set a debug hardware here.
+DEBUGMODE = ''
+
+if os.geteuid() != 0 and not DEBUGMODE:
+    print('Need to be run as root user')
+    print('Please run: sudo ./main.py')
+    print('Program now exiting.')
     exit()
 
-configurations = {
-    'fw2': {
-        'cpu': 'J1800',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': '',
-            },
-        ],
-    },
-    'fw2b': {
-        'cpu': 'J3060',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': 'FW2_BSW4L009.bin',
-            },
-            {
-                'name': 'coreboot',
-                'file': 'protectli_fw2b_v4.9.0.1.rom',
-            },
-        ],
-    },
-    'fw1': {
-        'cpu': 'J1900',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': 'FW2_BSW4L009.bin',
-            },
-        ],
-    },
-    'fw4a': {
-        'cpu': 'E3845',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': '',
-            },
-        ],
-    },
-    'fw4b': {
-        'cpu': 'J3160',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': 'FW4_BSW4L009.bin',
-            },
-            {
-                'name': 'coreboot',
-                'file': 'protectli_fw4b_v4.12.0.3.rom'
-            },
-        ],
-    },
-    'fw6a': {
-        'cpu': '3865U',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': 'FW6_KBU6LA09.bin',
-            },
-            {
-                'name': 'coreboot',
-                'file': 'protectli_fw6_v4.12.0.3.rom'
-            },
-        ],
-    },
-    'fw6b': {
-        'cpu': '7100U',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': 'FW6_KBU6LA09.bin',
-            },
-            {
-                'name': 'coreboot',
-                'file': 'protectli_fw6_v4.12.0.3.rom'
-            },
-        ],
-    },
-    'fw6c': {
-        'cpu': '7200U',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': 'FW6_KBU6LA09.bin',
-            },
-            {
-                'name': 'coreboot',
-                'file': 'protectli_fw6_v4.12.0.3.rom'
-            },
-        ],
-    },
-    'fw6d': {
-        'cpu': '8250U',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': 'FW6_KBU6LA09.bin',
-            },
-        ],
-    },
-    'fw6e': {
-        'cpu': '8550U',
-        'bios': [
-            {
-                'name': 'ami',
-                'file': 'FW6_KBU6LA09.bin',
-            },
-        ],
-    },
-    'vp2410': {
-        'cpu': 'J4125',
-        'bios': [
-            {
-                'name': 'amitest',
-                'file': 'VP2410_GLK34L250.bin',
-            },
-        ],
-    },
-}
 
-def is_protectli_device():
+def get_version() -> str:
+    """Functional way to get global VERSION.
+
+    Returns:
+        str: Value of global VERSION
+    """
+    global VERSION
+    return VERSION
+
+
+def get_terminal_width() -> int:
+    """Get the width of the current terminal in characters.
+
+    Returns:
+        int: Width in characters
+    """
+    return os.get_terminal_size().columns
+
+
+def is_protectli_device() -> bool:
     """Detect if this is a Protectli device.
 
     Returns:
-        Returns True if this is a Protectli device.
+        bool: True if this is a Protectli device
     """
-    syscall = subprocess.check_output(['/usr/sbin/dmidecode'], shell=False)
+    cmd = '/usr/sbin/dmidecode'
+    syscall = subprocess.check_output([cmd], shell=False).decode('utf-8')  # noqa:S603
     match1 = 'Protectli' in str(syscall)
     match2 = 'YANLING' in str(syscall)
-    return match1 or match2
-
-def get_cpu():
-    return subprocess.check_output('cat /proc/cpuinfo | grep -i "^model name" | uniq', shell=True).decode('utf-8')
+    global DEBUGMODE
+    return match1 or match2 or DEBUGMODE
 
 
-def get_protectli_device():
+def get_cpu() -> str:
+    """Get the CPU model.
+
+    Returns:
+        str: CPU identifier
+    """
+    cpu_data = subprocess.check_output(['/bin/cat', '/proc/cpuinfo']).decode('utf-8')  # noqa:S603
+    return re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
+
+
+def get_protectli_device() -> str:
     """Get the model name of this Protectli device.
 
     Returns:
-        Returns Protectli device model name as a string.
+        str: Protectli device model name
     """
     global configurations
-    global debugMode
-    if debugMode:
-        return debugMode
+    global DEBUGMODE
     cpu = get_cpu()
-    for k, v in configurations.items():
-        if v['cpu'] in cpu:
-            return k
+    if DEBUGMODE:
+        return DEBUGMODE
+    for device, props in configurations.items():
+        if props['cpu'] in cpu:
+            return device
     return 'Unknown model'
 
 
-def isUEFI():
-    """Check if currently running in EFI mode.
+def get_bios_mode() -> str:
+    """Check if currently running in EFI or BIOS mode.
 
     Returns:
-        Boolean
+        str: BIOS mode
     """
-    pathCheck = "/sys/firmware/efi"
-    return os.path.isdir(pathCheck)
+    return 'EFI' if os.path.isdir('/sys/firmware/efi') else 'BIOS'
 
 
-def get_image_path(model, bios):
-    """Get path to BIOS image
+def get_image_path(model: str, requested_bios: str) -> str:
+    """Get path to BIOS image.
+
+    Args:
+        model: Protectli device model name
+        requested_bios: The BIOS to be located
 
     Returns:
-        Path to the BIOS file to flash as string
+        str: Path to the BIOS file requested
     """
     global configurations
-    for v in configurations[model]['bios']:
-        if v['name'] == bios:
-            return 'images/' + v['file']
+    for bios in configurations[model]['bios']:
+        if bios['vendor'] == requested_bios:
+            return 'images/{0}'.format(bios['file'])
 
 
-def do_flash(model, bios):
-    """Perform BIOS flash
-    Parameters:
+def do_flash(model: str, bios: str):
+    """Perform the BIOS flash.
+
+    Args:
+        model: Protectli device model name
+        bios: The BIOS to be flashed
+    """
+    global DEBUGMODE
+    if DEBUGMODE:
+        print('Not actually flashing, script is in debug mode.')
+        return
+    file_path = get_image_path(model, bios)
+    subprocess.run('vendor/flashrom -p internal -w {0} --ifd -i bios'.format(file_path))  # noqa:S603
+
+
+def print_supported_products():
+    """Get list of devices from Configurations and prints to STDOUT."""
+    global configurations
+    devices = list(map(lambda dev: dev.upper(), list(configurations)))
+    devices.sort()
+    print(*devices, sep='\n')
+
+
+def get_user_selection(device: str):
+    """Get BIOS selection from user based on available images for device.
+
+    Args:
+        device: Which device to ask the user about
 
     Returns:
-        Void
+        str: Vendor name
     """
-    filePath = get_image_path(model, bios)
-    os.system('vendor/flashrom -p internal -w ' + filePath + ' --ifd -i bios')
+    global configurations
+    available_options = configurations[device]['bios']
+    selection = ''
+    while selection not in map(lambda option: option['vendor'], available_options):
+        number = 1
+        for available_option in available_options:
+            print('{0}: {1}'.format(str(number), available_option['vendor']))
+            number += 1
+        user_input = int(input())
+        if (0 < user_input <= len(available_options)):
+            return available_options[user_input - 1]['vendor']
 
 
-def main():
-    """Main
-
-    Returns:
-        Void
-    """
+def main():  # noqa:WPS213
+    """Main program."""
     device = get_protectli_device()
-    os.system('clear')
-    print("\t----FlashLi----\n")
-    print("\t--Version 0.1.01--\n")
+    os.system('/bin/clear')  # noqa:S607,S605
+    print('FlashLi'.center(get_terminal_width(), '='))
+    print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
 
-
-    print("Device: " + device)
+    print('Device: {0}'.format(device))
     if not is_protectli_device():
-        print("Unsupported device.")
+        print('Sorry, this is an unsupported device.')
+        print('This tool is used to flash BIOS onto the following Protectli products:')
+        print_supported_products()
         quit()
 
-    print("BIOS Mode: " + 'EFI' if isUEFI() else 'BIOS')
-    print("\n")
-    print("Available BIOS:")
+    print('BIOS Mode: {0}'.format(get_bios_mode()))
+    print('Available BIOS:')
 
-    global configurations
-    availableOptions = configurations[device]['bios']
-
-    selection = ''
-    while selection not in map(lambda a: a['name'], availableOptions):
-        i = 1
-        for v in availableOptions:
-            print(str(i) + ': ' + v['name'])
-            i += 1
-        userInput = int(input())
-        if (userInput > 0 and userInput <= len(availableOptions)):
-            selection = availableOptions[userInput - 1]['name']
-            continue
+    selection = get_user_selection()
 
     do_flash(device, selection)
-    print("\n\n-Make sure the flash has been VERIFIED")
-    print("-If the flash has not been VERIFIED please run the script again")
-    print("-If the flash is VERIFIED please restart the device")
+    print('Make sure the flash has been VERIFIED')
+    print('If the flash has not been VERIFIED please run the script again')
+    print('-If the flash is VERIFIED please restart the device')
 
 
 main()
-#
