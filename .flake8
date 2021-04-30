@@ -3,7 +3,7 @@
 #  - flake8
 #  - wemake-python-styleguide
 # E501: line too long (82 > 79 characters)
-# WPS421: Found wrong function call: global
+# WPS420: Found wrong function call: global
 # WPS421: Found wrong function call: exit
 ignore = E501, WPS420, WPS421
 exclude =
@@ -11,3 +11,5 @@ exclude =
     __pycache__
 max-complexity = 6
 docstring-convention = google
+per-file-ignores =
+    configurations.py: WPS226

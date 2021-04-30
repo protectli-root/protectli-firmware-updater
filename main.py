@@ -1,28 +1,24 @@
 #!/usr/bin/env python3
-
 """Protectli device BIOS flasher.
 
 This tool will flash new BIOS onto the machine that runs this script.
 """
 
 import os
-import re
 import subprocess  # noqa:S404
+import sys
 
-from configurations import CONFIGURATIONS
-
-configurations = CONFIGURATIONS
-
-VERSION = '1.1.0'
+from flashli import configurations, hardware
 
 # Set a debug hardware here.
-DEBUGMODE = ''
+DEBUGMODE = 'FW2B'
+CONFIGURATIONS = configurations.CONFIGURATIONS
+VERSION = '1.1.0'
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
     print('Please run: sudo ./main.py')
-    print('Program now exiting.')
-    exit()
+    sys.exit()
 
 
 def get_version() -> str:
@@ -44,56 +40,6 @@ def get_terminal_width() -> int:
     return os.get_terminal_size().columns
 
 
-def is_protectli_device() -> bool:
-    """Detect if this is a Protectli device.
-
-    Returns:
-        bool: True if this is a Protectli device
-    """
-    cmd = '/usr/sbin/dmidecode'
-    syscall = subprocess.check_output([cmd], shell=False).decode('utf-8')  # noqa:S603
-    match1 = 'Protectli' in str(syscall)
-    match2 = 'YANLING' in str(syscall)
-    global DEBUGMODE
-    return match1 or match2 or DEBUGMODE
-
-
-def get_cpu() -> str:
-    """Get the CPU model.
-
-    Returns:
-        str: CPU identifier
-    """
-    cpu_data = subprocess.check_output(['/bin/cat', '/proc/cpuinfo']).decode('utf-8')  # noqa:S603
-    return re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
-
-
-def get_protectli_device() -> str:
-    """Get the model name of this Protectli device.
-
-    Returns:
-        str: Protectli device model name
-    """
-    global configurations
-    global DEBUGMODE
-    cpu = get_cpu()
-    if DEBUGMODE:
-        return DEBUGMODE
-    for device, props in configurations.items():
-        if props['cpu'] in cpu:
-            return device
-    return 'Unknown model'
-
-
-def get_bios_mode() -> str:
-    """Check if currently running in EFI or BIOS mode.
-
-    Returns:
-        str: BIOS mode
-    """
-    return 'EFI' if os.path.isdir('/sys/firmware/efi') else 'BIOS'
-
-
 def get_image_path(model: str, requested_bios: str) -> str:
     """Get path to BIOS image.
 
@@ -104,8 +50,8 @@ def get_image_path(model: str, requested_bios: str) -> str:
     Returns:
         str: Path to the BIOS file requested
     """
-    global configurations
-    for bios in configurations[model]['bios']:
+    global CONFIGURATIONS
+    for bios in CONFIGURATIONS[model]['bios']:
         if bios['vendor'] == requested_bios:
             return 'images/{0}'.format(bios['file'])
 
@@ -127,13 +73,13 @@ def do_flash(model: str, bios: str):
 
 def print_supported_products():
     """Get list of devices from Configurations and prints to STDOUT."""
-    global configurations
-    devices = list(map(lambda dev: dev.upper(), list(configurations)))
+    global CONFIGURATIONS
+    devices = list(map(lambda dev: dev.upper(), list(CONFIGURATIONS)))
     devices.sort()
     print(*devices, sep='\n')
 
 
-def get_user_selection(device: str):
+def get_user_selection(device: str) -> str:
     """Get BIOS selection from user based on available images for device.
 
     Args:
@@ -142,8 +88,8 @@ def get_user_selection(device: str):
     Returns:
         str: Vendor name
     """
-    global configurations
-    available_options = configurations[device]['bios']
+    global CONFIGURATIONS
+    available_options = CONFIGURATIONS[device]['bios']
     selection = ''
     while selection not in map(lambda option: option['vendor'], available_options):
         number = 1
@@ -157,19 +103,19 @@ def get_user_selection(device: str):
 
 def main():  # noqa:WPS213
     """Main program."""
-    device = get_protectli_device()
+    device = hardware.get_protectli_device()
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
     print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
 
     print('Device: {0}'.format(device))
-    if not is_protectli_device():
+    if not hardware.is_protectli_device():
         print('Sorry, this is an unsupported device.')
         print('This tool is used to flash BIOS onto the following Protectli products:')
         print_supported_products()
-        quit()
+        sys.exit()
 
-    print('BIOS Mode: {0}'.format(get_bios_mode()))
+    print('BIOS Mode: {0}'.format(hardware.get_bios_mode()))
     print('Available BIOS:')
 
     selection = get_user_selection()

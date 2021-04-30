@@ -1,3 +1,4 @@
 .*
 !.gitignore
+!.flake8
 __pycache__

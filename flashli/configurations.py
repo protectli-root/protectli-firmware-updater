@@ -1,4 +1,8 @@
-CONFIGURATIONS = {
+"""Hardware configuration dict."""
+
+import types
+
+CONFIGURATIONS = types.MappingProxyType({
     'fw2': {
         'cpu': 'J1800',
         'bios': [
@@ -118,4 +122,4 @@ CONFIGURATIONS = {
             },
         ],
     },
-}
+})
