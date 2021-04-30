@@ -11,7 +11,7 @@ import sys
 from flashli import configurations, hardware
 
 # Set a debug hardware here.
-DEBUGMODE = 'FW2B'
+DEBUGMODE = ''
 CONFIGURATIONS = configurations.CONFIGURATIONS
 VERSION = '1.1.0'
 
