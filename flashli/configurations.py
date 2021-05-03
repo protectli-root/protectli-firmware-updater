@@ -8,7 +8,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': '',
+                'file': 'FW2_BTL4A012.bin',
             },
         ],
     },
@@ -30,7 +30,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW2_BSW4L009.bin',
+                'file': 'FW1_BTL4A012.bin',
             },
         ],
     },
@@ -39,7 +39,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': '',
+                'file': 'FW4A_E38L4A12.bin',
             },
         ],
     },
@@ -52,7 +52,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw4b_v4.12.0.3.rom',
+                'file': 'protectli_fw4b_v4.12.0.5.rom',
             },
         ],
     },
