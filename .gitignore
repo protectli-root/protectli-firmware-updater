@@ -2,3 +2,6 @@
 !.gitignore
 !.flake8
 __pycache__/
+build/
+dist/
+share/
