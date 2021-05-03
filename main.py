@@ -7,6 +7,7 @@ This tool will flash new BIOS onto the machine that runs this script.
 import os
 import subprocess  # noqa:S404
 import sys
+import textwrap
 
 from flashli import configurations, hardware
 
@@ -116,6 +117,13 @@ def main():  # noqa:WPS213
         sys.exit()
 
     print('BIOS Mode: {0}'.format(hardware.get_bios_mode()))
+    if hardware.get_bios_mode() == 'EFI':
+        print(textwrap.fill(
+            'This tool must be run in Legacy BIOS mode, not EFI. If you are using this tool to update an existing EFI system, you may experience issues booting into your operating system after flashing a new BIOS. If you are aware of the risks and wish to proceed with flashing a new BIOS image, please reboot your device and configure your current BIOS to boot into Legacy Mode.',
+            get_terminal_width(),
+        ))
+        sys.exit()
+
     print('Available BIOS:')
 
     selection = get_user_selection()
