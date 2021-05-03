@@ -12,7 +12,7 @@ import textwrap
 from flashli import configurations, hardware
 
 # Set a debug hardware here.
-DEBUGMODE = 'fw2b'
+DEBUGMODE = ''
 CONFIGURATIONS = configurations.CONFIGURATIONS
 VERSION = '1.1.0'
 
