@@ -76,7 +76,7 @@ def do_flash(model: str, bios: str) -> int:
         print('Not actually flashing, script is in debug mode.')
         return 0
     file_path = get_image_path(model, bios)
-    completed_process = subprocess.run('vendor/flashrom -p internal -w {0} --ifd -i bios'.format(file_path))  # noqa:S603
+    completed_process = subprocess.run('vendor/flashrom -p internal -w {0} --ifd -i bios'.format(file_path), shell=True)  # noqa:S602,S603
 
     return completed_process.returncode
 
