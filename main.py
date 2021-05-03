@@ -57,19 +57,28 @@ def get_image_path(model: str, requested_bios: str) -> str:
             return 'images/{0}'.format(bios['file'])
 
 
-def do_flash(model: str, bios: str):
+def do_flash(model: str, bios: str) -> int:
     """Perform the BIOS flash.
 
     Args:
         model: Protectli device model name
         bios: The BIOS to be flashed
+
+    Returns:
+        Returns exit status from flashrom binary:
+            0: Success
+            1: General Failure
+            2: /dev/mem cannot be opened
+            3: mmap() failed
     """
     global DEBUGMODE
     if DEBUGMODE:
         print('Not actually flashing, script is in debug mode.')
-        return
+        return 0
     file_path = get_image_path(model, bios)
-    subprocess.run('vendor/flashrom -p internal -w {0} --ifd -i bios'.format(file_path))  # noqa:S603
+    completed_process = subprocess.run('vendor/flashrom -p internal -w {0} --ifd -i bios'.format(file_path))  # noqa:S603
+
+    return completed_process.returncode
 
 
 def print_supported_products():
@@ -102,22 +111,29 @@ def get_user_selection(device: str) -> str:
             return available_options[user_input - 1]['vendor']
 
 
+def show_debug_info():
+    """Collect debug information and tell user how to submit an issue."""
+    print('TODO: Collect info and display instructions on how to submit a Github issue.')
+
+
 def main():  # noqa:WPS213
     """Main program."""
-    device = hardware.get_protectli_device()
+    global DEBUGMODE
+    device = hardware.get_protectli_device(DEBUGMODE)
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
     print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
 
     print('Device: {0}'.format(device))
-    if not hardware.is_protectli_device():
+    if not hardware.is_protectli_device(DEBUGMODE):
         print('Sorry, this is an unsupported device.')
         print('This tool is used to flash BIOS onto the following Protectli products:')
         print_supported_products()
         sys.exit()
 
-    print('BIOS Mode: {0}'.format(hardware.get_bios_mode()))
-    if hardware.get_bios_mode() == 'EFI':
+    bios_mode = hardware.get_bios_mode(DEBUGMODE)
+    print('BIOS Mode: {0}'.format(bios_mode))
+    if bios_mode == 'EFI':
         print(textwrap.fill(
             'This tool must be run in Legacy BIOS mode, not EFI. If you are using this tool to update an existing EFI system, you may experience issues booting into your operating system after flashing a new BIOS. If you are aware of the risks and wish to proceed with flashing a new BIOS image, please reboot your device and configure your current BIOS to boot into Legacy Mode.',
             get_terminal_width(),
@@ -126,12 +142,16 @@ def main():  # noqa:WPS213
 
     print('Available BIOS:')
 
-    selection = get_user_selection()
+    selection = get_user_selection(device)
 
-    do_flash(device, selection)
-    print('Make sure the flash has been VERIFIED')
-    print('If the flash has not been VERIFIED please run the script again')
-    print('-If the flash is VERIFIED please restart the device')
+    returncode = do_flash(device, selection)
+    if returncode == 0:
+        print('Flash completed and successful.')
+        print('Please restart your device.')
+    else:
+        print('BIOS Flash failed, is this script running with root permissions?')
+        print('Please try again, but if problems persist, please let us know.')
+        show_debug_info()
 
 
 main()
