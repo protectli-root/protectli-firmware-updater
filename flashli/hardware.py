@@ -3,9 +3,14 @@ import os
 import re
 import subprocess  # noqa:S404
 
+from flashli import configurations
 
-def is_protectli_device() -> bool:
+
+def is_protectli_device(debugmode: str) -> bool:
     """Detect if this is a Protectli device.
+
+    Args:
+        debugmode: Passed parameter if we are emulating a device.
 
     Returns:
         bool: True if this is a Protectli device
@@ -14,8 +19,7 @@ def is_protectli_device() -> bool:
     syscall = subprocess.check_output([cmd], shell=False).decode('utf-8')  # noqa:S603
     match1 = 'Protectli' in str(syscall)
     match2 = 'YANLING' in str(syscall)
-    global DEBUGMODE
-    return match1 or match2 or DEBUGMODE
+    return match1 or match2 or debugmode
 
 
 def get_cpu() -> str:
@@ -28,27 +32,37 @@ def get_cpu() -> str:
     return re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
 
 
-def get_protectli_device() -> str:
+def get_protectli_device(debugmode: str) -> str:
     """Get the model name of this Protectli device.
+
+    Args:
+        debugmode: Passed if this is a debug device.
 
     Returns:
         str: Protectli device model name
     """
-    global DEBUGMODE
-    if DEBUGMODE:
-        return DEBUGMODE
+    if debugmode:
+        return debugmode
     cpu = get_cpu()
-    global CONFIGURATIONS
-    for device, props in CONFIGURATIONS.items():
+
+    for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:
             return device
     return 'Unknown model'
 
 
-def get_bios_mode() -> str:
+def get_bios_mode(debugmode: str) -> str:
     """Check if currently running in EFI or BIOS mode.
+
+    Args:
+        debugmode: Passed if this is a debug device.
 
     Returns:
         str: BIOS mode
     """
-    return 'EFI' if os.path.isdir('/sys/firmware/efi') else 'BIOS'
+    if debugmode:
+        return 'BIOS'
+    if os.path.isdir('/sys/firmware/efi'):
+        return 'EFI'
+
+    return 'BIOS'
