@@ -1,41 +1,33 @@
 # BIOS Flash
 
+The ```flashbios``` application will detect Protectli-brand host hardware and flash available BIOS images to the BIOS chip. This tool is useful for swapping between AMI and coreboot BIOS, as well as recovering from a bad BIOS configuration.
+
+## Prerequisites
+
+The flash tool requires the following:
+
+1. Protectli Hardware as the machine running the script.
+1. A Linux-based operating system (use Ubuntu Live USB if you are unsure)
+1. Python3
+
 ## Quick Install and Run
 
-Only use this technique if you're working on a fresh system that you're not afraid to pipe wget to shell. <L:https://www.seancassidy.me/dont-pipe-to-your-shell.html>
+Simply clone this repo and run flashbios. Or, check out a release and download it directly.
+
+To clone and run:
 
 ```
-wget -O - https://gitlab.protectli.com/protectli/bios-flash/-/raw/master/main.sh | sudo sh
+git clone https://github.com/protectli/flashli.git
+cd flashli
+./flashbios
 ```
 
-    -Ensure you are connected to the local network and have internet access
-    -Use wget to obtain the zip file 
+To obtain a binary, visit the Releases page and select the download you want. The downloaded ZIP (or otherwise compressed file) should be extracted to the host machine however you please (such as by USB thumbdrive). Extract the contents and run ```./flashbios``` from the CLI.
 
-        wget https://gitlab.protectli.com/protectli/bios-flash/-/archive/master/bios-flash-master.zip
+## Developers
 
-    -Make sure the zip file is in your working directory "bios-flash-master.zip"
+To create distributable packages, simply run ```make```. ```make clean``` is also supported for between builds.
 
-        ls -la
+### Makefile
 
-    -Unzip the "bios-flash-master.zip"
-
-        unzip bios-flash-master.zip
-
-    -Verify that the zip file has unzipped and there is a "bios-flash-master" folder
-
-        ls -la
-
-    -Change into the "bios-flash-master" directory
-
-        cd bios-flash-master
-
-    -Verify you are in the bios-flash-master folder
-
-        ls -la
-
-    -Run the script
-
-        sudo python3 main.py
-
-    -After the script has started to run, you will be prompted to enter a password.
-    -Use the password for ubuntu user account
+```make``` will simply bundle the required resources into a .tar.gz for easy distribution.
