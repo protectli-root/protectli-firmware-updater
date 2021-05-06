@@ -100,17 +100,28 @@ def get_user_selection(device: str) -> str:
     """
     global CONFIGURATIONS
     available_options = CONFIGURATIONS[device]['bios']
-    selection = ''
-    while selection not in map(lambda option: option['vendor'], available_options):
+    while True:
         number = 1
         for available_option in available_options:
             vendor = available_option['vendor']
             filename = available_option['file']
-            print('{0}: {1} ({2})'.format(str(number), vendor, filename))
+            print('[{0}]: {1} ({2})'.format(str(number), vendor, filename))
             number += 1
-        user_input = int(input())
-        if (0 < user_input <= len(available_options)):
+        print('\nEnter the [#] of an image file, or [0] to quit.')
+        print('> ', end='')
+        try:
+            user_input = int(input())
+        except Exception:
+            user_input = -1
+        if (user_input == 0):
+            print('Exiting now.')
+            sys.exit(1)
+        elif (0 < user_input <= len(available_options)):
             return available_options[user_input - 1]['vendor']
+        else:
+            print('Invalid choice.')
+            print('Available BIOS:')
+            print()
 
 
 def show_debug_info():
@@ -127,8 +138,8 @@ def main():  # noqa:WPS213
     print('FlashLi'.center(get_terminal_width(), '='))
     print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
 
-    print('Device: {0}'.format(device))
-    print('CPU: {0}'.format(cpu))
+    print('Device:    Protectli {0}'.format(device))
+    print('CPU:       {0}'.format(cpu))
     if not hardware.is_protectli_device(DEBUGMODE):
         print('Sorry, this is an unsupported device.')
         print('This tool is used to flash BIOS onto the following Protectli products:')
@@ -144,7 +155,9 @@ def main():  # noqa:WPS213
         ))
         sys.exit()
 
+    print()
     print('Available BIOS:')
+    print()
 
     selection = get_user_selection(device)
 
