@@ -120,11 +120,13 @@ def main():  # noqa:WPS213
     """Main program."""
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE)
+    cpu = hardware.get_cpu()
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
     print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
 
     print('Device: {0}'.format(device))
+    print('CPU: {0}'.format(cpu))
     if not hardware.is_protectli_device(DEBUGMODE):
         print('Sorry, this is an unsupported device.')
         print('This tool is used to flash BIOS onto the following Protectli products:')
