@@ -104,7 +104,9 @@ def get_user_selection(device: str) -> str:
     while selection not in map(lambda option: option['vendor'], available_options):
         number = 1
         for available_option in available_options:
-            print('{0}: {1}'.format(str(number), available_option['vendor']))
+            vendor = available_option['vendor']
+            filename = available_option['file']
+            print('{0}: {1} ({2})'.format(str(number), vendor, filename))
             number += 1
         user_input = int(input())
         if (0 < user_input <= len(available_options)):
