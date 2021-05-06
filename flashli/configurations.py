@@ -102,6 +102,10 @@ CONFIGURATIONS = types.MappingProxyType({
                 'vendor': 'ami',
                 'file': 'FW6_KBU6LA09.bin',
             },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_fw6d_DF_1.0.6.rom',
+            },
         ],
     },
     'fw6e': {
