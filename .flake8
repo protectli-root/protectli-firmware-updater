@@ -1,0 +1,15 @@
+[flake8]
+# We use the following PIP packages for linting:
+#  - flake8
+#  - wemake-python-styleguide
+# E501: line too long (82 > 79 characters)
+# WPS420: Found wrong function call: global
+# WPS421: Found wrong function call: exit
+ignore = E501, WPS420, WPS421
+exclude =
+    .git
+    __pycache__
+max-complexity = 6
+docstring-convention = google
+per-file-ignores =
+    configurations.py: WPS226
