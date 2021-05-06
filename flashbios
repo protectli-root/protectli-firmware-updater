@@ -158,4 +158,8 @@ def main():  # noqa:WPS213
         show_debug_info()
 
 
-main()
+try:
+    main()
+except KeyboardInterrupt:
+    print('\n')
+    sys.exit()
