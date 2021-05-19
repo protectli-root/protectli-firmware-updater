@@ -117,7 +117,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw6e_DF_1.0.7.rom'
+                'file': 'protectli_fw6e_DF_1.0.7.rom',
             },
         ],
     },
