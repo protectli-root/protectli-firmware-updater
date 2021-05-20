@@ -13,7 +13,9 @@ from flashli import configurations, hardware
 
 # Set a debug hardware here.
 DEBUGMODE = ''
+CONFIGURATIONS = configurations.CONFIGURATIONS
 VERSION = '1.1.1'
+
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
