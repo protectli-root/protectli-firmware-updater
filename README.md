@@ -12,13 +12,19 @@ The flash tool requires the following:
 
 ## Quick Install and Run
 
-Simply clone this repo and run flashbios. Or, check out a release and download it directly.
-
-To clone and run:
+Download the latest release, uncompress it, and run the flashbios script
 
 ```
-git clone https://github.com/protectli/flashli.git
-cd flashli
+wget https://github.com/protectli-root/protectli-firmware-updater/releases/download/v1.1.0/flashli.tar.gz
+tar -zxvf flashli.tar.gz
+./flashbios
+```
+
+Or clone this repo for the source code and run flashbios. To clone and run:
+
+```
+git clone https://github.com/protectli-root/protectli-firmware-updater.git
+cd protectli-firmware-updater
 ./flashbios
 ```
 

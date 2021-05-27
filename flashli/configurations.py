@@ -125,7 +125,8 @@ CONFIGURATIONS = types.MappingProxyType({
         'cpu': 'J4125',
         'bios': [
             {
-                'vendor': 'amitest',
+                'vendor': 'ami',
+
                 'file': 'VP2410_GLK4L260.bin',
             },
         ],

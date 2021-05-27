@@ -13,9 +13,9 @@ from flashli import configurations, hardware
 
 # Set a debug hardware here.
 DEBUGMODE = ''
-
 CONFIGURATIONS = configurations.CONFIGURATIONS
-VERSION = '1.1.3s'
+
+VERSION = '1.1.3'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
