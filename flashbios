@@ -116,14 +116,12 @@ def get_user_selection(device: str) -> str:
         except Exception:
             user_input = -1
         if (user_input == 0):
-            print('Exiting now.')
-            sys.exit(1)
+            sys.exit('Exiting now.')
         elif (0 < user_input <= len(available_options)):
             return available_options[user_input - 1]['vendor']
         else:
             print('Invalid choice.')
-            print('Available BIOS:')
-            print()
+            print('Available BIOS:\n')
 
 
 def show_debug_info():
@@ -135,7 +133,7 @@ def main():  # noqa:WPS213
     """Main program."""
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE)
-    cpu = hardware.get_cpu()
+    cpu = hardware.get_cpu(DEBUGMODE)
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
     print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
