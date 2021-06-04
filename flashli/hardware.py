@@ -22,13 +22,24 @@ def is_protectli_device(debugmode: str) -> bool:
     return match1 or match2 or debugmode
 
 
-def get_cpu() -> str:
+def get_cpu(debugmode: str) -> str:
     """Get the CPU model.
+
+    Args:
+        debugmode: Passed if this is a debug device.
+
+    Raises:
+        SystemExit: If no CPU info is found.
 
     Returns:
         str: CPU identifier
     """
-    cpu_data = subprocess.check_output(['/bin/cat', '/proc/cpuinfo']).decode('utf-8')  # noqa:S603
+    cpu_data = ''
+    try:
+        cpu_data = subprocess.check_output(['/bin/cat', '/proc/cpuinfo'], stderr=subprocess.DEVNULL).decode('utf-8')  # noqa:S603
+    except subprocess.CalledProcessError as exception:
+        print('No CPU information found... am I running in a VM or chroot?')
+        raise SystemExit('/bin/cat returned error code {0}'.format(exception.returncode))
     return re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
 
 
@@ -43,12 +54,12 @@ def get_protectli_device(debugmode: str) -> str:
     """
     if debugmode:
         return debugmode
-    cpu = get_cpu()
+    cpu = get_cpu(debugmode)
 
     for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:
-            return device
-    return 'Unknown model'
+            return '{0}'.format(device)
+    return 'Unknown device'
 
 
 def get_bios_mode(debugmode: str) -> str:
