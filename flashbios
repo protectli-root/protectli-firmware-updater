@@ -13,9 +13,9 @@ from flashli import configurations, hardware
 
 # Set a debug hardware here.
 DEBUGMODE = ''
-
 CONFIGURATIONS = configurations.CONFIGURATIONS
-VERSION = '1.1.2'
+
+VERSION = '1.1.6'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -74,11 +74,12 @@ def do_flash(model: str, bios: str) -> int:
             3: mmap() failed
     """
     global DEBUGMODE
+    global CONFIGURATIONS
     if DEBUGMODE:
         print('Not actually flashing, script is in debug mode.')
         return 0
     file_path = get_image_path(model, bios)
-    completed_process = subprocess.run('vendor/flashrom -p internal -w {0} --ifd -i bios'.format(file_path), shell=True)  # noqa:S602,S603
+    completed_process = subprocess.run(CONFIGURATIONS[model]['command'].format(file_path), shell=True)  # noqa:S602,S603
 
     return completed_process.returncode
 
@@ -116,14 +117,12 @@ def get_user_selection(device: str) -> str:
         except Exception:
             user_input = -1
         if (user_input == 0):
-            print('Exiting now.')
-            sys.exit(1)
+            sys.exit('Exiting now.')
         elif (0 < user_input <= len(available_options)):
             return available_options[user_input - 1]['vendor']
         else:
             print('Invalid choice.')
-            print('Available BIOS:')
-            print()
+            print('Available BIOS:\n')
 
 
 def show_debug_info():
@@ -135,7 +134,7 @@ def main():  # noqa:WPS213
     """Main program."""
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE)
-    cpu = hardware.get_cpu()
+    cpu = hardware.get_cpu(DEBUGMODE)
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
     print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
