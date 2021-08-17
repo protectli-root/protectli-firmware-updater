@@ -37,3 +37,13 @@ To create distributable packages, simply run ```make```. ```make clean``` is als
 ### Makefile
 
 ```make``` will simply bundle the required resources into a .tar.gz for easy distribution.
+
+### Creating flashrom binary manually
+
+If you wish to build your own flashrom, you can replicate our build with
+
+```
+git checkout https://github.com/flashrom/flashrom.git
+cd flashrom
+make CONFIG_NOTHING=yes CONFIG_INTERNAL=yes CONFIG_DUMMY=yes
+```
