@@ -147,7 +147,7 @@ def main():  # noqa:WPS213
         print_supported_products()
         sys.exit()
 
-    if not hardware.get_protectli_device(DEBUGMODE) == 'Unknown':
+    if hardware.get_protectli_device(DEBUGMODE) == 'Unknown':
         print('Sorry, this is an unsupported device.')
         print('This tool is used to flash BIOS onto the following Protectli products:')
         print_supported_products()
