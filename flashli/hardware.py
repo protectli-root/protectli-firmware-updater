@@ -59,7 +59,7 @@ def get_protectli_device(debugmode: str) -> str:
     for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:
             return '{0}'.format(device)
-    return 'Unknown device'
+    return 'Unknown'
 
 
 def get_bios_mode(debugmode: str) -> str:
