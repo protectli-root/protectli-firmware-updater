@@ -15,7 +15,7 @@ from flashli import configurations, hardware
 DEBUGMODE = ''
 CONFIGURATIONS = configurations.CONFIGURATIONS
 
-VERSION = '1.1.8'
+VERSION = '1.1.9'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -142,6 +142,12 @@ def main():  # noqa:WPS213
     print('Device:    Protectli {0}'.format(device))
     print('CPU:       {0}'.format(cpu))
     if not hardware.is_protectli_device(DEBUGMODE):
+        print('Sorry, this is an unsupported device.')
+        print('This tool is used to flash BIOS onto the following Protectli products:')
+        print_supported_products()
+        sys.exit()
+
+    if not hardware.get_protectli_device(DEBUGMODE) == 'Unknown':
         print('Sorry, this is an unsupported device.')
         print('This tool is used to flash BIOS onto the following Protectli products:')
         print_supported_products()
