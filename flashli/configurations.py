@@ -133,5 +133,5 @@ CONFIGURATIONS = types.MappingProxyType({
             },
         ],
         'command': flash_command,
-    }
+    },
 })
