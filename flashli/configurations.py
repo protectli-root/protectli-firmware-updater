@@ -134,8 +134,8 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': flash_command,
     },
-    'vp2410': {
-        'cpu': 'J4125',
+    'Xvp2410X': {
+        'cpu': 'XJ4125X',
         'bios': [
             {
                 'vendor': 'ami',
