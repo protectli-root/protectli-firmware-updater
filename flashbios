@@ -15,7 +15,7 @@ from flashli import configurations, hardware
 DEBUGMODE = ''
 CONFIGURATIONS = configurations.CONFIGURATIONS
 
-VERSION = '1.1.10'
+VERSION = '1.1.11'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -83,6 +83,27 @@ def do_flash(model: str, bios: str) -> int:
 
     return completed_process.returncode
 
+def check_mac() -> bool:
+
+    global DEBUGMODE
+
+    device_mac = hardware.get_mac(DEBUGMODE)
+    know_mac_file = open('known_mac/mac_addr.txt', 'r')
+    know_mac_var = know_mac_file.readlines()
+    match_mac = ''
+
+    
+    for line_mac_read in know_mac_var:
+        
+        if device_mac == line_mac_read:
+            
+            match_mac = True
+            break
+
+        else:
+            match_mac = False
+
+    return match_mac
 
 def print_supported_products():
     """Get list of devices from Configurations and prints to STDOUT."""
@@ -133,7 +154,7 @@ def show_debug_info():
 def main():  # noqa:WPS213
     """Main program."""
     global DEBUGMODE
-    device = hardware.get_protectli_device(DEBUGMODE)
+    device = hardware.get_protectli_device(DEBUGMODE, check_mac())
     cpu = hardware.get_cpu(DEBUGMODE)
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
