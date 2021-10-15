@@ -102,8 +102,5 @@ def get_mac(debugmode: str) -> str:
 
         device_mac = str(subprocess.check_output(['/bin/cat', other_unites_mac_dir], shell=False).decode('utf-8'))
 
-<<<<<<< HEAD
     return device_mac
-=======
-    return device_mac
->>>>>>> 0a53f7483a7fd38945f9e65f985160db09bf17d6
+
