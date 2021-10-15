@@ -154,7 +154,7 @@ def show_debug_info():
 def main():  # noqa:WPS213
     """Main program."""
     global DEBUGMODE
-    device = hardware.get_protectli_device(DEBUGMODE)
+    device = hardware.get_protectli_device(DEBUGMODE, check_mac())
     cpu = hardware.get_cpu(DEBUGMODE)
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
