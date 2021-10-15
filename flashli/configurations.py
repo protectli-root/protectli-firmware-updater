@@ -139,19 +139,12 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-<<<<<<< HEAD
                 'file': 'VP2410_GML4AV30.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_vp2410_DF_1.0.10.rom',
-=======
-                'file': 'TBA',
-            },
-            {
-                'vendor': 'coreboot',
-                'file': 'TBA',
->>>>>>> 0a53f7483a7fd38945f9e65f985160db09bf17d6
+
             },
         ],
         'command': vp2410_flash_command,
