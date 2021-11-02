@@ -8,6 +8,7 @@ import os
 import subprocess  # noqa:S404
 import sys
 import textwrap
+import time
 
 from flashli import configurations, hardware
 
@@ -88,7 +89,7 @@ def check_mac() -> bool:
     global DEBUGMODE
 
     device_mac = hardware.get_mac(DEBUGMODE)
-    know_mac_file = open('known_mac/mac_addr.txt', 'r')
+    know_mac_file = open('known_mac/mac_res', 'rb')
     know_mac_var = know_mac_file.readlines()
     match_mac = ''
 
@@ -154,6 +155,8 @@ def show_debug_info():
 def main():  # noqa:WPS213
     """Main program."""
     global DEBUGMODE
+    print(check_mac()) 
+    time.sleep(10)
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
     cpu = hardware.get_cpu(DEBUGMODE)
     os.system('/bin/clear')  # noqa:S607,S605
