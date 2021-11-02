@@ -89,10 +89,12 @@ def check_mac() -> bool:
     global DEBUGMODE
 
     device_mac = hardware.get_mac(DEBUGMODE)
+    mac_match = ''
+    """
+
     know_mac_file = open('mac_res/mac_addr.txt', 'r')
     know_mac_var = know_mac_file.readlines()
     match_mac = ''
-
     
     for line_mac_read in know_mac_var:
         
@@ -105,6 +107,13 @@ def check_mac() -> bool:
             match_mac = False
 
     return match_mac
+    """
+
+    if device_mac > "64:62:66:21:03:14":
+        mac_match = True
+    
+    else:
+        mac_match = False
 
 def print_supported_products():
     """Get list of devices from Configurations and prints to STDOUT."""
