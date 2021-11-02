@@ -109,11 +109,13 @@ def check_mac() -> bool:
     return match_mac
     """
 
-    if device_mac > "64:62:66:21:03:14":
+    if device_mac <= "64:62:66:21:03:14":
         mac_match = True
     
     else:
         mac_match = False
+    
+    return mac_match
 
 def print_supported_products():
     """Get list of devices from Configurations and prints to STDOUT."""
