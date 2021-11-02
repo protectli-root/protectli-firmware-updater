@@ -88,7 +88,10 @@ def check_mac() -> bool:
 
     global DEBUGMODE
 
-    device_mac = hardware.get_mac(DEBUGMODE)
+    standard_mac = int(646266210314, base=10)
+
+    device_mac = str(hardware.get_mac(DEBUGMODE))
+    device_mac = int(device_mac.replace(':', ''), 10)
     mac_match = ''
     """
 
@@ -109,13 +112,16 @@ def check_mac() -> bool:
     return match_mac
     """
 
-    if device_mac <= "64:62:66:21:03:14":
+    if device_mac <= standard_mac:
         mac_match = True
     
     else:
         mac_match = False
     
     return mac_match
+
+#def version_display() -> str:
+
 
 def print_supported_products():
     """Get list of devices from Configurations and prints to STDOUT."""
