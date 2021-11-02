@@ -89,7 +89,7 @@ def check_mac() -> bool:
     global DEBUGMODE
 
     device_mac = hardware.get_mac(DEBUGMODE)
-    know_mac_file = open('mac_res/mac', 'rb')
+    know_mac_file = open('mac_res/mac_addr.txt', 'r')
     know_mac_var = know_mac_file.readlines()
     match_mac = ''
 
