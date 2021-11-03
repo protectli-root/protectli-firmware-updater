@@ -84,7 +84,7 @@ def do_flash(model: str, bios: str) -> int:
 
     return completed_process.returncode
 
-def check_mac() -> str:
+def check_mac() -> bool:
 
     global DEBUGMODE
 
@@ -96,11 +96,11 @@ def check_mac() -> str:
     device_mac = int("0x" + device_mac.replace(':', ''), base=16)
     mac_match = ''
 
-    if device_mac > str_mac and device_mac < end_mac:
-        mac_match = "vp_vr1"
+    if  device_mac > str_mac and device_mac < end_mac:
+        mac_match = 'vp_vr1'
     
-    else:
-        mac_match = "vp_vr2"
+    elif "J4125" in hardware.get_cpu(DEBUGMODE):
+        mac_match = 'vp_vr2'
     
     return mac_match
 
