@@ -97,10 +97,10 @@ def check_mac() -> bool:
     mac_match = ''
 
     if  device_mac > str_mac and device_mac < end_mac:
-        mac_match = True
+        mac_match = 'vp_vr1'
     
-    else:
-        mac_match = False
+    elif "J4125" in hardware.get_cpu(DEBUGMODE):
+        mac_match = 'vp_vr2'
     
     return mac_match
 
