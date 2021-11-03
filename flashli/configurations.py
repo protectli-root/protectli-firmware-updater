@@ -59,7 +59,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw4b_v4.12.0.5.rom',
+                'file': 'protectli_fw4b_v4.12.0.7.rom',
             },
         ],
         'command': flash_command,

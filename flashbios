@@ -84,7 +84,7 @@ def do_flash(model: str, bios: str) -> int:
 
     return completed_process.returncode
 
-def check_mac() -> str:
+def check_mac() -> bool:
 
     global DEBUGMODE
 
@@ -97,10 +97,10 @@ def check_mac() -> str:
     mac_match = ''
 
     if device_mac > str_mac and device_mac < end_mac:
-        mac_match = "vp_vr1"
+        mac_match = False
     
     else:
-        mac_match = "vp_vr2"
+        mac_match = True
     
     return mac_match
 
