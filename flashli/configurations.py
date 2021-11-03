@@ -59,7 +59,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw4b_v4.12.0.5.rom',
+                'file': 'protectli_fw4b_v4.12.0.7.rom',
             },
         ],
         'command': flash_command,
@@ -133,5 +133,34 @@ CONFIGURATIONS = types.MappingProxyType({
             },
         ],
         'command': flash_command,
+    },
+    'vp2410': {
+        'cpu': 'J4125',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'VP2410_GLK4L260.bin', 
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp2410_DF_1.0.9.rom',
+
+            },
+        ],
+        'command': vp2410_flash_command,
+    },
+    'vp2410r': {
+        'cpu': 'J4125',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'VP2410_GML4AV30.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp2410_DF_1.0.10.rom',
+            },
+        ],
+        'command': vp2410_flash_command,
     },
 })

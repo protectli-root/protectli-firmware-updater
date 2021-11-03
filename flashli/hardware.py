@@ -43,7 +43,7 @@ def get_cpu(debugmode: str) -> str:
     return re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
 
 
-def get_protectli_device(debugmode: str) -> str:
+def get_protectli_device(debugmode: str, mac_check: str) -> str:
     """Get the model name of this Protectli device.
 
     Args:
@@ -56,9 +56,18 @@ def get_protectli_device(debugmode: str) -> str:
         return debugmode
     cpu = get_cpu(debugmode)
 
+    if mac_check == 'vp_vr1':
+        device = 'vp2410'
+        return device
+
+    if mac_check == 'vp_vr2':
+        device = 'vp2410r'
+        return device
+
     for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:
             return '{0}'.format(device)
+            
     return 'Unknown'
 
 
@@ -77,3 +86,26 @@ def get_bios_mode(debugmode: str) -> str:
         return 'EFI'
 
     return 'BIOS'
+
+def get_mac(debugmode: str) -> str:
+    """Checks the first NIC for mac
+
+    Args:
+        debugmode: Passed if this is a debug device.
+
+    Returns:
+         str: NIC mac
+    """
+    vp2410_mac_dir = '/sys/class/net/eno1/address'
+    other_unites_mac_dir = '/sys/class/net/enp1s0/address'
+
+    if os.path.isfile(vp2410_mac_dir):
+
+        device_mac = str(subprocess.check_output(['/bin/cat', vp2410_mac_dir], shell=False).decode('utf-8'))
+
+    else:
+
+        device_mac = str(subprocess.check_output(['/bin/cat', other_unites_mac_dir], shell=False).decode('utf-8'))
+
+    return device_mac
+
