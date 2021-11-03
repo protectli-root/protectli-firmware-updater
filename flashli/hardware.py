@@ -56,7 +56,7 @@ def get_protectli_device(debugmode: str, mac_check: bool) -> str:
         return debugmode
     cpu = get_cpu(debugmode)
 
-    if not mac_check:
+    if mac_check:
         device = 'vp2410r'
         return device
 

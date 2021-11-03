@@ -96,7 +96,7 @@ def check_mac() -> bool:
     device_mac = int("0x" + device_mac.replace(':', ''), base=16)
     mac_match = ''
 
-    if  device_mac > str_mac and  device_mac < end_mac:
+    if  device_mac > str_mac or device_mac < end_mac:
         mac_match = True
     
     else:
