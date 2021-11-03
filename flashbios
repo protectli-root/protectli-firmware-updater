@@ -8,6 +8,7 @@ import os
 import subprocess  # noqa:S404
 import sys
 import textwrap
+import time
 
 from flashli import configurations, hardware
 
@@ -15,7 +16,7 @@ from flashli import configurations, hardware
 DEBUGMODE = ''
 CONFIGURATIONS = configurations.CONFIGURATIONS
 
-VERSION = '1.1.10'
+VERSION = '1.1.11'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -83,6 +84,25 @@ def do_flash(model: str, bios: str) -> int:
 
     return completed_process.returncode
 
+def check_mac() -> str:
+
+    global DEBUGMODE
+
+    str_mac = int("0x646266210000", base=16)
+    end_mac = int("0x646266210314", base=16)
+    
+
+    device_mac = str(hardware.get_mac(DEBUGMODE))
+    device_mac = int("0x" + device_mac.replace(':', ''), base=16)
+    mac_match = ''
+
+    if device_mac > str_mac and device_mac < end_mac:
+        mac_match = "vp_vr1"
+    
+    else:
+        mac_match = "vp_vr2"
+    
+    return mac_match
 
 def print_supported_products():
     """Get list of devices from Configurations and prints to STDOUT."""
@@ -133,7 +153,7 @@ def show_debug_info():
 def main():  # noqa:WPS213
     """Main program."""
     global DEBUGMODE
-    device = hardware.get_protectli_device(DEBUGMODE)
+    device = hardware.get_protectli_device(DEBUGMODE, check_mac())
     cpu = hardware.get_cpu(DEBUGMODE)
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
@@ -141,13 +161,7 @@ def main():  # noqa:WPS213
 
     print('Device:    Protectli {0}'.format(device))
     print('CPU:       {0}'.format(cpu))
-    if not hardware.is_protectli_device(DEBUGMODE):
-        print('Sorry, this is an unsupported device.')
-        print('This tool is used to flash BIOS onto the following Protectli products:')
-        print_supported_products()
-        sys.exit()
-
-    if hardware.get_protectli_device(DEBUGMODE) == 'Unknown':
+    if not hardware.is_protectli_device(DEBUGMODE) or 'Unknown' == hardware.is_protectli_device(DEBUGMODE):
         print('Sorry, this is an unsupported device.')
         print('This tool is used to flash BIOS onto the following Protectli products:')
         print_supported_products()
@@ -156,7 +170,7 @@ def main():  # noqa:WPS213
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))
 
-    if bios_mode == 'EFI' and not str(device).upper() == "VP2410":
+    if bios_mode == 'EFI' and not str(device) == 'vp2410' and not str(device) == 'vp2410r':
         print(textwrap.fill(
             'This tool must be run in Legacy BIOS mode, not EFI. If you are using this tool to update an existing EFI system, you may experience issues booting into your operating system after flashing a new BIOS. If you are aware of the risks and wish to proceed with flashing a new BIOS image, please reboot your device and configure your current BIOS to boot into Legacy Mode.',
             get_terminal_width(),
