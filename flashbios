@@ -88,8 +88,9 @@ def check_mac() -> str:
 
     global DEBUGMODE
 
-    str_mac = int("0x646266210314", base=16)
-    end_mac = int("0x646266210000", base=16)
+    str_mac = int("0x646266210000", base=16)
+    end_mac = int("0x646266210314", base=16)
+    
 
     device_mac = str(hardware.get_mac(DEBUGMODE))
     device_mac = int("0x" + device_mac.replace(':', ''), base=16)
