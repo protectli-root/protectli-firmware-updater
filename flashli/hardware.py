@@ -43,7 +43,7 @@ def get_cpu(debugmode: str) -> str:
     return re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
 
 
-def get_protectli_device(debugmode: str, mac_check: bool) -> str:
+def get_protectli_device(debugmode: str, mac_check: str) -> str:
     """Get the model name of this Protectli device.
 
     Args:
@@ -56,7 +56,7 @@ def get_protectli_device(debugmode: str, mac_check: bool) -> str:
         return debugmode
     cpu = get_cpu(debugmode)
 
-    if mac_check:
+    if mac_check == 'vp_vr2':
         device = 'vp2410r'
         return device
 
