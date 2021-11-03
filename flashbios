@@ -93,24 +93,6 @@ def check_mac() -> bool:
     device_mac = str(hardware.get_mac(DEBUGMODE))
     device_mac = int("0x" + device_mac.replace(':', ''), base=16)
     mac_match = ''
-    """
-
-    know_mac_file = open('mac_res/mac_addr.txt', 'r')
-    know_mac_var = know_mac_file.readlines()
-    match_mac = ''
-    
-    for line_mac_read in know_mac_var:
-        
-        if device_mac == line_mac_read:
-            
-            match_mac = True
-            break
-
-        else:
-            match_mac = False
-
-    return match_mac
-    """
 
     if device_mac <= standard_mac:
         mac_match = True
@@ -119,9 +101,6 @@ def check_mac() -> bool:
         mac_match = False
     
     return mac_match
-
-#def version_display() -> str:
-
 
 def print_supported_products():
     """Get list of devices from Configurations and prints to STDOUT."""
