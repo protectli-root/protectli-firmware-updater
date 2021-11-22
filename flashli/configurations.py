@@ -69,11 +69,11 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_YKBR6L12.bin',
+                'file': 'FW6_all_YKBR6L12.bin',
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw6_v4.12.0.4.rom',
+                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
             },
         ],
         'command': flash_command,
@@ -83,11 +83,11 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_YKBR6L12.bin',
+                'file': 'FW6_all_YKBR6L12.bin',
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw6_v4.12.0.4.rom',
+                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
             },
         ],
         'command': flash_command,
@@ -97,11 +97,11 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_YKBR6L12.bin',
+                'file': 'FW6_all_YKBR6L12.bin',
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw6_v4.12.0.4.rom',
+                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
             },
         ],
         'command': flash_command,
@@ -111,11 +111,11 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6D_KBR6L132.bin',
+                'file': 'FW6_all_YKBR6L12.bin',
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw6d_DF_1.0.6.rom',
+                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
             },
         ],
         'command': flash_command,
@@ -125,11 +125,11 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6E_KBR6L132.bin',
+                'file': 'FW6_all_YKBR6L12.bin',
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw6e_DF_1.0.7.rom',
+                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
             },
         ],
         'command': flash_command,
