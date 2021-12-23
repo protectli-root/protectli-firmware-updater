@@ -16,7 +16,7 @@ from flashli import configurations, hardware
 DEBUGMODE = ''
 CONFIGURATIONS = configurations.CONFIGURATIONS
 
-VERSION = '1.1.12'
+VERSION = '1.1.13'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -144,6 +144,28 @@ def get_user_selection(device: str) -> str:
             print('Invalid choice.')
             print('Available BIOS:\n')
 
+def display_warning () :
+
+    os.system('/bin/clear')
+
+    general_warning = 'Flashing new firmware onto any hardware is potentially dangerous\nin that if the procedure is interrupted or otherwise not able to complete, your hardware may be rendered useless.\nPlease proceed with caution.\nIf there are any questions, please contact Protectli support BEFORE proceeding.\n\n'
+
+    ness_warning = 'Unless there is a compelling reason to update the BIOS, we recommend to stay with your current known working revision/' 
+
+    print (general_warning)s
+    print (ness_warning)
+
+    user_agrement = str(input('\nAcknowledgement [Y, N]')).lower()
+
+    if user_agrement == 'y':
+        print ('Agreed')
+    
+    elif user_agrement == 'n':
+        sys.exit('Acknowledgement has been declined')
+
+    else :
+
+        display_warning()
 
 def show_debug_info():
     """Collect debug information and tell user how to submit an issue."""
