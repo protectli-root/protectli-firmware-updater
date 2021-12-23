@@ -150,9 +150,9 @@ def display_warning () :
 
     general_warning = 'Flashing new firmware onto any hardware is potentially dangerous\nin that if the procedure is interrupted or otherwise not able to complete, your hardware may be rendered useless.\nPlease proceed with caution.\nIf there are any questions, please contact Protectli support BEFORE proceeding.\n\n'
 
-    ness_warning = 'Unless there is a compelling reason to update the BIOS, we recommend to stay with your current known working revision/' 
+    ness_warning = 'Unless there is a compelling reason to update the BIOS, we recommend to stay with your current known working revision.' 
 
-    print (general_warning)s
+    print (general_warning)
     print (ness_warning)
 
     user_agrement = str(input('\nAcknowledgement [Y, N]')).lower()
