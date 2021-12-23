@@ -15,8 +15,8 @@ def is_protectli_device(debugmode: str) -> bool:
     Returns:
         bool: True if this is a Protectli device
     """
-    cmd = '/usr/sbin/dmidecode'
-    syscall = subprocess.check_output([cmd], shell=False).decode('utf-8')  # noqa:S603
+    dmi_path = str(subprocess.check_output(['which', 'dmidecode'], shell=False).decode('utf-8')).replace('\n', '')
+    syscall = subprocess.check_output([dmi_path], shell=False).decode('utf-8')  # noqa:S603
     match1 = 'Protectli' in str(syscall)
     match2 = 'YANLING' in str(syscall)
     return match1 or match2 or debugmode

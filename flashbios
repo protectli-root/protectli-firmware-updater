@@ -177,6 +177,9 @@ def main():  # noqa:WPS213
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
     cpu = hardware.get_cpu(DEBUGMODE)
+
+    display_warning()
+
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
     print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
