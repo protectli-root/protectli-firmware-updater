@@ -16,7 +16,7 @@ from flashli import configurations, hardware
 DEBUGMODE = ''
 CONFIGURATIONS = configurations.CONFIGURATIONS
 
-VERSION = '1.1.12'
+VERSION = '1.1.14'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -96,7 +96,7 @@ def check_mac() -> bool:
     device_mac = int("0x" + device_mac.replace(':', ''), base=16)
     mac_match = ''
 
-    if  device_mac > str_mac and device_mac < end_mac:
+    if  device_mac >= str_mac and device_mac <= end_mac:
         mac_match = 'vp_vr1'
     
     elif "J4125" in hardware.get_cpu(DEBUGMODE):
@@ -144,6 +144,28 @@ def get_user_selection(device: str) -> str:
             print('Invalid choice.')
             print('Available BIOS:\n')
 
+def display_warning () :
+
+    os.system('/bin/clear')
+
+    general_warning = 'Flashing new firmware onto any hardware is potentially dangerous\nin that if the procedure is interrupted or otherwise not able to complete, your hardware may be rendered useless.\nPlease proceed with caution.\nIf there are any questions, please contact Protectli support BEFORE proceeding.\n\n'
+
+    ness_warning = 'Unless there is a compelling reason to update the BIOS, we recommend to stay with your current known working revision.' 
+
+    print (general_warning)
+    print (ness_warning)
+
+    user_agrement = str(input('\nAcknowledgement [Y, N]')).lower()
+
+    if user_agrement == 'y':
+        print ('Agreed')
+    
+    elif user_agrement == 'n':
+        sys.exit('Acknowledgement has been declined')
+
+    else :
+
+        display_warning()
 
 def show_debug_info():
     """Collect debug information and tell user how to submit an issue."""
@@ -155,6 +177,9 @@ def main():  # noqa:WPS213
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
     cpu = hardware.get_cpu(DEBUGMODE)
+
+    display_warning()
+
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
     print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
