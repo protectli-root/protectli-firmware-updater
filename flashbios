@@ -16,11 +16,7 @@ from flashli import configurations, hardware
 DEBUGMODE = ''
 CONFIGURATIONS = configurations.CONFIGURATIONS
 
-<<<<<<< HEAD
-VERSION = '1.1.12'
-=======
-VERSION = '1.1.13'
->>>>>>> parent of a8d4607... 1.1.14
+VERSION = '1.1.14'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -100,7 +96,7 @@ def check_mac() -> bool:
     device_mac = int("0x" + device_mac.replace(':', ''), base=16)
     mac_match = ''
 
-    if  device_mac > str_mac and device_mac < end_mac:
+    if  device_mac >= str_mac and device_mac <= end_mac:
         mac_match = 'vp_vr1'
     
     elif "J4125" in hardware.get_cpu(DEBUGMODE):
