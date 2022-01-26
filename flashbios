@@ -16,11 +16,7 @@ from flashli import configurations, hardware
 DEBUGMODE = ''
 CONFIGURATIONS = configurations.CONFIGURATIONS
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f6f5f8f0d0b695ad18508c273f80ef58ed020683
-VERSION = '1.1.15'
+VERSION = '1.1.16'
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
@@ -158,6 +154,10 @@ def main():  # noqa:WPS213
     """Main program."""
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
+
+    if device == 'Unknown' :
+        print ('device is returning unknow')
+        return -1
     cpu = hardware.get_cpu(DEBUGMODE)
     os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
