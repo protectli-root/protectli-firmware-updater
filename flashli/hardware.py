@@ -65,6 +65,10 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
         device = 'vp2410r'
         return device
 
+    if cpu == '7020U':
+        device = 'fw6br'
+        return device
+
     for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:
             return '{0}'.format(device)
