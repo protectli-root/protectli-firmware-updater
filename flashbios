@@ -151,8 +151,6 @@ def show_debug_info():
 
 def display_logo () :
 
-    os.system('/bin/clear')
-    
     logo_str =  ' ______   ______     ______     ______   ______     ______     ______   __         __    \n'
     logo_str += '/\  == \ /\  == \   /\  __ \   /\__  _\ /\  ___\   /\  ___\   /\__  _\ /\ \       /\ \   \n'
     logo_str += '\ \  _-/ \ \  __<   \ \ \/\ \  \/_/\ \/ \ \  __\   \ \ \____  \/_/\ \/ \ \ \____  \ \ \  \n'
@@ -188,6 +186,9 @@ def display_warning () :
 
 def main():  # noqa:WPS213
     """Main program."""
+
+    os.system('/bin/clear')  # noqa:S607,S605
+
     display_logo()
     display_warning()
 
@@ -198,7 +199,6 @@ def main():  # noqa:WPS213
         print ('device is returning unknow')
         return -1
     cpu = hardware.get_cpu(DEBUGMODE)
-    os.system('/bin/clear')  # noqa:S607,S605
     print('FlashLi'.center(get_terminal_width(), '='))
     print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
 
