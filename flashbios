@@ -149,9 +149,55 @@ def show_debug_info():
     """Collect debug information and tell user how to submit an issue."""
     print('TODO: Collect info and display instructions on how to submit a Github issue.')
 
+def display_logo () :
+
+    #print (' ______   ______     ______     ______   ______     ______     ______   __         __    ')
+    #print ('/\  == \ /\  == \   /\  __ \   /\__  _\ /\  ___\   /\  ___\   /\__  _\ /\ \       /\ \   ')
+    #print ('\ \  _-/ \ \  __<   \ \ \/\ \  \/_/\ \/ \ \  __\   \ \ \____  \/_/\ \/ \ \ \____  \ \ \  ')
+    #print (' \ \_\    \ \_\ \_\  \ \_____\    \ \_\  \ \_____\  \ \_____\    \ \_\  \ \_____\  \ \_\ ')
+    #print ('  \/_/     \/_/ /_/   \/_____/     \/_/   \/_____/   \/_____/     \/_/   \/_____/   \/_/ ')
+    #print ('_________________________________________________________________________________________')
+
+    logo_str =  ' ______   ______     ______     ______   ______     ______     ______   __         __    \n'
+    logo_str += '/\  == \ /\  == \   /\  __ \   /\__  _\ /\  ___\   /\  ___\   /\__  _\ /\ \       /\ \   \n'
+    logo_str += '\ \  _-/ \ \  __<   \ \ \/\ \  \/_/\ \/ \ \  __\   \ \ \____  \/_/\ \/ \ \ \____  \ \ \  \n'
+    logo_str += ' \ \_\    \ \_\ \_\  \ \_____\    \ \_\  \ \_____\  \ \_____\    \ \_\  \ \_____\  \ \_\ \n'
+    logo_str += '  \/_/     \/_/ /_/   \/_____/     \/_/   \/_____/   \/_____/     \/_/   \/_____/   \/_/ \n'
+    logo_str += '_________________________________________________________________________________________\n\n'
+
+    return logo_str
+def display_warning () :
+
+    os.system('/bin/clear')
+
+    display_logo()
+
+    general_warning = 'Flashing new firmware onto any hardware is potentially dangerous\nin that if the procedure is interrupted or otherwise not able to complete, your hardware may be rendered useless.\nPlease proceed with caution.\nIf there are any questions, please contact Protectli support BEFORE proceeding.\n\n'
+
+    ram_warning = 'Unless there is a compelling reason to update the BIOS, we recommend to stay with your current known working revision/' 
+
+    print (general_warning)
+    print (ram_warning)
+
+    user_agrement = str(input('\nAcknowledgement [Y, N]')).lower()
+
+    #while user_agrement != 'y' or user_agrement != 'n':
+
+    if user_agrement == 'y':
+        print ('')
+    
+    elif user_agrement == 'n':
+        sys.exit('Exiting')
+
+    else :
+
+        print ('Please enter yes or no')
 
 def main():  # noqa:WPS213
     """Main program."""
+    display_logo()
+    display_warning()
+    
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
 
