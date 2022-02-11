@@ -65,6 +65,10 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
         device = 'vp2410r'
         return device
 
+    if cpu == "3867U":
+        device = "fw6ar"
+        return device
+
     if cpu == '7020U':
         device = 'fw6br'
         return device
