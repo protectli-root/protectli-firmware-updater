@@ -163,12 +163,12 @@ def display_warning () :
 
     display_logo()
 
-    general_warning = 'Flashing new firmware onto any hardware is potentially dangerous\nin that if the procedure is interrupted or otherwise not able to complete, your hardware may be rendered useless.\nPlease proceed with caution.\nIf there are any questions, please contact Protectli support BEFORE proceeding.\n\n'
+    general_warning = '\nFlashing new firmware onto any hardware is potentially dangerous\nin that if the procedure is interrupted or otherwise not able to complete, your hardware may be rendered useless.\nPlease proceed with caution.\nIf there are any questions, please contact Protectli support BEFORE proceeding.\n\n'
 
     ram_warning = 'Unless there is a compelling reason to update the BIOS, we recommend to stay with your current known working BIOS version' 
 
-    print (general_warning)
-    print (ram_warning)
+    print (textwrap.fill(general_warning, 89))
+    print (textwrap.fill(ram_warning, 89))
 
     user_agrement = str(input('\nAcknowledgement [Y, N]: ')).lower()
 
@@ -189,8 +189,8 @@ def main():  # noqa:WPS213
 
     os.system('/bin/clear')  # noqa:S607,S605
 
-    display_logo()
-    display_warning()
+    print (display_logo())
+    #display_warning()
 
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
@@ -199,8 +199,8 @@ def main():  # noqa:WPS213
         print ('device is returning unknow')
         return -1
     cpu = hardware.get_cpu(DEBUGMODE)
-    print('FlashLi'.center(get_terminal_width(), '='))
-    print('--Version {0}--'.format(get_version()).center(get_terminal_width(), '-'))
+    print('FlashLi'.center(89, '='))
+    print('--Version {0}--\n'.format(get_version()).center(89, '-'))
 
     print('Device:    Protectli {0}'.format(device))
     print('CPU:       {0}'.format(cpu))
@@ -216,7 +216,7 @@ def main():  # noqa:WPS213
     if bios_mode == 'EFI' and not str(device) == 'vp2410' and not str(device) == 'vp2410r':
         print(textwrap.fill(
             'This tool must be run in Legacy BIOS mode, not EFI. If you are using this tool to update an existing EFI system, you may experience issues booting into your operating system after flashing a new BIOS. If you are aware of the risks and wish to proceed with flashing a new BIOS image, please reboot your device and configure your current BIOS to boot into Legacy Mode.',
-            get_terminal_width(),
+            89,
         ))
         sys.exit()
 
@@ -225,6 +225,8 @@ def main():  # noqa:WPS213
     print()
 
     selection = get_user_selection(device)
+    
+    display_warning()
 
     returncode = do_flash(device, selection)
     if returncode == 0:
