@@ -170,7 +170,7 @@ def display_warning () :
     print (textwrap.fill(general_warning, 89))
     print (textwrap.fill(ram_warning, 89))
 
-    user_agrement = str(input('\nAcknowledgement [Y, N]: ')).lower()
+    user_agrement = str(input('\nAcknowledgement Yes [Y]: ')).lower()
 
     #while user_agrement != 'y' or user_agrement != 'n':
 
@@ -178,11 +178,7 @@ def display_warning () :
         print ('')
     
     elif user_agrement == 'n':
-        sys.exit('Exiting')
-
-    else :
-
-        print ('Please enter yes or no')
+        sys.exit('Acknowledgement rejected')
 
 def main():  # noqa:WPS213
     """Main program."""
