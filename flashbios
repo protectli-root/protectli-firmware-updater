@@ -167,7 +167,7 @@ def display_warning () :
     general_warning = '\nFlashing new firmware onto any hardware is potentially dangerous\nin that if the procedure is interrupted or otherwise not able to complete, your hardware may be rendered useless.\nPlease proceed with caution.\nIf there are any questions, please contact Protectli support BEFORE proceeding.\n\n'
 
     ram_warning = 'Unless there is a compelling reason to update the BIOS, we recommend to stay with your current known working BIOS version' 
-
+    print (textwrap.fill("Are you sure you would like to flash this device?", 89))
     print (textwrap.fill(general_warning, 89))
     print (textwrap.fill(ram_warning, 89))
 
