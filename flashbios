@@ -168,15 +168,15 @@ def display_warning () :
 
     display_logo()
 
-    general_warning = '\n\nFlashing new firmware onto any hardware is potentially dangerous\nin that if the procedure is interrupted or otherwise not able to complete, your hardware may be rendered useless.\nPlease proceed with caution.\nIf there are any questions, please contact Protectli support BEFORE proceeding.\n\n'
+    general_warning = '\nFlashing new firmware onto any hardware is potentially dangerous\nin that if the procedure is interrupted or otherwise not able to complete, your hardware may be rendered useless.\nPlease proceed with caution.\nIf there are any questions, please contact Protectli support BEFORE proceeding.\n\n'
 
     ram_warning = '\nUnless there is a compelling reason to update the BIOS, we recommend to stay with your current known working BIOS version'
 
-    print("!".center(displaySize, '*')) 
-    print (textwrap.fill("Are you sure you would like to flash this device?", displaySize))
-    print (textwrap.fill(general_warning, displaySize))
-    print (textwrap.fill(ram_warning, displaySize))
-    print("!".center(displaySize, '*'))
+    print('\n' + '!'.center(displaySize, '*')) 
+    print (textwrap.fill('Are you sure you would like to flash this device?', displaySize) + '\n')
+    print (textwrap.fill(general_warning, displaySize) + '\n')
+    print (textwrap.fill(ram_warning, displaySize) + '\n')
+    print('!'.center(displaySize, '*'))
 
     user_agrement = str(input('\nAcknowledgement Yes [Y]: ')).lower()
 
@@ -184,7 +184,7 @@ def display_warning () :
         print ('')
     
     else :
-        sys.exit('Acknowledgement rejected')
+        sys.exit('**Acknowledgement rejected**\n')
 
 def main():  # noqa:WPS213
     """Main program."""

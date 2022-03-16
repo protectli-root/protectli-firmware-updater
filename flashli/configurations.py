@@ -134,6 +134,20 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': flash_command,
     },
+    'fw6m': {
+        'cpu': 'FW6MC',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'FW6_all_YKBR6L12.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+            },
+        ],
+        'command': flash_command,
+    },
     'fw6d': {
         'cpu': '8250U',
         'bios': [
