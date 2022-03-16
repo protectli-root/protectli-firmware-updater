@@ -46,7 +46,7 @@ def get_cpu(debugmode: str) -> str:
         raise SystemExit('/bin/cat returned error code {0}'.format(exception.returncode)) 
     cpu_str = re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
 
-    if '3865U' or '7100U' or '7200U' in cpu_str and get_nicTest(debugmode):
+    if '3865U' in cpu_str or '7100U' in cpu_str or '7200U' in cpu_str and get_nicTest(debugmode):
         return "FW6MC"
 
     return cpu_str
@@ -115,9 +115,9 @@ def get_nicTest(debugmode: bool) -> bool:
          bool
     """
 
-    pci_list = str(subprocess.check_output(['dmidecode'], shell=False).decode('utf-8'))
+    pci_list = str(subprocess.check_output(['lspci'], shell=False).decode('utf-8'))
 
-    if "82385" in pci_list:
+    if "82583" in pci_list:
         return True
 
     return False
