@@ -139,7 +139,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_all_YKBR6L12.bin',
+                'file': 'FW6_825_KBU6LA09.bin',
             },
             {
                 'vendor': 'coreboot',

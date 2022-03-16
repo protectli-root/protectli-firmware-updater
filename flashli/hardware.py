@@ -5,7 +5,7 @@ import os
 import re
 import subprocess
 
-from click import argument  # noqa:S404
+#from click import argument  # noqa:S404
 
 from flashli import configurations
 
