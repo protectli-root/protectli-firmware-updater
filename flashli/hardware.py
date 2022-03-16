@@ -46,9 +46,8 @@ def get_cpu(debugmode: str) -> str:
         raise SystemExit('/bin/cat returned error code {0}'.format(exception.returncode)) 
     cpu_str = re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
 
-    if '3865U' in cpu_str or '7100U' in cpu_str or '7200U' in cpu_str and get_nicTest(debugmode):
-        return "FW6MC"
-
+    #if '3865U' in cpu_str or '7100U' in cpu_str or '7200U' in cpu_str and get_nicTest(debugmode):
+        #return "FW6MC"
     return cpu_str
 
 
@@ -78,7 +77,7 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
     if cpu == '7020U':
         return 'fw6br'
     
-    if cpu == 'FW6MC':
+    if cpu == '3865U' or cpu == '7100U' or cpu == '7200U' and get_nicTest(debugmode):
         return "fw6m"
 
     for device, props in configurations.CONFIGURATIONS.items():
