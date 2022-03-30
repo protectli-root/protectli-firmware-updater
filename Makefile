@@ -7,12 +7,12 @@ dist:
 
 build:
 	@mkdir build/
-	@cp -r flashli/ images/ vendor/ flashbios README.md build/
+	@cp -r flashli/ images/ vendor/ known_mac/ flashbios README.md build/
 	@echo 'Application and sources built into ./build/'
 
 share:
 	@mkdir share/
-	@cp -r flashli/ images/ vendor/ dist/ flashbios README.md share/
+	@cp -r flashli/ images/ vendor/ dist/ known_mac/ flashbios README.md share/
 	@echo 'Shareable GitHub config built into ./share/'
 
 .PHONY: clean
