@@ -78,11 +78,7 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': flash_command,
     },
-<<<<<<< HEAD
-    'fw6a': {
-=======
         'fw6ar': {
->>>>>>> master
         'cpu': '3867U',
         'bios': [
             {
@@ -92,10 +88,6 @@ CONFIGURATIONS = types.MappingProxyType({
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_DF_v1.0.12.rom',
-<<<<<<< HEAD
-
-=======
->>>>>>> master
             },
         ],
         'command': flash_command,
