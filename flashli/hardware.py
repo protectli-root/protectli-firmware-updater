@@ -1,10 +1,13 @@
 """Hardware interactions."""
+from curses import flash
+from nis import match
 import os
 import re
-import subprocess  # noqa:S404
+import subprocess
+
+#from click import argument  # noqa:S404
 
 from flashli import configurations
-
 
 def is_protectli_device(debugmode: str) -> bool:
     """Detect if this is a Protectli device.
@@ -39,8 +42,11 @@ def get_cpu(debugmode: str) -> str:
         cpu_data = subprocess.check_output(['/bin/cat', '/proc/cpuinfo'], stderr=subprocess.DEVNULL).decode('utf-8')  # noqa:S603
     except subprocess.CalledProcessError as exception:
         print('No CPU information found... am I running in a VM or chroot?')
-        raise SystemExit('/bin/cat returned error code {0}'.format(exception.returncode))
-    return re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
+        raise SystemExit('/bin/cat returned error code {0}'.format(exception.returncode)) 
+    cpu_str = re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
+
+    return cpu_str
+
 
 
 def get_protectli_device(debugmode: str, mac_check: str) -> str:
@@ -57,16 +63,23 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
     cpu = get_cpu(debugmode)
 
     if mac_check == 'vp_vr1':
-        device = 'vp2410'
-        return device
+        return 'vp2410'
 
     if mac_check == 'vp_vr2':
-        device = 'vp2410r'
-        return device
+        return 'vp2410r'
+
+    if cpu == '3867U':
+        return "fw6ar"
+
+    if cpu == '7020U':
+        return 'fw6br'
+    
+    if '3865U' in cpu or '7100U' in cpu or '7200U' in cpu and get_nicTest(debugmode):
+        return "fw6m"
 
     for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:
-            return '{0}'.format(device)
+            return '{0}'.format(device) 
             
     return 'Unknown'
 
@@ -86,6 +99,24 @@ def get_bios_mode(debugmode: str) -> str:
         return 'EFI'
 
     return 'BIOS'
+
+def get_nicTest(debugmode: bool) -> bool:
+
+    """Checks if 82583 is present
+
+    Args:
+        debugmode: Passed if this is a debug device.
+
+    Returns:
+         bool
+    """
+
+    pci_list = str(subprocess.check_output(['lspci'], shell=False).decode('utf-8'))
+
+    if "82583" in pci_list:
+        return True
+
+    return False
 
 def get_mac(debugmode: str) -> str:
     """Checks the first NIC for mac
