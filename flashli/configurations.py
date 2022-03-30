@@ -92,7 +92,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
         ],
         'command': flash_command,
-    }
+    },
     'fw6b': {
         'cpu': '7100U',
         'bios': [
