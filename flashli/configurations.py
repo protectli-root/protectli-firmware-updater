@@ -78,7 +78,11 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': flash_command,
     },
+<<<<<<< HEAD
     'fw6a': {
+=======
+        'fw6ar': {
+>>>>>>> master
         'cpu': '3867U',
         'bios': [
             {
@@ -88,7 +92,10 @@ CONFIGURATIONS = types.MappingProxyType({
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
             },
         ],
         'command': flash_command,
@@ -107,12 +114,40 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': flash_command,
     },
+    'fw6br': {
+        'cpu': '7020U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'FW6_all_YKBR6L12.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+            },
+        ],
+        'command': flash_command,
+    },
     'fw6c': {
         'cpu': '7200U',
         'bios': [
             {
                 'vendor': 'ami',
                 'file': 'FW6_all_YKBR6L12.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+            },
+        ],
+        'command': flash_command,
+    },
+    'fw6m': {
+        'cpu': 'FW6MC',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'FW6_825_KBU6LA09.bin',
             },
             {
                 'vendor': 'coreboot',
