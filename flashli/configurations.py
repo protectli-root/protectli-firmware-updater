@@ -78,7 +78,8 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': flash_command,
     },
-        'fw6ar': {
+
+    'fw6ar': {
         'cpu': '3867U',
         'bios': [
             {
@@ -91,7 +92,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
         ],
         'command': flash_command,
-    },
+    }
     'fw6b': {
         'cpu': '7100U',
         'bios': [
