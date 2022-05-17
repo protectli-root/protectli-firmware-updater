@@ -73,7 +73,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -87,7 +87,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -101,7 +101,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -115,7 +115,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -129,7 +129,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -143,7 +143,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -157,7 +157,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -171,7 +171,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,

@@ -21,7 +21,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 
 displaySize = 89
 
-VERSION = '1.1.19'
+VERSION = '1.1.20'
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
@@ -99,7 +99,6 @@ def check_mac() -> bool:
     device_mac = str(hardware.get_mac(DEBUGMODE))
     device_mac = int("0x" + device_mac.replace(':', ''), base=16)
     mac_match = ''
-
 
     if  device_mac >= str_mac and device_mac <= end_mac:
         mac_match = 'vp_vr1'
