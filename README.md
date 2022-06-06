@@ -15,7 +15,7 @@ The flash tool requires the following:
 Download the latest release, uncompress it, and run the flashbios script
 
 ```
-wget https://github.com/protectli-root/protectli-firmware-updater/releases/download/v1.1.19/flashli.tar.gz
+wget https://github.com/protectli-root/protectli-firmware-updater/releases/download/v1.1.21/flashli.tar.gz
 tar -zxvf flashli.tar.gz
 ./flashbios
 ```
