@@ -3,6 +3,7 @@
 import types
 
 flash_command = 'vendor/flashrom -p internal -w {0} --ifd -i bios'
+overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --ifd -i bios'
 vp2410_flash_command = 'vendor/flashrom -p internal -w {0}'
 
 CONFIGURATIONS = types.MappingProxyType({
@@ -161,6 +162,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
         ],
         'command': flash_command,
+        'override': overrider_command,
     },
     'fw6e': {
         'cpu': '8550U',
@@ -175,6 +177,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
         ],
         'command': flash_command,
+        'override': overrider_command,
     },
     'vp2410': {
         'cpu': 'J4125',
