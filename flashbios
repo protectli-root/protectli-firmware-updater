@@ -21,7 +21,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 
 displaySize = 89
 
-VERSION = '1.1.21'
+VERSION = '1.1.22'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -85,7 +85,13 @@ def do_flash(model: str, bios: str) -> int:
         print('Not actually flashing, script is in debug mode.')
         return 0
     file_path = get_image_path(model, bios)
-    completed_process = subprocess.run(CONFIGURATIONS[model]['command'].format(file_path), shell=True)  # noqa:S602,S603
+
+    if hardware.has_param(DEBUGMODE, 'FW6D') or hardware.has_param(DEBUGMODE, 'FW6E') and hardware.has_param(DEBUGMODE, 'coreboot'):
+
+        completed_process = subprocess.run(CONFIGURATIONS[model]['override'].format(file_path), shell=True)  # noqa:S602,S603
+
+    else:
+        completed_process = subprocess.run(CONFIGURATIONS[model]['command'].format(file_path), shell=True)  # noqa:S602,S603
 
     return completed_process.returncode
 
