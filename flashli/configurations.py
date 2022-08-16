@@ -4,7 +4,7 @@ import types
 
 flash_command = 'vendor/flashrom -p internal -w {0} --ifd -i bios'
 overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --ifd -i bios'
-vp2410_flash_command = 'vendor/flashrom -p internal -w {0}'
+vpxxxx_flash_command = 'vendor/flashrom -p internal -w {0}'
 
 CONFIGURATIONS = types.MappingProxyType({
     'fw2': {
@@ -206,7 +206,7 @@ CONFIGURATIONS = types.MappingProxyType({
 
             },
         ],
-        'command': vp2410_flash_command,
+        'command': vpxxxx_flash_command,
     },
     'vp2410r': {
         'cpu': 'J4125',
@@ -220,6 +220,23 @@ CONFIGURATIONS = types.MappingProxyType({
                 'file': 'protectli_vp2410_DF_v1.0.15.rom',
             },
         ],
-        'command': vp2410_flash_command,
+        'command': vpxxxx_flash_command,
     },
+    'vp4630': {
+        'cpu': '10110U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'YWDZ6L11.bin',
+                
+            },
+            {
+                'vendor': 'DEV coreboot',
+                'file': 'protectli_vault.rom',
+            },
+
+        ],
+        'command': vpxxxx_flash_command,
+    },
+
 })

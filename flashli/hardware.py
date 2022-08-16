@@ -79,6 +79,7 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
     """
     if debugmode:
         return debugmode
+        
     cpu = get_cpu(debugmode)
 
     if mac_check == 'vp_vr1':
