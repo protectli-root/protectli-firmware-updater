@@ -223,17 +223,17 @@ def display_warning () :
 def display_bios_lock():
         
     print('\nBIOS lock option in the BIOS is enabled.\nFlashli will now exit to prevent harm.')
-    print('Please disable the BIOS lock in the BIOS\n')
+    print('Please disable the BIOS lock in the BIOS\n\n\n')
 
     print('\tIF YOU ARE USING AMI\n')
-    print('For AMI please reboot the device\nPress del when the splash screen appears.')
+    print('Please reboot the device\nPress DEL when the splash screen appears.')
     print('Navigate to Chipset\nUnder Chipset naviate to PCH-10 Configuration.')
     print('\nYou will see BIOS Lock at the bottom')
     print('Disable BIOS lock\nPress F4 to save and reboot')
     print('After reboot please try flashli again.\n\n')
 
     print('\tIF YOU ARE USING COREBOOT\n')
-    print('For AMI please reboot the device\nPress del when the splash screen appears.')
+    print('Please reboot the device\nPress DEL when the splash screen appears.')
     print('From the main menu naviagte to Dasharo System Features.\nThen to Dasahro Security Options.')
     print('You should now see an option for Lock the BIOS boot medium.\nPress enter to disable it.')
     print('Make sure to go out to the main by pressing esc\nSelect reset\nWait for reboot.\n\n')
