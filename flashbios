@@ -64,34 +64,40 @@ def get_image_path(model: str, requested_bios: str) -> str:
         if bios['vendor'] == requested_bios:
             return 'images/{0}'.format(bios['file'])
 
-def check_flash ():
-    """Runs flashrom to check for errors.
+def check_vp46_flash_config (bios_select: str) -> str:
+    """checks the current BIOS to user selected flash image.
 
     Args:
+        bios_select: selected flash BIOS image
 
     Returns:
-        Returns exit status from flashrom binary:
-            0: Success
-            1: General Failure
-            2: /dev/mem cannot be opened
-            3: mmap() failed
+        str: Path to the BIOS file requested
     """
-    flashrom_dir = './vendor/flashrom'
-    flashrom_status = str(subprocess.run([flashrom_dir, '-p', 'internal'], capture_output=True))
-    #flashrom_po = subprocess.Popen([flashrom_dir, '-p', 'internal' ], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-    #flashrom_status = str(flashrom_po.stdout.read())
 
+    if hardware.get_protectli_device(DEBUGMODE, check_mac()) == 'vp4630' :
 
-    if 'Warning: BIOS region SMM protection is enabled!' in flashrom_status:
+        if hardware.check_for_ami(DEBUGMODE) :
 
-        return True
+            if hardware.check_bios_lock(DEBUGMODE) :
+                display_bios_lock_ami()
 
-    elif 'PR0: Warning: 0x00c00000-0x00ffffff is read-only' in flashrom_status:
+            else:
+                return 'command'
 
-        return True
+        elif hardware.check_for_coreboot(DEBUGMODE):
+
+            if 'ami' in bios_select:
+
+                if hardware.check_bios_lock(DEBUGMODE) :
+                    display_bios_lock_coreboot()
+
+                else :
+                    return 'command'
+            else:
+                return 'upgrade'
         
-    else:
-        return False
+        else:
+            sys.exit('Error has occured\nVP46xx device not found')
 
 def do_flash(model: str, bios: str) -> int:
     """Perform the BIOS flash.
@@ -112,11 +118,16 @@ def do_flash(model: str, bios: str) -> int:
     if DEBUGMODE:
         print('Not actually flashing, script is in debug mode.')
         return 0
+
+    vp46_command = check_vp46_flash_config(bios)
     file_path = get_image_path(model, bios)
 
     if hardware.has_param(DEBUGMODE, 'FW6D') or hardware.has_param(DEBUGMODE, 'FW6E') and hardware.has_param(DEBUGMODE, 'coreboot'):
 
         completed_process = subprocess.run(CONFIGURATIONS[model]['override'].format(file_path), shell=True)  # noqa:S602,S603
+    
+    elif hardware.has_param(DEBUGMODE, 'VP46xx'):
+        completed_process = subprocess.run(CONFIGURATIONS[model][vp46_command].format(file_path), shell=True)  # noqa:S602,S603
 
     else:
         completed_process = subprocess.run(CONFIGURATIONS[model]['command'].format(file_path), shell=True)  # noqa:S602,S603
@@ -220,27 +231,33 @@ def display_warning () :
     else :
         sys.exit('**Acknowledgement rejected**\n')
 
-def display_bios_lock():
+def display_bios_lock_ami ():
         
     print('\nBIOS lock option in the BIOS is enabled.\nFlashli will now exit to prevent harm.')
-    print('Please disable the BIOS lock in the BIOS\n\n\n')
+    print('Please disable the BIOS lock in the BIOS\n')
 
-    print('\tIF YOU ARE USING AMI\n')
-    print('Please reboot the device\nPress DEL when the splash screen appears.')
-    print('Navigate to Chipset\nUnder Chipset naviate to PCH-10 Configuration.')
-    print('\nYou will see BIOS Lock at the bottom')
-    print('Disable BIOS lock\nPress F4 to save and reboot')
-    print('After reboot please try flashli again.\n\n')
-
-    print('\tIF YOU ARE USING COREBOOT\n')
-    print('Please reboot the device\nPress DEL when the splash screen appears.')
-    print('From the main menu naviagte to Dasharo System Features.\nThen to Dasahro Security Options.')
-    print('You should now see an option for Lock the BIOS boot medium.\nPress enter to disable it.')
-    print('Make sure to go out to the main by pressing esc\nSelect reset\nWait for reboot.\n\n')
+    print('\tUSING AMI\n')
+    print('-Please reboot the device\n-Press DEL when the splash screen appears')
+    print('-Navigate to Chipset\n-Navigate to PCH-10 Configuration')
+    print('\n-You will see BIOS Lock at the bottom')
+    print('-Disable BIOS lock\n-Press F4 to save and reboot')
+    print('-After reboot please try flashli again\n\n')
 
     sys.exit()
 
+def display_bios_lock_coreboot ():
 
+    print('\nBIOS lock option in the BIOS is enabled.\nFlashli will now exit to prevent harm.')
+    print('Please disable the BIOS lock in the BIOS\n')
+
+    print('\tUSING COREBOOT\n')
+    print('-Please reboot the device\n-Press DEL when the splash screen appears')
+    print('-From the main menu navigate to \'Dasharo System Features\'\n-Select \'Dasharo Security Options\'')
+    print('-Disable Lock the BIOS boot medium by pressing enter')
+    print('-Press ESC until you see the main menu\n-Select Reset to save and reboot.')
+    print('-After reboot please try flashli again\n\n')
+
+    sys.exit()
 
 def main():  # noqa:WPS213
     """Main program."""
@@ -248,9 +265,6 @@ def main():  # noqa:WPS213
     os.system('/bin/clear')  # noqa:S607,S605
 
     print (display_logo())
-
-    if check_flash():
-        display_bios_lock()
 
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())

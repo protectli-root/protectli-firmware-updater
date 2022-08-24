@@ -4,7 +4,9 @@ import types
 
 flash_command = 'vendor/flashrom -p internal -w {0} --ifd -i bios'
 overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --ifd -i bios'
+
 vpxxxx_flash_command = 'vendor/flashrom -p internal -w {0}'
+vpxxxx_upgrade = 'vendor/flashrom -p internal -w {0} --fmap -i RW_SECTION_A'
 
 CONFIGURATIONS = types.MappingProxyType({
     'fw2': {
@@ -231,12 +233,13 @@ CONFIGURATIONS = types.MappingProxyType({
                 
             },
             {
-                'vendor': 'DEV coreboot',
-                'file': 'protectli_vault.rom',
+                'vendor': 'coreboot',
+                'file': 'protectli_vp4630_v1.0.17.rom',
             },
 
         ],
         'command': vpxxxx_flash_command,
+        'upgrade': vpxxxx_upgrade,
     },
 
 })
