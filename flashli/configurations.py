@@ -8,6 +8,7 @@ overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --if
 vpxxxx_flash_command = 'vendor/flashrom -p internal -w {0}'
 vpxxxx_upgrade = 'vendor/flashrom -p internal -w {0} --fmap -i RW_SECTION_A'
 
+
 CONFIGURATIONS = types.MappingProxyType({
     'fw2': {
         'cpu': 'J1800',

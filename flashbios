@@ -124,7 +124,7 @@ def do_flash(model: str, bios: str) -> int:
     if hardware.has_param(DEBUGMODE, 'FW6D') or hardware.has_param(DEBUGMODE, 'FW6E') and hardware.has_param(DEBUGMODE, 'coreboot'):
 
         completed_process = subprocess.run(CONFIGURATIONS[model]['override'].format(file_path), shell=True)  # noqa:S602,S603
-    
+
     elif hardware.has_param(DEBUGMODE, 'VP46xx'):
         completed_process = subprocess.run(CONFIGURATIONS[model][vp46_command].format(file_path), shell=True)  # noqa:S602,S603
 
