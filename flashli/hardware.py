@@ -79,6 +79,7 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
     """
     if debugmode:
         return debugmode
+        
     cpu = get_cpu(debugmode)
 
     if mac_check == 'vp_vr1':
@@ -92,6 +93,9 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
 
     if cpu == '7020U':
         return 'fw6br'
+
+    if cpu == '8130U':
+        return 'fw6br2'
     
     if '3865U' in cpu or '7100U' in cpu or '7200U' in cpu and get_nicTest(debugmode):
         return "fw6m"
@@ -159,3 +163,57 @@ def get_mac(debugmode: str) -> str:
 
     return device_mac
 
+def check_bios_lock (debugmode: str) -> str:
+    """Runs flashrom to check for errors.
+
+    Args:
+        debugmode: Passed if this is a debug device.
+
+    Returns:
+        bool
+    """
+    flashrom_dir = './vendor/flashrom'
+    flashrom_status = str(subprocess.run([flashrom_dir, '-p', 'internal'], capture_output=True))
+
+    # Flashrom error for AMI
+    if 'Warning: BIOS region SMM protection is enabled!' in flashrom_status:
+
+        return True
+        
+    # Flashrom error for coreboot
+    elif 'PR0: Warning: 0x00c00000-0x00ffffff is read-only' in flashrom_status:
+
+        return True
+        
+    else:
+        return False
+
+def check_for_ami(debugmode):
+    """Checks if BIOS is AMI
+
+    Args:
+        debugmode: Passed if this is a debug device.
+
+    Returns:
+        bool
+    """
+
+    if has_param(debugmode, 'American Megatrends'):
+        return True
+    
+    return False
+
+def check_for_coreboot(debugmode):
+    """Checks if BIOS is coreboot
+
+    Args:
+        debugmode: Passed if this is a debug device.
+
+    Returns:
+        bool
+    """
+
+    if has_param(debugmode, 'coreboot'):
+        return True
+    
+    return False

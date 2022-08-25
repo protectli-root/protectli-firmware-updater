@@ -4,7 +4,10 @@ import types
 
 flash_command = 'vendor/flashrom -p internal -w {0} --ifd -i bios'
 overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --ifd -i bios'
-vp2410_flash_command = 'vendor/flashrom -p internal -w {0}'
+
+vpxxxx_flash_command = 'vendor/flashrom -p internal -w {0}'
+vpxxxx_upgrade = 'vendor/flashrom -p internal -w {0} --fmap -i RW_SECTION_A'
+
 
 CONFIGURATIONS = types.MappingProxyType({
     'fw2': {
@@ -79,6 +82,7 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': flash_command,
     },
+
     'fw6ar': {
         'cpu': '3867U',
         'bios': [
@@ -109,6 +113,20 @@ CONFIGURATIONS = types.MappingProxyType({
     },
     'fw6br': {
         'cpu': '7020U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'FW6_all_YKBR6L12.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
+            },
+        ],
+        'command': flash_command,
+    },
+    'fw6br2': {
+        'cpu': '8130U',
         'bios': [
             {
                 'vendor': 'ami',
@@ -192,7 +210,7 @@ CONFIGURATIONS = types.MappingProxyType({
 
             },
         ],
-        'command': vp2410_flash_command,
+        'command': vpxxxx_flash_command,
     },
     'vp2410r': {
         'cpu': 'J4125',
@@ -206,6 +224,24 @@ CONFIGURATIONS = types.MappingProxyType({
                 'file': 'protectli_vp2410_DF_v1.0.15.rom',
             },
         ],
-        'command': vp2410_flash_command,
+        'command': vpxxxx_flash_command,
     },
+    'vp4630': {
+        'cpu': '10110U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'VP4630_YWDZ6L11.bin',
+                
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp4630_v1.0.17.rom',
+            },
+
+        ],
+        'command': vpxxxx_flash_command,
+        'upgrade': vpxxxx_upgrade,
+    },
+
 })

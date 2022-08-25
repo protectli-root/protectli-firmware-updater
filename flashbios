@@ -21,8 +21,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 
 displaySize = 89
 
-VERSION = '1.1.22'
-
+VERSION = '1.1.23'
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
@@ -64,6 +63,40 @@ def get_image_path(model: str, requested_bios: str) -> str:
         if bios['vendor'] == requested_bios:
             return 'images/{0}'.format(bios['file'])
 
+def check_vp46_flash_config (bios_select: str) -> str:
+    """checks the current BIOS to user selected flash image.
+
+    Args:
+        bios_select: selected flash BIOS image
+
+    Returns:
+        str: Path to the BIOS file requested
+    """
+
+    if hardware.get_protectli_device(DEBUGMODE, check_mac()) == 'vp4630' :
+
+        if hardware.check_for_ami(DEBUGMODE) :
+
+            if hardware.check_bios_lock(DEBUGMODE) :
+                display_bios_lock_ami()
+
+            else:
+                return 'command'
+
+        elif hardware.check_for_coreboot(DEBUGMODE):
+
+            if 'ami' in bios_select:
+
+                if hardware.check_bios_lock(DEBUGMODE) :
+                    display_bios_lock_coreboot()
+
+                else :
+                    return 'command'
+            else:
+                return 'upgrade'
+        
+        else:
+            sys.exit('Error has occured\nVP46xx device not found')
 
 def do_flash(model: str, bios: str) -> int:
     """Perform the BIOS flash.
@@ -84,11 +117,16 @@ def do_flash(model: str, bios: str) -> int:
     if DEBUGMODE:
         print('Not actually flashing, script is in debug mode.')
         return 0
+
+    vp46_command = check_vp46_flash_config(bios)
     file_path = get_image_path(model, bios)
 
     if hardware.has_param(DEBUGMODE, 'FW6D') or hardware.has_param(DEBUGMODE, 'FW6E') and hardware.has_param(DEBUGMODE, 'coreboot'):
 
         completed_process = subprocess.run(CONFIGURATIONS[model]['override'].format(file_path), shell=True)  # noqa:S602,S603
+
+    elif hardware.has_param(DEBUGMODE, 'VP46xx'):
+        completed_process = subprocess.run(CONFIGURATIONS[model][vp46_command].format(file_path), shell=True)  # noqa:S602,S603
 
     else:
         completed_process = subprocess.run(CONFIGURATIONS[model]['command'].format(file_path), shell=True)  # noqa:S602,S603
@@ -192,13 +230,40 @@ def display_warning () :
     else :
         sys.exit('**Acknowledgement rejected**\n')
 
+def display_bios_lock_ami ():
+        
+    print('\nBIOS lock option in the BIOS is enabled.\nFlashli will now exit to prevent harm.')
+    print('Please disable the BIOS lock in the BIOS\n')
+
+    print('\tUSING AMI\n')
+    print('-Please reboot the device\n-Press DEL when the splash screen appears')
+    print('-Navigate to Chipset\n-Navigate to PCH-10 Configuration')
+    print('\n-You will see BIOS Lock at the bottom')
+    print('-Disable BIOS lock\n-Press F4 to save and reboot')
+    print('-After reboot please try flashli again\n\n')
+
+    sys.exit()
+
+def display_bios_lock_coreboot ():
+
+    print('\nBIOS lock option in the BIOS is enabled.\nFlashli will now exit to prevent harm.')
+    print('Please disable the BIOS lock in the BIOS\n')
+
+    print('\tUSING COREBOOT\n')
+    print('-Please reboot the device\n-Press DEL when the splash screen appears')
+    print('-From the main menu navigate to \'Dasharo System Features\'\n-Select \'Dasharo Security Options\'')
+    print('-Disable Lock the BIOS boot medium by pressing enter')
+    print('-Press ESC until you see the main menu\n-Select Reset to save and reboot.')
+    print('-After reboot please try flashli again\n\n')
+
+    sys.exit()
+
 def main():  # noqa:WPS213
     """Main program."""
 
     os.system('/bin/clear')  # noqa:S607,S605
 
     print (display_logo())
-    #display_warning()
 
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
@@ -221,9 +286,13 @@ def main():  # noqa:WPS213
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))
 
-    if bios_mode == 'EFI' and not str(device) == 'vp2410' and not str(device) == 'vp2410r':
+    if bios_mode == 'EFI' and not str(device) == 'vp2410' and not str(device) == 'vp2410r' and not str(device) == 'vp4630':
         print(textwrap.fill(
-            'This tool must be run in Legacy BIOS mode, not EFI. If you are using this tool to update an existing EFI system, you may experience issues booting into your operating system after flashing a new BIOS. If you are aware of the risks and wish to proceed with flashing a new BIOS image, please reboot your device and configure your current BIOS to boot into Legacy Mode.',
+            '\n\nThis tool must be run in Legacy BIOS mode, not EFI.\n'
+            'If you are using this tool to update an existing EFI system,\n'
+            'you may experience issues booting into your operating system after flashing a new BIOS.\n'
+            'If you are aware of the risks and wish to proceed with flashing a new BIOS image,\n'
+            ' please reboot your device and configure your current BIOS to boot into Legacy Mode.',
             displaySize,
         ))
         sys.exit()
@@ -242,7 +311,7 @@ def main():  # noqa:WPS213
         print('Please restart your device.')
     else:
         print('BIOS Flash failed, is this script running with root permissions?')
-        print('Please try again, but if problems persist, please let us know.')
+        print('Please try again, but if problems persist, please contact Protectli.')
         show_debug_info()
 
 
