@@ -3,7 +3,10 @@
 import types
 
 flash_command = 'vendor/flashrom -p internal -w {0} --ifd -i bios'
-vp2410_flash_command = 'vendor/flashrom -p internal -w {0}'
+overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --ifd -i bios'
+
+vpxxxx_flash_command = 'vendor/flashrom -p internal -w {0}'
+vpxxxx_upgrade = 'vendor/flashrom -p internal -w {0} --fmap -i RW_SECTION_A'
 
 CONFIGURATIONS = types.MappingProxyType({
     'fw2': {
@@ -73,12 +76,13 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
     },
-        'fw6ar': {
+
+    'fw6ar': {
         'cpu': '3867U',
         'bios': [
             {
@@ -87,7 +91,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -101,7 +105,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -115,7 +119,21 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
+            },
+        ],
+        'command': flash_command,
+    },
+    'fw6br2': {
+        'cpu': '8130U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'FW6_all_YKBR6L12.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -129,7 +147,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -143,7 +161,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
@@ -157,10 +175,11 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
+        'override': overrider_command,
     },
     'fw6e': {
         'cpu': '8550U',
@@ -171,10 +190,11 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_DF_v1.0.12.rom',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
         'command': flash_command,
+        'override': overrider_command,
     },
     'vp2410': {
         'cpu': 'J4125',
@@ -189,7 +209,7 @@ CONFIGURATIONS = types.MappingProxyType({
 
             },
         ],
-        'command': vp2410_flash_command,
+        'command': vpxxxx_flash_command,
     },
     'vp2410r': {
         'cpu': 'J4125',
@@ -200,9 +220,27 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_vp2410_DF_1.0.10.rom',
+                'file': 'protectli_vp2410_DF_v1.0.15.rom',
             },
         ],
-        'command': vp2410_flash_command,
+        'command': vpxxxx_flash_command,
     },
+    'vp4630': {
+        'cpu': '10110U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'VP4630_YWDZ6L11.bin',
+                
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp4630_v1.0.17.rom',
+            },
+
+        ],
+        'command': vpxxxx_flash_command,
+        'upgrade': vpxxxx_upgrade,
+    },
+
 })
