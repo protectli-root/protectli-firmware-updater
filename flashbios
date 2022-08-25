@@ -23,7 +23,6 @@ displaySize = 89
 
 VERSION = '1.1.23'
 
-
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
     print('Please run: sudo ./main.py')
