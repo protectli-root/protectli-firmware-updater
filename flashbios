@@ -179,7 +179,7 @@ def get_user_selection(device: str) -> str:
             filename = available_option['file']
             print('[{0}]: {1} ({2})'.format(str(number), vendor, filename))
             number += 1
-        print('\nEnter the [#] of an image file, or [0] to quit. Flahing will not begin yet')
+        print('\nEnter the [#] of an image file, or [0] to quit. Flashing will not begin yet')
         print('> ', end='')
         try:
             user_input = int(input())
