@@ -8,6 +8,7 @@ overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --if
 vpxxxx_flash_command = 'vendor/flashrom -p internal -w {0}'
 vpxxxx_upgrade = 'vendor/flashrom -p internal -w {0} --fmap -i RW_SECTION_A'
 
+
 CONFIGURATIONS = types.MappingProxyType({
     'fw2': {
         'cpu': 'J1800',
@@ -91,6 +92,7 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': flash_command,
     },
+
     'fw6ar': {
         'cpu': '3867U',
         'bios': [
@@ -239,7 +241,9 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
+
                 'file': 'vp4630_YW6L2314.bin',
+
                 
             },
             {
@@ -250,7 +254,7 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': vpxxxx_flash_command,
         'upgrade': vpxxxx_upgrade,
-    },
+    }
      'vp4650': {
         'cpu': '10210U',
         'bios': [
