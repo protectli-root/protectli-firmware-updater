@@ -21,7 +21,8 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 
 displaySize = 89
 
-VERSION = '1.1.23'
+VERSION = '1.1.24'
+
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
@@ -286,7 +287,8 @@ def main():  # noqa:WPS213
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))
 
-    if bios_mode == 'EFI' and not str(device) == 'vp2410' and not str(device) == 'vp2410r' and not str(device) == 'vp4630':
+    if bios_mode == 'EFI' and not str(device) == 'vp2410' and not str(device) == 'vp2410r' and not str(device) == 'vp4630' and not str(device) == 'vp4650':
+
         print(textwrap.fill(
             '\n\nThis tool must be run in Legacy BIOS mode, not EFI.\n'
             'If you are using this tool to update an existing EFI system,\n'
