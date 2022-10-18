@@ -254,7 +254,7 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': vpxxxx_flash_command,
         'upgrade': vpxxxx_upgrade,
-    }
+    },
      'vp4650': {
         'cpu': '10210U',
         'bios': [
