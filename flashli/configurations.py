@@ -7,6 +7,10 @@ overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --if
 
 vpxxxx_flash_command = 'vendor/flashrom -p internal -w {0}'
 vpxxxx_upgrade = 'vendor/flashrom -p internal -w {0} --fmap -i RW_SECTION_A'
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4a5be071134c617876100f19b50da74f86bf01b
 
 CONFIGURATIONS = types.MappingProxyType({
     'fw2': {
@@ -91,6 +95,7 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': flash_command,
     },
+
     'fw6ar': {
         'cpu': '3867U',
         'bios': [
