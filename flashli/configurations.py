@@ -8,7 +8,6 @@ overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --if
 vpxxxx_flash_command = 'vendor/flashrom -p internal -w {0}'
 vpxxxx_upgrade = 'vendor/flashrom -p internal -w {0} --fmap -i RW_SECTION_A'
 
-
 CONFIGURATIONS = types.MappingProxyType({
     'fw2': {
         'cpu': 'J1800',
@@ -29,7 +28,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw2b_v4.9.0.2.rom',
+                'file': 'protectli_fw2b_v4.9.0.3.rom',
             },
         ],
         'command': flash_command,
@@ -63,7 +62,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_fw4b_v4.12.0.7.rom',
+                'file': 'protectli_fw4b_v4.12.0.8.rom',
             },
         ],
         'command': flash_command,
@@ -73,7 +72,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW4C_220921.bin',
+                'file': 'FW4C_MBSW0103.bin',
             },
         ],
         'command': flash_command,
@@ -241,7 +240,6 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-
                 'file': 'vp4630_YW6L2314.bin',
 
                 
