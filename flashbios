@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.25'
+VERSION = '1.1.26'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -126,11 +126,7 @@ def do_flash(model: str, bios: str) -> int:
     if hardware.has_param(DEBUGMODE, 'FW6D') or hardware.has_param(DEBUGMODE, 'FW6E') and hardware.has_param(DEBUGMODE, 'coreboot'):
 
         completed_process = subprocess.run(CONFIGURATIONS[model]['override'].format(file_path), shell=True)  # noqa:S602,S603
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> f4a5be071134c617876100f19b50da74f86bf01b
     elif hardware.has_param(DEBUGMODE, 'VP46xx'):
         completed_process = subprocess.run(CONFIGURATIONS[model][vp46_command].format(file_path), shell=True)  # noqa:S602,S603
 
@@ -293,10 +289,7 @@ def main():  # noqa:WPS213
     print('BIOS Mode: {0}'.format(bios_mode))
 
     if bios_mode == 'EFI' and not str(device) == 'vp2410' and not str(device) == 'vp2410r' and not str(device) == 'vp4630' and not str(device) == 'vp4650':
-<<<<<<< HEAD
-=======
 
->>>>>>> f4a5be071134c617876100f19b50da74f86bf01b
         print(textwrap.fill(
             '\n\nThis tool must be run in Legacy BIOS mode, not EFI.\n'
             'If you are using this tool to update an existing EFI system,\n'
