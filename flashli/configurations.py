@@ -241,6 +241,7 @@ CONFIGURATIONS = types.MappingProxyType({
             {
                 'vendor': 'ami',
                 'file': 'vp4630_YW6L2314.bin',
+
                 
             },
             {
