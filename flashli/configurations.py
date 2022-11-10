@@ -258,7 +258,20 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'vp4650_YW6L2514.bin',
+                'file': 'vp4650_YW6L2516_221102.bin',
+                
+            },
+
+        ],
+        'command': vpxxxx_flash_command,
+        'upgrade': vpxxxx_upgrade,
+    },
+    'vp4670': {
+        'cpu': '10810U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'vp4670_YW6L1715_221102.bin',
                 
             },
 
