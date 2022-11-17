@@ -155,10 +155,6 @@ CONFIGURATIONS = types.MappingProxyType({
                 'vendor': 'ami',
                 'file': 'FW6_all_YKBR6L12.bin',
             },
-            {
-                'vendor': 'coreboot',
-                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
-            },
         ],
         'command': flash_command,
     },
