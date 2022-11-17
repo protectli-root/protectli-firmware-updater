@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.27'
+VERSION = '1.1.28'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
