@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.28'
+VERSION = '1.1.29'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -75,7 +75,9 @@ def check_vp46_flash_config (bios_select: str) -> str:
         str: Path to the BIOS file requested
     """
 
-    if hardware.get_protectli_device(DEBUGMODE, check_mac()) == 'vp4630' :
+    vp46_devices = {'vp4630', 'vp4650', 'vp4670'}
+
+    if hardware.get_protectli_device(DEBUGMODE, check_mac()) in vp46_devices :
 
         if hardware.check_for_ami(DEBUGMODE) :
 
@@ -85,7 +87,7 @@ def check_vp46_flash_config (bios_select: str) -> str:
             else:
                 return 'command'
 
-        elif hardware.check_for_coreboot(DEBUGMODE):
+        elif hardware.check_for_coreboot(DEBUGMODE) :
 
             if 'ami' in bios_select:
 
