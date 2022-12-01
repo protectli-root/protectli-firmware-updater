@@ -22,12 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-<<<<<<< HEAD
-VERSION = '1.1.28'
-=======
 VERSION = '1.1.29'
->>>>>>> master
-
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
