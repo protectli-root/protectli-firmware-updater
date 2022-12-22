@@ -257,6 +257,11 @@ CONFIGURATIONS = types.MappingProxyType({
                 'file': 'vp4650_YW6L2516_221102.bin',
                 
             },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp4630_vp4650_v1.0.19.rom',
+                
+            },
 
         ],
         'command': vpxxxx_flash_command,
