@@ -155,6 +155,10 @@ CONFIGURATIONS = types.MappingProxyType({
                 'vendor': 'ami',
                 'file': 'FW6_all_YKBR6L12.bin',
             },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
+            },
         ],
         'command': flash_command,
     },
@@ -255,6 +259,11 @@ CONFIGURATIONS = types.MappingProxyType({
             {
                 'vendor': 'ami',
                 'file': 'vp4650_YW6L2516_221102.bin',
+                
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp4630_vp4650_v1.0.19.rom',
                 
             },
 
