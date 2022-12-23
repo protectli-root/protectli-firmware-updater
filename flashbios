@@ -118,6 +118,9 @@ def do_flash(model: str, bios: str) -> int:
     """
     global DEBUGMODE
     global CONFIGURATIONS
+
+    vp46_device = {'VP46xx', 'vp4630', 'vp4650'}
+
     if DEBUGMODE:
         print('Not actually flashing, script is in debug mode.')
         return 0
@@ -129,10 +132,12 @@ def do_flash(model: str, bios: str) -> int:
 
         completed_process = subprocess.run(CONFIGURATIONS[model]['override'].format(file_path), shell=True)  # noqa:S602,S603
 
-    elif hardware.has_param(DEBUGMODE, 'VP46xx'):
+    elif model in vp46_device : 
+
         completed_process = subprocess.run(CONFIGURATIONS[model][vp46_command].format(file_path), shell=True)  # noqa:S602,S603
 
     else:
+
         completed_process = subprocess.run(CONFIGURATIONS[model]['command'].format(file_path), shell=True)  # noqa:S602,S603
 
     return completed_process.returncode
