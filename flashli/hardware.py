@@ -172,7 +172,12 @@ def check_bios_lock (debugmode: str) -> str:
     Returns:
         bool
     """
-    flashrom_dir = './vendor/flashrom'
+    if (has_param('null','VP2420')) :
+        flashrom_dir = './vendor/flashrom_v2'
+    
+    else :
+        flashrom_dir = './vendor/flashrom'
+    
     flashrom_status = str(subprocess.run([flashrom_dir, '-p', 'internal'], capture_output=True))
 
     # Flashrom error for AMI
