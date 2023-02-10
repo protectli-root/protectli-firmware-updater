@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.31'
+VERSION = '1.1.32'
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
@@ -74,7 +74,7 @@ def check_vp46_flash_config (bios_select: str) -> str:
         str: Path to the BIOS file requested
     """
 
-    vp46_devices = {'vp4630', 'vp4650', 'vp4670'}
+    vp46_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670'}
 
     if hardware.get_protectli_device(DEBUGMODE, check_mac()) in vp46_devices :
 
@@ -118,7 +118,7 @@ def do_flash(model: str, bios: str) -> int:
     global DEBUGMODE
     global CONFIGURATIONS
 
-    vp46_device = {'VP46xx', 'vp4630', 'vp4650'}
+    vp_device = {'vp2420', 'VP46xx', 'vp4630', 'vp4650', 'vp4670'}
 
     if DEBUGMODE:
         print('Not actually flashing, script is in debug mode.')
@@ -131,7 +131,7 @@ def do_flash(model: str, bios: str) -> int:
 
         completed_process = subprocess.run(CONFIGURATIONS[model]['override'].format(file_path), shell=True)  # noqa:S602,S603
 
-    elif model in vp46_device : 
+    elif model in vp_device : 
 
         completed_process = subprocess.run(CONFIGURATIONS[model][vp46_command].format(file_path), shell=True)  # noqa:S602,S603
 
@@ -294,7 +294,7 @@ def main():  # noqa:WPS213
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))
 
-    efi_devices = {'2410', 'vp2410r', 'vp4630', 'vp4650', 'vp4670'}
+    efi_devices = {'vp2410', 'vp2420', 'vp2410r', 'vp4630', 'vp4650', 'vp4670'}
 
     if bios_mode == 'EFI' and not str(device) in efi_devices :
 
@@ -319,7 +319,13 @@ def main():  # noqa:WPS213
     returncode = do_flash(device, selection)
     if returncode == 0:
         print('Flash completed and successful.')
-        print('Please restart your device.')
+
+        if device == 'vp2420':
+            print('Please POWER OFF the device and turn it back on')
+        
+        else:
+            print('Please restart your device.')
+
     else:
         print('BIOS Flash failed, is this script running with root permissions?')
         print('Please try again, but if problems persist, please contact Protectli.')
