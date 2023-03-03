@@ -25,7 +25,7 @@ def is_protectli_device(debugmode: str) -> bool:
     match2 = 'YANLING' in str(syscall)
     return match1 or match2 or debugmode
 
-def has_param(debugmode: str, param_check: str) -> bool:
+def has_param(debugmode: str, param_check) -> bool:
     """Check for a specific parameter
 
     Args:
@@ -34,8 +34,16 @@ def has_param(debugmode: str, param_check: str) -> bool:
     Returns:
         bool: True if the device has the parameter
     """
+
     dmi_path = str(subprocess.check_output(['which', 'dmidecode'], shell=False).decode('utf-8')).replace('\n','')
     syscall = subprocess.check_output([dmi_path], shell=False).decode('utf-8') 
+
+    if isinstance(param_check, set) :
+
+        for ele in param_check:
+
+            if ele in str(syscall):
+                return True
 
     if param_check in str(syscall):
         return True

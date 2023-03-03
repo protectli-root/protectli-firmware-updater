@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.33'
+VERSION = '1.1.34'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -74,28 +74,36 @@ def check_vp46_flash_config (bios_select: str) -> str:
     Returns:
         str: Path to the BIOS file requested
     """
-
+    full_flash_exceptions = {'Dasharo (coreboot+UEFI) v1.0.1'}
     vp46_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670'}
 
+
+    #Checks if the devic is a VP
     if hardware.get_protectli_device(DEBUGMODE, check_mac()) in vp46_devices :
-
+        #Checks if current BIOS/UEFI is AMI
         if hardware.check_for_ami(DEBUGMODE) :
-
+            #Checks if the BIOS lock is enabled
             if hardware.check_bios_lock(DEBUGMODE) :
                 display_bios_lock_ami()
 
             else:
                 return 'command'
-
+        #checks if the current BIOS is coreboot
         elif hardware.check_for_coreboot(DEBUGMODE) :
 
-            if 'ami' in bios_select:
 
+            #checks if ami image is select to flash
+            if 'ami' in bios_select:
+                #checks if the BIOS lock is on
                 if hardware.check_bios_lock(DEBUGMODE) :
                     display_bios_lock_coreboot()
 
                 else :
                     return 'command'
+                
+            elif hardware.has_param(DEBUGMODE, full_flash_exceptions):
+                return 'command'
+            
             else:
                 return 'upgrade'
         
