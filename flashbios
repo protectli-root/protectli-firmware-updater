@@ -78,31 +78,41 @@ def check_vp46_flash_config (bios_select: str) -> str:
     vp46_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670'}
 
 
-    #Checks if the devic is a VP
+    #Checks if the device is a VP
     if hardware.get_protectli_device(DEBUGMODE, check_mac()) in vp46_devices :
+
         #Checks if current BIOS/UEFI is AMI
         if hardware.check_for_ami(DEBUGMODE) :
+
             #Checks if the BIOS lock is enabled
             if hardware.check_bios_lock(DEBUGMODE) :
                 display_bios_lock_ami()
 
             else:
                 return 'command'
-        #checks if the current BIOS is coreboot
+            
+        #Checks if the current BIOS is coreboot
         elif hardware.check_for_coreboot(DEBUGMODE) :
 
 
-            #checks if ami image is select to flash
+            #Checks if ami image is select to flash
             if 'ami' in bios_select:
-                #checks if the BIOS lock is on
+
+                #Checks if the BIOS lock is on
                 if hardware.check_bios_lock(DEBUGMODE) :
                     display_bios_lock_coreboot()
 
                 else :
                     return 'command'
-                
+            #Checks if there is an exception    
             elif hardware.has_param(DEBUGMODE, full_flash_exceptions):
-                return 'command'
+
+                #Checks if the BIOS lock is on
+                if hardware.check_bios_lock(DEBUGMODE) :
+                    display_bios_lock_coreboot()
+
+                else :
+                    return 'command'
             
             else:
                 return 'upgrade'
