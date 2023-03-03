@@ -77,6 +77,10 @@ CONFIGURATIONS = types.MappingProxyType({
                 'vendor': 'ami',
                 'file': 'FW4C_MBSW0103.bin',
             },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_fw4c_v4.12.0.12.rom'
+            },
         ],
         'command': flash_command,
     },
