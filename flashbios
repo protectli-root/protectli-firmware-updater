@@ -111,10 +111,16 @@ def check_vp46_flash_config (bios_select: str) -> str:
                 if hardware.check_bios_lock(DEBUGMODE) :
                     display_bios_lock_coreboot()
 
+                elif hardware.get_protectli_device(DEBUGMODE, check_mac()) == 'vp2420' :
+                    print ('Alt Upgrade')
+                    return 'alt_upgrade'
+
                 else :
+                    print ('Regular Flashing')
                     return 'command'
             
             else:
+                print ('Upgrading')
                 return 'upgrade'
         
         else:

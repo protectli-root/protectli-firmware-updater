@@ -7,6 +7,7 @@ overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --if
 
 vp2420_command = 'vendor/flashrom_v2 -p internal -w {0}'
 vp2420_upgrade = 'vendor/flashrom_v2 -p internal -w {0} --fmap -i RW_SECTION_A'
+vp242_alt_upgrade = 'vendor/flashrom_v2 -p internal -w {0} --fmap -i RW_SECTION_A -i WP_RO'
 
 vpxxxx_flash_command = 'vendor/flashrom -p internal -w {0}'
 vpxxxx_upgrade = 'vendor/flashrom -p internal -w {0} --fmap -i RW_SECTION_A'
@@ -256,6 +257,7 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': vp2420_command,
         'upgrade': vp2420_upgrade,
+        'alt_upgrade' : vp242_alt_upgrade,
     },
     'vp4630': {
         'cpu': '10110U',
