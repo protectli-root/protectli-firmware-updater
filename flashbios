@@ -74,7 +74,7 @@ def check_vp46_flash_config (bios_select: str) -> str:
     Returns:
         str: Path to the BIOS file requested
     """
-    full_flash_exceptions = {'Dasharo (coreboot+UEFI) v1.0.1'}
+    full_flash_exceptions = 'Dasharo (coreboot+UEFI) v1.0.1'
     vp46_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670'}
 
 
