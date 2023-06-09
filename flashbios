@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.35'
+VERSION = '1.1.36'
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
@@ -73,7 +73,8 @@ def check_vp46_flash_config (bios_select: str) -> str:
     Returns:
         str: Path to the BIOS file requested
     """
-    full_flash_exceptions = 'Dasharo (coreboot+UEFI) v1.0.1'
+    full_flash_exceptions = ('Dasharo (coreboot+UEFI) v1.0.1', 'Dasharo (coreboot+UEFI) v1.0.19')
+    full_flash_unit_exceptions = {'vp2420', 'vp4670'}
     vp46_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670'}
 
 
@@ -110,7 +111,7 @@ def check_vp46_flash_config (bios_select: str) -> str:
                 if hardware.check_bios_lock(DEBUGMODE) :
                     display_bios_lock_coreboot()
 
-                elif hardware.get_protectli_device(DEBUGMODE, check_mac()) == 'vp2420' :
+                elif hardware.get_protectli_device(DEBUGMODE, check_mac()) in full_flash_unit_exceptions :
                     print ('Alternative Upgrade')
                     return 'alt_upgrade'
 
