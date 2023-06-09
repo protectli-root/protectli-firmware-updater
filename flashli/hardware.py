@@ -1,6 +1,6 @@
 """Hardware interactions."""
 from curses import flash
-from nis import match
+#from nis import match
 import os
 import re
 import subprocess
@@ -38,14 +38,14 @@ def has_param(debugmode: str, param_check) -> bool:
     dmi_path = str(subprocess.check_output(['which', 'dmidecode'], shell=False).decode('utf-8')).replace('\n','')
     syscall = subprocess.check_output([dmi_path], shell=False).decode('utf-8') 
 
-    if isinstance(param_check, set) :
+    if isinstance(param_check, (set, tuple, list, dict) ):
 
         for ele in param_check:
 
             if ele in str(syscall):
                 return True
 
-    if param_check in str(syscall):
+    elif param_check in str(syscall):
         return True
 
     return False
