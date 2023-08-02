@@ -1,6 +1,5 @@
 """Hardware interactions."""
 from curses import flash
-#from nis import match
 import os
 import re
 import subprocess

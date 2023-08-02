@@ -248,7 +248,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'vp2420_YELD4L11.bin',
+                'file': 'VP2420_YELD4L12_230706.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -264,7 +264,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'vp4630_YW6L2316_221102.bin',
+                'file': 'VP4630_YW6L2317_230615.bin',
 
             },
             {
@@ -281,7 +281,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'vp4650_YW6L2516_221102.bin',
+                'file': 'VP4630_YW6L2317_230615.bin',
                 
             },
             {
@@ -299,7 +299,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'vp4670_YW6L1715_221102.bin',
+                'file': 'VP4670_YW6L1716_230615.bin',
                 
             },
             {
