@@ -281,7 +281,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'VP4630_YW6L2317_230615.bin',
+                'file': 'VP4650_YW6L2517_230615.bin',
                 
             },
             {
