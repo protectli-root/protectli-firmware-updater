@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.37'
+VERSION = '1.1.38'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -316,6 +316,12 @@ def main():  # noqa:WPS213
         print('This tool is used to flash BIOS onto the following Protectli products:')
         print_supported_products()
         sys.exit()
+    
+    if device == 'vp4670' and hardware.get_cpu_step(DEBUGMODE):
+        print('\nThis is a new version of the VP4670 CPU and requires an updated version of coreboot.')
+        print('The revision is expected to be released soon')
+        print('We apologize for the inconvenience\n')
+        sys.exit(1)
 
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))

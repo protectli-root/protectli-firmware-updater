@@ -49,7 +49,15 @@ def has_param(debugmode: str, param_check) -> bool:
 
     return False
 
-
+def get_cpu_data (debugmode: str) -> str:
+    
+    try:
+        cpu_data = subprocess.check_output(['/bin/cat', '/proc/cpuinfo'], stderr=subprocess.DEVNULL).decode('utf-8')  # noqa:S603
+    except subprocess.CalledProcessError as exception:
+        print('No CPU information found... am I running in a VM or chroot?')
+        raise SystemExit('/bin/cat returned error code {0}'.format(exception.returncode))
+    
+    return cpu_data
 
 def get_cpu(debugmode: str) -> str:
     """Get the CPU model.
@@ -63,15 +71,29 @@ def get_cpu(debugmode: str) -> str:
     Returns:
         str: CPU identifier
     """
-    cpu_data = ''
-    try:
-        cpu_data = subprocess.check_output(['/bin/cat', '/proc/cpuinfo'], stderr=subprocess.DEVNULL).decode('utf-8')  # noqa:S603
-    except subprocess.CalledProcessError as exception:
-        print('No CPU information found... am I running in a VM or chroot?')
-        raise SystemExit('/bin/cat returned error code {0}'.format(exception.returncode)) 
+    cpu_data = get_cpu_data(debugmode)
+
     cpu_str = re.search(r'model name(\t|\s|:)*(.+)\n', cpu_data).group(2)
 
     return cpu_str
+
+def get_cpu_step(debugmode: int) -> int:
+     """Get the CPU model.
+
+    Args:
+        debugmode: Passed if this is a debug device.
+
+    Raises:
+        SystemExit: If no CPU info is found.
+
+    Returns:
+        str: CPU identifier
+    """
+     
+     cpu_data = get_cpu_data(debugmode)
+     cpu_str = re.search(r'stepping(\t|\s|:)*(.+)\n', cpu_data).group(2)
+
+     return int(cpu_str)
 
 
 
