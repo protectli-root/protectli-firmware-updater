@@ -304,7 +304,26 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_vp4670_v1.1.0.rom',
+                'file': 'protectli_vp4600_v1.2.0.rom',
+                
+            },
+
+        ],
+        'command': vpxxxx_flash_command,
+        'upgrade': vpxxxx_upgrade,
+        'alt_upgrade' : alt_upgrade,
+    },
+    'vp4670[s1]': {
+        'cpu': '10810U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'VP4670_YW6L2721_231101.bin',
+                
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp4600_v1.2.0.rom',
                 
             },
 

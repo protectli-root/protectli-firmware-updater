@@ -78,7 +78,7 @@ def get_cpu(debugmode: str) -> str:
     return cpu_str
 
 def get_cpu_step(debugmode: int) -> int:
-     """Get the CPU model.
+     """Get the CPU step.
 
     Args:
         debugmode: Passed if this is a debug device.
@@ -87,7 +87,7 @@ def get_cpu_step(debugmode: int) -> int:
         SystemExit: If no CPU info is found.
 
     Returns:
-        str: CPU identifier
+        int: CPU step
     """
      
      cpu_data = get_cpu_data(debugmode)
@@ -128,6 +128,9 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
     
     if '3865U' in cpu or '7100U' in cpu or '7200U' in cpu and get_nicTest(debugmode):
         return "fw6m"
+
+    if '10810U' in cpu and get_cpu_step(debugmode) == 1:
+        return "vp4670[s1]"
 
     for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:
@@ -215,9 +218,13 @@ def check_bios_lock (debugmode: str) -> str:
         return True
         
     # Flashrom error for coreboot
-    elif 'PR0: Warning: 0x00c00000-0x00ffffff is read-only' in flashrom_status:
+    elif 'PR0: Warning:' in flashrom_status:
 
-        return True
+        read_only_addresses = {'0x00c00000-0x00ffffff', '0x00b80000-0x00ffffff'}
+
+        for address in read_only_addresses:
+            if (address + ' is read-only') in flashrom_status:
+                return True
         
     else:
         return False
