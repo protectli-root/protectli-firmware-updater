@@ -26,7 +26,7 @@ Or clone this repo for the source code and run flashbios. To clone and run:
 ```
 git clone https://github.com/protectli-root/protectli-firmware-updater.git
 cd protectli-firmware-updater
-./flashbios
+sudo ./flashbios
 ```
 
 To obtain a binary, visit the Releases page and select the download you want. The downloaded ZIP (or otherwise compressed file) should be extracted to the host machine however you please (such as by USB thumbdrive). Extract the contents and run ```./flashbios``` from the CLI.
