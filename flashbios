@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.39'
+VERSION = '1.1.40'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -76,7 +76,7 @@ def check_vp46_flash_config (bios_select: str) -> str:
     """
     full_flash_exceptions = ('Dasharo (coreboot+UEFI) v1.0.1', 'Dasharo (coreboot+UEFI) v1.0.19')
     full_flash_unit_exceptions = {'vp2420', 'vp4670'}
-    full_flash = {'vp4670', 'vp4670[s1]'}
+    full_flash = {'vp4650', 'vp4670', 'vp4670[s1]'}
     vp46_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]'}
 
 
