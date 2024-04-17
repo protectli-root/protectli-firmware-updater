@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.40'
+VERSION = '1.1.41'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -76,7 +76,7 @@ def check_vp46_flash_config (bios_select: str) -> str:
     """
     full_flash_exceptions = ('Dasharo (coreboot+UEFI) v1.0.1', 'Dasharo (coreboot+UEFI) v1.0.19')
     full_flash_unit_exceptions = {'vp2420', 'vp4670'}
-    full_flash = {'vp4650', 'vp4670', 'vp4670[s1]'}
+    full_flash = {'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]'}
     vp46_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]'}
 
 
@@ -331,7 +331,6 @@ def main():  # noqa:WPS213
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))
 
-    efi_devices = {'fw4c', 'vp2410', 'vp2420', 'vp2410r', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]'}
     efi_devices = {'fw4c', 'vp2410', 'vp2420', 'vp2410r', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]'}
 
     if bios_mode == 'EFI' and not str(device) in efi_devices :
