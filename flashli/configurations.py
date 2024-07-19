@@ -5,7 +5,7 @@ import types
 flash_command = 'vendor/flashrom -p internal -w {0} --ifd -i bios'
 overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --ifd -i bios'
 
-vp2420_command = 'vendor/flashrom_v2 -p internal -w {0}'
+vp24_vp66_command = 'vendor/flashrom_v2 -p internal -w {0}'
 vp2420_upgrade = 'vendor/flashrom_v2 -p internal -w {0} --fmap -i RW_SECTION_A'
 alt_upgrade = 'vendor/flashrom_v2 -p internal -w {0} --fmap -i RW_SECTION_A -i WP_RO'
 
@@ -255,7 +255,7 @@ CONFIGURATIONS = types.MappingProxyType({
                 'file': 'protectli_vp2420_v1.2.0.rom',
             },
         ],
-        'command': vp2420_command,
+        'command': vp24_vp66_command,
         'upgrade': vp2420_upgrade,
         'alt_upgrade' : alt_upgrade,
     },
@@ -332,5 +332,40 @@ CONFIGURATIONS = types.MappingProxyType({
         'upgrade': vpxxxx_upgrade,
         'alt_upgrade' : alt_upgrade,
     },
+    'vp6630': {
+        'cpu': '1215U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'vp6630_ADZ6L313_240604.bin',
+            },
 
+        ],
+        'command': vp24_vp66_command,
+
+    },
+    'vp6650': {
+        'cpu': '1235U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'vp6650_ADZ6L513_240716.bin',
+            },
+
+        ],
+        'command': vp24_vp66_command,
+
+    },
+    'vp6670': {
+        'cpu': '1255U',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'vp6670_ADZ6L713_240716.bin',
+            },
+
+        ],
+        'command': vp24_vp66_command,
+
+    },
 })

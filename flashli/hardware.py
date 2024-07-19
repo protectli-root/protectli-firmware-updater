@@ -182,18 +182,29 @@ def get_mac(debugmode: str) -> str:
     Returns:
          str: NIC mac
     """
-    vp2410_mac_dir = '/sys/class/net/eno1/address'
-    other_unites_mac_dir = '/sys/class/net/enp1s0/address'
 
-    if os.path.isfile(vp2410_mac_dir):
+    device_mac = 0
 
-        device_mac = str(subprocess.check_output(['/bin/cat', vp2410_mac_dir], shell=False).decode('utf-8'))
-
+    address_dir = ['/sys/class/net/enp1s0f0/address',
+                   '/sys/class/net/enp2s0f0/address',
+                   '/sys/class/net/eno1/address',
+                   '/sys/class/net/enp1s0/address',
+                   '/sys/class/net/enp2s0/address',
+                   '/sys/class/net/enp4s0/address',
+                   '/sys/class/net/enp5s0/address',
+                   ]
+    
+    for add_dir in address_dir :
+        if os.path.isfile(add_dir):
+            device_mac = str(subprocess.check_output(['/bin/cat', add_dir], shell=False).decode('utf-8'))
+            break
+             
+    if not device_mac:
+        return False
+    
     else:
+        return device_mac
 
-        device_mac = str(subprocess.check_output(['/bin/cat', other_unites_mac_dir], shell=False).decode('utf-8'))
-
-    return device_mac
 
 def check_bios_lock (debugmode: str) -> str:
     """Runs flashrom to check for errors.
@@ -204,7 +215,8 @@ def check_bios_lock (debugmode: str) -> str:
     Returns:
         bool
     """
-    if (has_param('null','VP2420')) :
+
+    if (has_param('null',['VP2420', 'VP6630', 'VP6650', 'VP6670'])) :
         flashrom_dir = './vendor/flashrom_v2'
     
     else :
@@ -220,7 +232,9 @@ def check_bios_lock (debugmode: str) -> str:
     # Flashrom error for coreboot
     elif 'PR0: Warning:' in flashrom_status:
 
-        read_only_addresses = {'0x00c00000-0x00ffffff', '0x00b80000-0x00ffffff'}
+        read_only_addresses = {'0x00c00000-0x00ffffff',
+                               '0x00b80000-0x00ffffff',
+                               }
 
         for address in read_only_addresses:
             if (address + ' is read-only') in flashrom_status:
