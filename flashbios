@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.42'
+VERSION = '1.1.43'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -311,6 +311,47 @@ def display_bios_lock_coreboot ():
 
     sys.exit()
 
+def display_remove_power_warning (device):
+
+    poweroff_devices = ['vp2420',]
+
+    user_input = '0'
+
+    if device in poweroff_devices:
+
+        while (user_input != 'Y'):
+
+            print('NOTICE:\n')
+
+            print('When flashing new firmware onto the {0}, you MUST disconnect and reconnect the power cable\nfrom the unit in order to fully complete the update process.'.format(device))
+
+            print('Failure to perform these steps will cause your {0} to fail to power on until rectified.'.format(device))
+
+            print('\n\nAfter you have completed flashing the firmware:')
+
+            print('\n1. Shut down the {0}.'.format(device))
+            print('2. Disconnect the power cable from the unit.')
+            print('3. Wait five seconds.')
+            print('4. Reconnect the power cable to the unit.')
+
+            print('\nYOUR {0} WILL BE IN AN UNUSABLE STATE UNTIL THE ABOVE STEPS ARE PERFORMED.'.format(device))
+
+            print('\nPress [Y] to acknowledge these steps, or press [N] to stop the firmware update process.')
+
+            user_input = input(':').upper()
+
+            if (user_input == 'Y'):
+                print('\nAcknowledgement confirmed')
+                print('proceeding')
+
+            elif (user_input == 'N'):
+                print('\nFlashing firmware process has been stopped')
+                print('Exiting program')
+                sys.exit(0)
+            else:
+                print('\nPlease enter Y for yes or N for no')
+
+
 def main():  # noqa:WPS213
     """Main program."""
 
@@ -320,6 +361,8 @@ def main():  # noqa:WPS213
 
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
+
+    display_remove_power_warning(device)
 
     if device == 'Unknown' :
         print ('device is returning unknown')
