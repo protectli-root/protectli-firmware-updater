@@ -339,6 +339,10 @@ CONFIGURATIONS = types.MappingProxyType({
                 'vendor': 'ami',
                 'file': 'vp6630_ADZ6L313_240604.bin',
             },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp6600_v0.9.0.rom',
+            },
 
         ],
         'command': vp24_vp66_command,
@@ -351,6 +355,10 @@ CONFIGURATIONS = types.MappingProxyType({
                 'vendor': 'ami',
                 'file': 'vp6650_ADZ6L513_240716.bin',
             },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp6600_v0.9.0.rom',
+            },
 
         ],
         'command': vp24_vp66_command,
@@ -362,6 +370,10 @@ CONFIGURATIONS = types.MappingProxyType({
             {
                 'vendor': 'ami',
                 'file': 'vp6670_ADZ6L713_240716.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp6600_v0.9.0.rom',
             },
 
         ],

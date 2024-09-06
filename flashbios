@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.43'
+VERSION = '1.1.44'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -311,9 +311,52 @@ def display_bios_lock_coreboot ():
 
     sys.exit()
 
+def display_secureboot_enabled_ami ():
+        
+    print('\nSecure Boot option in the BIOS is enabled.\nFlashli will now exit to prevent harm.')
+    print('Please disable Secure Boot in the BIOS\n')
+
+    print('\tUSING AMI\n')
+    print('-Please reboot the device\n-Press DEL when the splash screen appears')
+    print('-Navigate to Security\n-Navigate Secure Boot')
+    print('\n-You will see Secure Boot as the first option')
+    print('-Disable Secure Boot\n-Press F4 to save and reboot')
+    print('-After reboot please try flashli again\n\n')
+
+    sys.exit()
+
+def display_secureboot_enabled_coreboot ():
+
+    print('\nSecure Boot option in the BIOS is enabled.\nFlashli will now exit to prevent harm.')
+    print('Please disable Secure Boot in the BIOS\n')
+
+    print('\tUSING COREBOOT\n')
+    print('-Please reboot the device\n-Press DEL when the splash screen appears')
+    print('-From the main menu navigate to \'Device Manager\'\n-Select \'Secure Boot Configureation\'')
+    print('-Disable Secure Boot by pressing enter')
+    print('-Press ESC until you see the main menu\n-Select Reset to save and reboot.')
+    print('-After reboot please try flashli again\n\n')
+
+    sys.exit()
+
+def display_long_boot_time (device):
+
+    long_boot = ['vp6630', 'vp6650', 'vp6670']
+
+    if device in long_boot:
+
+        print('\ncoreboot on the VP6600 has a notably longer memory initialization process')
+
+        print('After the unit has completed flashing the coreboot BIOS, the device may take up to 2 minutes to boot.')
+
+        print('DO NOT unplug the device during this time.')
+
+        print('Doing so will reset the initialization process and may cause a significant delay in device initialization.')
+
+
 def display_remove_power_warning (device):
 
-    poweroff_devices = ['vp2420',]
+    poweroff_devices = ['vp2420', 'vp6630', 'vp6650', 'vp6670']
 
     user_input = '0'
 
@@ -325,7 +368,7 @@ def display_remove_power_warning (device):
 
             print('When flashing new firmware onto the {0}, you MUST disconnect and reconnect the power cable\nfrom the unit in order to fully complete the update process.'.format(device))
 
-            print('Failure to perform these steps will cause your {0} to fail to power on until rectified.'.format(device))
+            print('Failure to perform these steps will cause your {0} to fail to power on or behave erratic until rectified'.format(device))
 
             print('\n\nAfter you have completed flashing the firmware:')
 
@@ -335,6 +378,8 @@ def display_remove_power_warning (device):
             print('4. Reconnect the power cable to the unit.')
 
             print('\nYOUR {0} WILL BE IN AN UNUSABLE STATE UNTIL THE ABOVE STEPS ARE PERFORMED.'.format(device))
+
+            display_long_boot_time(device)
 
             print('\nPress [Y] to acknowledge these steps, or press [N] to stop the firmware update process.')
 
@@ -363,6 +408,14 @@ def main():  # noqa:WPS213
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
 
     display_remove_power_warning(device)
+
+    if hardware.check_secureboot(DEBUGMODE):
+
+        if hardware.check_for_ami(DEBUGMODE):
+            display_secureboot_enabled_ami()
+
+        elif hardware.check_for_coreboot(DEBUGMODE):
+            display_secureboot_enabled_coreboot()
 
     if device == 'Unknown' :
         print ('device is returning unknown')
@@ -409,7 +462,7 @@ def main():  # noqa:WPS213
     if returncode == 0:
         print('Flash completed and successful.')
 
-        if device == 'vp2420':
+        if device in ['vp2420', 'vp6630', 'vp6650', 'vp6670']:
             print('Please POWER OFF the device and turn it back on')
         
         else:

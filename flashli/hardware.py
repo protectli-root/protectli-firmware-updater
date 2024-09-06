@@ -272,3 +272,27 @@ def check_for_coreboot(debugmode):
         return True
     
     return False
+
+def check_secureboot(debugmode):
+    """Checks if BIOS is coreboot
+
+    Args:
+        debugmode: Passed if this is a debug device.
+
+    Returns:
+        bool
+    """
+    mokutil_check = str(subprocess.run(['which', 'mokutil'], capture_output=True))
+    secureboot_status = str(subprocess.run(['mokutil', '--sb-state'], capture_output=True))
+
+    if mokutil_check:
+
+        if 'enabled' in secureboot_status:
+            return True
+        
+        elif 'disabled' in secureboot_status:
+            return False
+    else:
+
+        print('\nUnable to locate mokutil\n')
+        return False
