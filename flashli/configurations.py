@@ -214,6 +214,36 @@ CONFIGURATIONS = types.MappingProxyType({
         'command': flash_command,
         'override': overrider_command,
     },
+    'v1210': {
+        'cpu': 'N5105',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file' : 'V1210_JPL_S4G_007.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_v1210_v0.9.3.rom',
+
+            },
+        ],
+        'command': vp24_vp66_command,
+    },
+    'v1410': {
+        'cpu': 'N5105',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'V1410_JPL_S8GB_006B.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_v1410_v0.9.3.rom',
+
+            },
+        ],
+        'command': vp24_vp66_command,
+    },
     'vp2410': {
         'cpu': 'J4125',
         'bios': [

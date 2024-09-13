@@ -131,6 +131,12 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
 
     if '10810U' in cpu and get_cpu_step(debugmode) == 1:
         return "vp4670[s1]"
+    
+    if has_param(debugmode, 'V1210'):
+        return "v1210"
+    
+    if has_param(debugmode, 'V1410'):
+        return "v1410"
 
     for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:

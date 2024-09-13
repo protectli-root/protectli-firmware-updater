@@ -22,12 +22,12 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.44'
+VERSION = '1.1.45'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
     print('Need to be run as root user')
-    print('Please run: sudo ./main.py')
+    print('Please run: sudo ./flashbios')
     sys.exit()
 
 
@@ -76,13 +76,15 @@ def check_vp46_flash_config (bios_select: str) -> str:
     """
     full_flash_exceptions = ('Dasharo (coreboot+UEFI) v1.0.1', 'Dasharo (coreboot+UEFI) v1.0.19')
     full_flash_unit_exceptions = {'vp2420', 'vp4670'}
-    full_flash = {'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]'}
-    vp46_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
+    full_flash = {'v1210', 'v1410', 'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
+                  'vp6630', 'vp6650', 'vp6670'}
+    
+    vp_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
                     'vp6630', 'vp6650', 'vp6670'}
 
 
     #Checks if the device is a VP
-    if hardware.get_protectli_device(DEBUGMODE, check_mac()) in vp46_devices :
+    if hardware.get_protectli_device(DEBUGMODE, check_mac()) in vp_devices :
 
         #Checks if current BIOS/UEFI is AMI
         if hardware.check_for_ami(DEBUGMODE) :
@@ -356,7 +358,7 @@ def display_long_boot_time (device):
 
 def display_remove_power_warning (device):
 
-    poweroff_devices = ['vp2420', 'vp6630', 'vp6650', 'vp6670']
+    poweroff_devices = ['v1210', 'v1410', 'vp2420', 'vp6630', 'vp6650', 'vp6670']
 
     user_input = '0'
 
@@ -435,7 +437,7 @@ def main():  # noqa:WPS213
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))
 
-    efi_devices = {'fw4c', 'vp2410', 'vp2420', 'vp2410r', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
+    efi_devices = {'fw4c', 'v1210', 'v1410', 'vp2410', 'vp2420', 'vp2410r', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
                    'vp6630', 'vp6650', 'vp6670'}
 
     if bios_mode == 'EFI' and not str(device) in efi_devices :
@@ -462,8 +464,8 @@ def main():  # noqa:WPS213
     if returncode == 0:
         print('Flash completed and successful.')
 
-        if device in ['vp2420', 'vp6630', 'vp6650', 'vp6670']:
-            print('Please POWER OFF the device and turn it back on')
+        if device in ['v1210', 'v1410', 'vp2420', 'vp6630', 'vp6650', 'vp6670']:
+            print('Please REMOVE the POWER SUPPLY from the device and reinsert it')
         
         else:
             print('Please restart your device.')
