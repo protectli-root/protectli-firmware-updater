@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.45'
+VERSION = '1.1.46'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -366,8 +366,6 @@ def display_remove_power_warning (device):
 
         while (user_input != 'Y'):
 
-            print('NOTICE:\n')
-
             print('When flashing new firmware onto the {0}, you MUST disconnect and reconnect the power cable\nfrom the unit in order to fully complete the update process.'.format(device))
 
             print('Failure to perform these steps will cause your {0} to fail to power on or behave erratic until rectified'.format(device))
@@ -399,6 +397,32 @@ def display_remove_power_warning (device):
                 print('\nPlease enter Y for yes or N for no')
 
 
+def display_pkfail_support (device):
+
+    not_supported = ['fw1', 'fw2', 'fw4a', 'fw6m']
+    later_support = ['vp2420', 'vp2420r']
+
+    if device in not_supported:
+
+        print('\nThe {0} is out of the support window and will not be getting further updates.'.format(device))
+        print('{0} will not be receiving the PKfail fix.\n'.format(device))
+
+    elif device in later_support:
+
+        print('\nThe PKfail fix for {0} is still in the qualification process.'.format(device))
+        print('We estimate the PKfail fix will be released by 10/18/2024 {0}\n'.format(device))
+
+
+def display_serial_uuid_warning (device):
+
+    default_serial_uuid = ['v1210', 'v1410']
+
+    if device in default_serial_uuid:
+
+        print('\nWith the current implementation of firmware flashing, {0}\'s serial and UUID will be set to default.'.format(device))
+        print('A solution is currently in development.\n')
+
+
 def main():  # noqa:WPS213
     """Main program."""
 
@@ -409,6 +433,9 @@ def main():  # noqa:WPS213
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
 
+    print('NOTICE:\n')
+    display_pkfail_support(device)
+    display_serial_uuid_warning(device)
     display_remove_power_warning(device)
 
     if hardware.check_secureboot(DEBUGMODE):

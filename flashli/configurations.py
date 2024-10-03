@@ -3,6 +3,7 @@
 import types
 
 flash_command = 'vendor/flashrom -p internal -w {0} --ifd -i bios'
+flashli_command_pkfail = 'vendor/flashrom -p internal -w {0}'
 overrider_command = 'vendor/flashrom -p internal:boardmismatch=force -w {0} --ifd -i bios'
 
 vp24_vp66_command = 'vendor/flashrom_v2 -p internal -w {0}'
@@ -28,14 +29,14 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW2B_BSW4L011.bin',
+                'file': 'fw2b_YLBWL240P.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_fw2b_v4.9.0.3.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
     },
     'fw1': {
         'cpu': 'J1900',
@@ -62,42 +63,42 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW4B_BSW4L011.bin',
+                'file': 'fw4b_YLBWL440P.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_fw4b_v4.12.0.8.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
     },
     'fw4c': {
         'cpu': 'J3710',
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW4C_MBSW0103.bin',
+                'file': 'fw4c_MBSW0104.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_fw4c_v4.12.0.12.rom'
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
     },
     'fw6a': {
         'cpu': '3865U',
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_all_YKBR6L12.bin',
+                'file': 'fw6_all_YKR6LV30.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
     },
 
     'fw6ar': {
@@ -105,77 +106,77 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_all_YKBR6L12.bin',
+                'file': 'fw6_all_YKR6LV30.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
     },
     'fw6b': {
         'cpu': '7100U',
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_all_YKBR6L12.bin',
+                'file': 'fw6_all_YKR6LV30.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
     },
     'fw6br': {
         'cpu': '7020U',
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_all_YKBR6L12.bin',
+                'file': 'fw6_all_YKR6LV30.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
     },
     'fw6br2': {
         'cpu': '8130U',
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_all_YKBR6L12.bin',
+                'file': 'fw6_all_YKR6LV30.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
     },
     'fw6c': {
         'cpu': '7200U',
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_all_YKBR6L12.bin',
+                'file': 'fw6_all_YKR6LV30.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
     },
     'fw6m': {
         'cpu': 'FW6MC',
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_825_KBU6LA09.bin',
+                'file': 'fw6_825_KBU6LA09.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -189,14 +190,14 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_all_YKBR6L12.bin',
+                'file': 'fw6_all_YKR6LV30.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
         'override': overrider_command,
     },
     'fw6e': {
@@ -204,14 +205,14 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'FW6_all_YKBR6L12.bin',
+                'file': 'fw6_all_YKR6LV30.bin',
             },
             {
                 'vendor': 'coreboot',
                 'file': 'protectli_all_fw6_vault_kbl_v1.0.14.rom',
             },
         ],
-        'command': flash_command,
+        'command': flashli_command_pkfail,
         'override': overrider_command,
     },
     'v1210': {
@@ -219,7 +220,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file' : 'V1210_JPL_S4G_007.bin',
+                'file' : 'v1210_JPL.2LAN.S4G.PCIE.6W.013.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -234,7 +235,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'V1410_JPL_S8GB_006B.bin',
+                'file': 'v1410_JPL.4LAN.S8GB.PCIE.6W.007.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -249,7 +250,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'VP2410_GLK4L260.bin', 
+                'file': 'vp2410_GLK4L260.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -264,7 +265,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'VP2410_GML4AV30.bin',
+                'file': 'vp2410_GML4AV30.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -278,7 +279,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'VP2420_YELD4L12_230706.bin',
+                'file': 'vp2420_YELD4L13P.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -294,7 +295,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'VP4630_YW6L2317_230615.bin',
+                'file': 'vp4630_v2_YW6L2318.bin',
 
             },
             {
@@ -311,7 +312,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'VP4650_YW6L2517_230615.bin',
+                'file': 'vp4650_v2_YW6L2518.bin',
                 
             },
             {
@@ -329,7 +330,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'VP4670_YW6L1716_230615.bin',
+                'file': 'vp4670_v1_YW6L1717.bin',
                 
             },
             {
@@ -348,7 +349,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'VP4670_YW6L2721_231101.bin',
+                'file': 'vp4670_v2_YW6L2722.bin',
                 
             },
             {
@@ -367,7 +368,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'vp6630_ADZ6L313_240604.bin',
+                'file': 'vp6630_ADZ6L314.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -383,7 +384,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'vp6650_ADZ6L513_240716.bin',
+                'file': 'vp6650_ADZ6L514.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -399,7 +400,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'vp6670_ADZ6L713_240716.bin',
+                'file': 'vp6670_ADZ6L714.bin',
             },
             {
                 'vendor': 'coreboot',
