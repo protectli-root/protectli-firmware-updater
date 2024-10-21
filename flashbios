@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.46'
+VERSION = '1.1.47'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -263,6 +263,17 @@ def display_logo () :
     logo_str += '_________________________________________________________________________________________\n\n'
 
     return logo_str
+
+
+def general_notice(device) :
+
+    revision = ['v1410']
+
+    if device in revision:
+        print('Revised PKfail BIOS for {0} is available'.format(device))
+        print('please see https://kb.protectli.com/kb/bios-versions-for-the-vault\nfor changes')
+
+
 def display_warning () :
 
     display_logo()
@@ -400,17 +411,11 @@ def display_remove_power_warning (device):
 def display_pkfail_support (device):
 
     not_supported = ['fw1', 'fw2', 'fw4a', 'fw6m']
-    later_support = ['vp2420', 'vp2420r']
 
     if device in not_supported:
 
         print('\nThe {0} is out of the support window and will not be getting further updates.'.format(device))
         print('{0} will not be receiving the PKfail fix.\n'.format(device))
-
-    elif device in later_support:
-
-        print('\nThe PKfail fix for {0} is still in the qualification process.'.format(device))
-        print('We estimate the PKfail fix will be released by 10/18/2024 {0}\n'.format(device))
 
 
 def display_serial_uuid_warning (device):
@@ -434,6 +439,7 @@ def main():  # noqa:WPS213
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
 
     print('NOTICE:\n')
+    general_notice(device)
     display_pkfail_support(device)
     display_serial_uuid_warning(device)
     display_remove_power_warning(device)

@@ -235,7 +235,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'v1410_JPL.4LAN.S8GB.PCIE.6W.007.bin',
+                'file': 'v1410_JPL.4LAN.S8GB.PCIE.6W.007B.bin',
             },
             {
                 'vendor': 'coreboot',
@@ -265,7 +265,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'vp2410_GML4AV30.bin',
+                'file': 'vp2410_YGM4LV22.bin',
             },
             {
                 'vendor': 'coreboot',

@@ -96,6 +96,19 @@ def get_cpu_step(debugmode: int) -> int:
      return int(cpu_str)
 
 
+def get_number_network_ports() -> int:
+
+    all_interfaces = subprocess.check_output(['ls', '/sys/class/net'], text=True).split()
+
+    nic_port_interfaces = []
+    for interface in all_interfaces:
+
+        if interface.startswith('enp') or interface.startswith('eno'):
+
+            nic_port_interfaces.append(interface)
+
+    return len(nic_port_interfaces)
+
 
 def get_protectli_device(debugmode: str, mac_check: str) -> str:
     """Get the model name of this Protectli device.
@@ -106,10 +119,9 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
     Returns:
         str: Protectli device model name
     """
-    if debugmode:
-        return debugmode
-        
+  
     cpu = get_cpu(debugmode)
+    interfaces = get_number_network_ports()
 
     if mac_check == 'vp_vr1':
         return 'vp2410'
@@ -133,10 +145,26 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
         return "vp4670[s1]"
     
     if has_param(debugmode, 'V1210'):
-        return "v1210"
+
+        if interfaces == 2:
+            return 'v1210'
+
+        elif interfaces == 4:
+            return 'v1410'
+        
+        else:
+            return 'Unknown'
     
     if has_param(debugmode, 'V1410'):
-        return "v1410"
+
+        if interfaces == 2:
+            return 'v1210'
+
+        elif interfaces == 4:
+            return 'v1410'
+        
+        else:
+            return 'Unknown'
 
     for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:
