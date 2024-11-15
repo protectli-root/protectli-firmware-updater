@@ -245,6 +245,21 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': vp24_vp66_command,
     },
+    'v1610': {
+        'cpu': 'N6005',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'v1610_JPL.6LAN.D16G.PCIE.007.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_v1610_v0.9.3.rom',
+
+            },
+        ],
+        'command': vp24_vp66_command,
+    },
     'vp2410': {
         'cpu': 'J4125',
         'bios': [
