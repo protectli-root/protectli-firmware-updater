@@ -169,13 +169,10 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
     
     if has_param(debugmode, 'V1211'):
 
-        meminfo = get_meminfo_total()
+        # meminfo = get_meminfo_total()
+        # if meminfo in [7905332, 8006576]:
 
-        if meminfo in [7905332, 8006576]:
-            return 'v1211'
-        
-        else:
-            return 'Unknown'
+        return 'v1211'
 
     if has_param(debugmode, 'V1410'):
 
