@@ -95,6 +95,18 @@ def get_cpu_step(debugmode: int) -> int:
 
      return int(cpu_str)
 
+def get_meminfo_total():
+    meminfo = subprocess.check_output(['/bin/cat', '/proc/meminfo'], stderr=subprocess.DEVNULL).decode('utf-8')
+    meminfo = meminfo.splitlines()[0]
+
+    totalmem = ''
+
+    for char in meminfo:
+        if char.isdigit():
+            totalmem = totalmem + char 
+    
+    return int(totalmem)
+
 
 def get_number_network_ports() -> int:
 
@@ -155,6 +167,16 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
         else:
             return 'Unknown'
     
+    if has_param(debugmode, 'V1211'):
+
+        meminfo = get_meminfo_total()
+
+        if meminfo in [7905332, 8006576]:
+            return 'v1211'
+        
+        else:
+            return 'Unknown'
+
     if has_param(debugmode, 'V1410'):
 
         if interfaces == 2:
