@@ -299,7 +299,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_vp2410_v1.1.0.rom',
+                'file': 'protectli_vp2410_v1.1.1.rom',
             },
         ],
         'command': vpxxxx_flash_command,
@@ -402,7 +402,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_vp6600_v0.9.0.rom',
+                'file': 'protectli_vp6600_v0.9.1.rom',
             },
 
         ],
@@ -418,7 +418,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_vp6600_v0.9.0.rom',
+                'file': 'protectli_vp6600_v0.9.1.rom',
             },
 
         ],
@@ -434,7 +434,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_vp6600_v0.9.0.rom',
+                'file': 'protectli_vp6600_v0.9.1.rom',
             },
 
         ],

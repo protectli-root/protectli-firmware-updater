@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.49'
+VERSION = '1.1.50'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -64,6 +64,7 @@ def get_image_path(model: str, requested_bios: str) -> str:
     for bios in CONFIGURATIONS[model]['bios']:
         if bios['vendor'] == requested_bios:
             return 'images/{0}'.format(bios['file'])
+        
 
 def check_vp46_flash_config (bios_select: str) -> str:
     """checks the current BIOS to user selected flash image.
@@ -77,11 +78,11 @@ def check_vp46_flash_config (bios_select: str) -> str:
     full_flash_exceptions = ('Dasharo (coreboot+UEFI) v1.0.1', 'Dasharo (coreboot+UEFI) v1.0.19')
     full_flash_unit_exceptions = {'vp2420', 'vp4670'}
     full_flash = {'v1210', 'v1211', 'v1410', 'v1610',
-                  'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
+                  'vp2410r', 'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
                   'vp6630', 'vp6650', 'vp6670'}
     
-    vp_devices = {'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
-                    'vp6630', 'vp6650', 'vp6670'}
+    vp_devices = {'vp2410r', 'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
+                  'vp6630', 'vp6650', 'vp6670'}
 
 
     #Checks if the device is a VP
@@ -159,7 +160,7 @@ def do_flash(model: str, bios: str) -> int:
     global DEBUGMODE
     global CONFIGURATIONS
 
-    vp_device = {'vp2420', 'VP46xx', 'vp4630', 'vp4650', 'vp4670'}
+    vp_device = {'vp2410r', 'vp2420', 'VP46xx', 'vp4630', 'vp4650', 'vp4670'}
 
     if DEBUGMODE:
         print('Not actually flashing, script is in debug mode.')
@@ -319,7 +320,7 @@ def display_bios_lock_coreboot ():
     print('\tUSING COREBOOT\n')
     print('-Please reboot the device\n-Press DEL when the splash screen appears')
     print('-From the main menu navigate to \'Dasharo System Features\'\n-Select \'Dasharo Security Options\'')
-    print('-Disable Lock the BIOS boot medium by pressing enter')
+    print('-Disable Lock the BIOS boot medium and SMM BIOS write protection by pressing enter')
     print('-Press ESC until you see the main menu\n-Select Reset to save and reboot.')
     print('-After reboot please try flashli again\n\n')
 
@@ -471,7 +472,7 @@ def main():  # noqa:WPS213
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))
 
-    efi_devices = {'fw4c', 'v1210', 'v1211', 'v1410', 'v1610', 'vp2410', 'vp2420', 'vp2410r', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
+    efi_devices = {'fw4c', 'v1210', 'v1211', 'v1410', 'v1610', 'vp2410r', 'vp2420', 'vp2410r', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
                    'vp6630', 'vp6650', 'vp6670'}
 
     if bios_mode == 'EFI' and not str(device) in efi_devices :

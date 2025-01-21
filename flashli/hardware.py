@@ -286,6 +286,7 @@ def check_bios_lock (debugmode: str) -> str:
     elif 'PR0: Warning:' in flashrom_status:
 
         read_only_addresses = {'0x00c00000-0x00ffffff',
+                               '0x00b00000-0x00ffffff',
                                '0x00b80000-0x00ffffff',
                                }
 
