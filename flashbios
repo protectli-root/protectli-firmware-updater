@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.50'
+VERSION = '1.1.51'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -472,7 +472,7 @@ def main():  # noqa:WPS213
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))
 
-    efi_devices = {'fw4c', 'v1210', 'v1211', 'v1410', 'v1610', 'vp2410r', 'vp2420', 'vp2410r', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
+    efi_devices = {'fw4c', 'v1210', 'v1211', 'v1410', 'v1610', 'vp2410', 'vp2410r', 'vp2420', 'vp4630', 'vp4650', 'vp4670', 'vp4670[s1]',
                    'vp6630', 'vp6650', 'vp6670'}
 
     if bios_mode == 'EFI' and not str(device) in efi_devices :
