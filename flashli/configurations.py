@@ -313,7 +313,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_vp2420_v1.2.0.rom',
+                'file': 'protectli_vp2420_v1.2.1.rom',
             },
         ],
         'command': vp24_vp66_command,
