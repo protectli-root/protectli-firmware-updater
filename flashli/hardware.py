@@ -152,6 +152,9 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
     
     if '3865U' in cpu or '7100U' in cpu or '7200U' in cpu and get_nicTest(debugmode):
         return "fw6m"
+    
+    if '10110U' in cpu and get_cpu_step(debugmode) == 1:
+        return "vp4630[s1]"
 
     if '10810U' in cpu and get_cpu_step(debugmode) == 1:
         return "vp4670[s1]"

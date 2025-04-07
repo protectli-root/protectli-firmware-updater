@@ -325,6 +325,23 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
+                'file': 'vp4630_v1_YW6L1311.bin',
+
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp4600_v1.2.0.rom',
+            },
+
+        ],
+        'command': vpxxxx_flash_command,
+        'upgrade': vpxxxx_upgrade,
+    },
+    'vp4630[s1]': {
+        'cpu': '10110U',
+        'bios': [
+            {
+                'vendor': 'ami',
                 'file': 'vp4630_v2_YW6L2318.bin',
 
             },
@@ -337,7 +354,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'command': vpxxxx_flash_command,
         'upgrade': vpxxxx_upgrade,
     },
-     'vp4650': {
+    'vp4650': {
         'cpu': '10210U',
         'bios': [
             {
