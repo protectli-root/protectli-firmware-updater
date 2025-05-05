@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.53'
+VERSION = '1.1.54'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -78,10 +78,10 @@ def check_vp46_flash_config (bios_select: str) -> str:
     full_flash_exceptions = ('Dasharo (coreboot+UEFI) v1.0.1', 'Dasharo (coreboot+UEFI) v1.0.19')
     full_flash_unit_exceptions = {'vp2420', 'vp4670'}
     full_flash = {'v1210', 'v1211', 'v1410', 'v1610',
-                  'vp2410r', 'vp2420', 'vp4630', 'vp4630[s1]', 'vp4650', 'vp4670', 'vp4670[s1]',
+                  'vp2410r', 'vp2420', 'vp2430', 'vp4630', 'vp4630[s1]', 'vp4650', 'vp4670', 'vp4670[s1]',
                   'vp6630', 'vp6650', 'vp6670'}
     
-    vp_devices = {'vp2410r', 'vp2420', 'vp4630', 'vp4630[s1]', 'vp4650', 'vp4670', 'vp4670[s1]',
+    vp_devices = {'vp2410r', 'vp2420', 'vp2430', 'vp4630', 'vp4630[s1]', 'vp4650', 'vp4670', 'vp4670[s1]',
                   'vp6630', 'vp6650', 'vp6670'}
 
 
@@ -160,7 +160,7 @@ def do_flash(model: str, bios: str) -> int:
     global DEBUGMODE
     global CONFIGURATIONS
 
-    vp_device = {'vp2410r', 'vp2420', 'VP46xx', 'vp4630', 'vp4650', 'vp4670'}
+    vp_device = {'vp2410r', 'vp2420', 'vp2430', 'VP46xx', 'vp4630', 'vp4650', 'vp4670'}
 
     if DEBUGMODE:
         print('Not actually flashing, script is in debug mode.')
@@ -371,7 +371,7 @@ def display_long_boot_time (device):
 
 def display_remove_power_warning (device):
 
-    poweroff_devices = ['v1210', 'v1211', 'v1410', 'v1610', 'vp2420', 'vp6630', 'vp6650', 'vp6670']
+    poweroff_devices = ['v1210', 'v1211', 'v1410', 'v1610', 'vp2420', 'vp2430', 'vp6630', 'vp6650', 'vp6670']
 
     user_input = '0'
 
@@ -472,7 +472,7 @@ def main():  # noqa:WPS213
     bios_mode = hardware.get_bios_mode(DEBUGMODE)
     print('BIOS Mode: {0}'.format(bios_mode))
 
-    efi_devices = {'fw4c', 'v1210', 'v1211', 'v1410', 'v1610', 'vp2410', 'vp2410r', 'vp2420', 'vp4630', 'vp4630[s1]', 'vp4650', 'vp4670', 'vp4670[s1]',
+    efi_devices = {'fw4c', 'v1210', 'v1211', 'v1410', 'v1610', 'vp2410', 'vp2410r', 'vp2420', 'vp2430', 'vp4630', 'vp4630[s1]', 'vp4650', 'vp4670', 'vp4670[s1]',
                    'vp6630', 'vp6650', 'vp6670'}
 
     if bios_mode == 'EFI' and not str(device) in efi_devices :
@@ -499,7 +499,7 @@ def main():  # noqa:WPS213
     if returncode == 0:
         print('Flash completed and successful.')
 
-        if device in ['v1210', 'v1211', 'v1410', 'v1610', 'vp2420', 'vp6630', 'vp6650', 'vp6670']:
+        if device in ['v1210', 'v1211', 'v1410', 'v1610', 'vp2420', 'vp2430', 'vp6630', 'vp6650', 'vp6670']:
             print('Please REMOVE the POWER SUPPLY from the device and reinsert it')
         
         else:

@@ -320,6 +320,20 @@ CONFIGURATIONS = types.MappingProxyType({
         'upgrade': vp2420_upgrade,
         'alt_upgrade' : alt_upgrade,
     },
+    'vp2430': {
+        'cpu': 'N150',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'vp2430_PRALNDZ4L10.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp2430_v0.9.0.rom',
+            },
+        ],
+        'command': vp24_vp66_command,
+    },
     'vp4630': {
         'cpu': '10110U',
         'bios': [
