@@ -385,10 +385,9 @@ def display_remove_power_warning (device):
 
             print('\n\nAfter you have completed flashing the firmware:')
 
-            print('\n1. Shut down the {0}.'.format(device))
-            print('2. Disconnect the power cable from the unit.')
-            print('3. Wait five seconds.')
-            print('4. Reconnect the power cable to the unit.')
+            print('\n1. Disconnect the power cable from the unit (after the flash is complete).')
+            print('2. Wait five seconds.')
+            print('3. Reconnect the power cable to the unit.')
 
             print('\nYOUR {0} WILL BE IN AN UNUSABLE STATE UNTIL THE ABOVE STEPS ARE PERFORMED.'.format(device))
 
