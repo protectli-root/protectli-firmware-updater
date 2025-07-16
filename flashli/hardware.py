@@ -272,7 +272,7 @@ def check_bios_lock (debugmode: str) -> str:
         bool
     """
 
-    if (has_param('null',['VP2420', 'VP2430', 'VP6630', 'VP6650', 'VP6670'])) :
+    if (has_param('null',['VP2420', 'VP2430', 'VP3210', 'VP3230', 'VP6630', 'VP6650', 'VP6670'])) :
         flashrom_dir = './vendor/flashrom_v2'
     
     else :
