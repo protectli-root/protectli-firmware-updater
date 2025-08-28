@@ -18,7 +18,7 @@ Download the latest release, uncompress it, and run the flashbios script
 wget https://github.com/protectli-root/protectli-firmware-updater/releases/download/v1.1.57/flashli.tar.gz
 tar -zxvf flashli.tar.gz
 cd protectli-firmware-updater-1.1.57/
-./flashbios
+sudo ./flashbios
 ```
 
 Or clone this repo for the source code and run flashbios. To clone and run:
