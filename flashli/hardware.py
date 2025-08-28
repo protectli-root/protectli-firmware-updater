@@ -121,6 +121,14 @@ def get_number_network_ports() -> int:
 
     return len(nic_port_interfaces)
 
+def check_hardware_network_interface(unit_interface) -> bool:
+    all_interfaces = subprocess.check_output(['ls', '/sys/class/net'], text=True).split()
+
+    for interface in all_interfaces:
+
+        if unit_interface in interface:
+
+            return True
 
 def get_protectli_device(debugmode: str, mac_check: str) -> str:
     """Get the model name of this Protectli device.
@@ -158,7 +166,10 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
 
     if '10810U' in cpu and get_cpu_step(debugmode) == 1:
         return "vp4670[s1]"
-    
+
+    if 'N150' in cpu and check_hardware_network_interface('enp1s0f'):
+        return 'vp2440'
+
     if has_param(debugmode, 'V1210'):
 
         if interfaces == 2:
@@ -188,9 +199,11 @@ def get_protectli_device(debugmode: str, mac_check: str) -> str:
         else:
             return 'Unknown'
 
+    
+
     for device, props in configurations.CONFIGURATIONS.items():
         if props['cpu'] in cpu:
-            return '{0}'.format(device) 
+            return '{0}'.format(device)
             
     return 'Unknown'
 
@@ -272,7 +285,7 @@ def check_bios_lock (debugmode: str) -> str:
         bool
     """
 
-    if (has_param('null',['VP2420', 'VP2430', 'VP3210', 'VP3230', 'VP6630', 'VP6650', 'VP6670'])) :
+    if (has_param('null',['VP2420', 'VP2430', 'VP2440', 'VP3210', 'VP3230', 'VP6630', 'VP6650', 'VP6670'])) :
         flashrom_dir = './vendor/flashrom_v2'
     
     else :

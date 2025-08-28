@@ -334,6 +334,20 @@ CONFIGURATIONS = types.MappingProxyType({
         ],
         'command': vp24_vp66_command,
     },
+    'vp2440': {
+        'cpu': 'N150',
+        'bios': [
+            {
+                'vendor': 'ami',
+                'file': 'vp2440_PANDZ2F2L11.bin',
+            },
+            {
+                'vendor': 'coreboot',
+                'file': 'protectli_vp2440_v0.9.0.rom',
+            },
+        ],
+        'command': vp24_vp66_command,
+    },
     'vp3210': {
         'cpu': 'N100',
         'bios': [
