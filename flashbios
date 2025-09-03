@@ -272,8 +272,6 @@ def display_logo () :
     for line in logo_str:
         print(line)
 
-    # return logo_str
-
 
 def general_notice(device) :
 
@@ -442,7 +440,7 @@ def main():  # noqa:WPS213
 
     os.system('/bin/clear')  # noqa:S607,S605
 
-    print (display_logo())
+    display_logo()
 
     global DEBUGMODE
     device = hardware.get_protectli_device(DEBUGMODE, check_mac())
