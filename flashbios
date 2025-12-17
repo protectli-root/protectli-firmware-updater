@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.57'
+VERSION = '1.1.58'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -425,6 +425,19 @@ def display_pkfail_support (device):
         print('{0} will not be receiving the PKfail fix.\n'.format(device))
 
 
+
+def display_nic_name_change (device):
+
+    nic_name_change = ['v1210', 'v1211', 'v1410', 'v1610']
+    # user_input = '0'
+
+    if device in nic_name_change:
+        print('\nWith the update for V1000 series coreboot v0.9.4')
+        print('the network interface naming can change for some linux operating systems.')
+        print('The naming will change from \'eno\' to \'enp\'.')
+        print('Please note that this may require you to reconfigure your network or interface settings')
+
+
 def display_serial_uuid_warning (device):
 
     default_serial_uuid = ['v1210', 'v1211', 'v1410', 'v1610']
@@ -448,6 +461,7 @@ def main():  # noqa:WPS213
     print('NOTICE:\n')
     general_notice(device)
     display_pkfail_support(device)
+    display_nic_name_change(device)
     display_serial_uuid_warning(device)
     display_remove_power_warning(device)
 

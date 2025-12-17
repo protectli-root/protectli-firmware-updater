@@ -224,7 +224,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_v1210_v0.9.3.rom',
+                'file': 'protectli_v1210_v0.9.4.rom',
 
             },
         ],
@@ -239,7 +239,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_v1211_v0.9.3.rom',
+                'file': 'protectli_v1211_v0.9.4.rom',
 
             },
         ],
@@ -254,7 +254,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_v1410_v0.9.3.rom',
+                'file': 'protectli_v1410_v0.9.4.rom',
 
             },
         ],
@@ -269,7 +269,7 @@ CONFIGURATIONS = types.MappingProxyType({
             },
             {
                 'vendor': 'coreboot',
-                'file': 'protectli_v1610_v0.9.3.rom',
+                'file': 'protectli_v1610_v0.9.4.rom',
 
             },
         ],
