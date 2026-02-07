@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.58'
+VERSION = '1.1.59'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -436,6 +436,9 @@ def display_nic_name_change (device):
         print('the network interface naming can change for some linux operating systems.')
         print('The naming will change from \'eno\' to \'enp\'.')
         print('Please note that this may require you to reconfigure your network or interface settings')
+        print('Please also note following.')
+
+        display_v1000_v094_warning(device)
 
 
 def display_serial_uuid_warning (device):
@@ -446,6 +449,18 @@ def display_serial_uuid_warning (device):
 
         print('\nWith the current implementation of firmware flashing, {0}\'s serial and UUID will be set to default.'.format(device))
         print('A solution is currently in development.\n')
+
+def display_v1000_v094_warning (device):
+
+    defualt = ['v1210', 'v1211', 'v1410', 'v1610']
+
+    if device in defualt:
+
+        print ('Not all drives are recognized on coreboot v0.9.4')
+        print('Your drive may not be recognized when flashing from v0.9.3 to v0.9.4.')
+        print('proceed at your own risk.')
+        print ('for more information please see https://github.com/protectli-root/protectli-firmware-updater/releases/tag/v1.1.59')
+
 
 
 def main():  # noqa:WPS213
