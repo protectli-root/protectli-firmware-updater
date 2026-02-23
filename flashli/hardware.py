@@ -257,6 +257,7 @@ def get_mac(debugmode: str) -> str:
     address_dir = ['/sys/class/net/enp1s0f0/address',
                    '/sys/class/net/enp2s0f0/address',
                    '/sys/class/net/eno1/address',
+                   '/sys/class/net/nic0/address',
                    '/sys/class/net/enp1s0/address',
                    '/sys/class/net/enp2s0/address',
                    '/sys/class/net/enp4s0/address',
