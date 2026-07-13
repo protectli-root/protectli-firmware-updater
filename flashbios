@@ -22,7 +22,7 @@ CONFIGURATIONS = configurations.CONFIGURATIONS
 displaySize = 89
 
 
-VERSION = '1.1.61'
+VERSION = '1.1.62'
 
 
 if os.geteuid() != 0 and not DEBUGMODE:
@@ -441,7 +441,7 @@ def display_nic_name_change (device):
 
 def display_serial_uuid_warning (device):
 
-    default_serial_uuid = ['v1210', 'v1211', 'v1410', 'v1610']
+    default_serial_uuid = ['fw4c', 'v1210', 'v1211', 'v1410', 'v1610']
 
     if device in default_serial_uuid:
 

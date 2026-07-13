@@ -77,7 +77,7 @@ CONFIGURATIONS = types.MappingProxyType({
         'bios': [
             {
                 'vendor': 'ami',
-                'file': 'fw4c_MBSW0104.bin',
+                'file': 'fw4c_MBSW0133.bin',
             },
             {
                 'vendor': 'coreboot',
